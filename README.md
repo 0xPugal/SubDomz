@@ -1,15 +1,16 @@
 # subdomz
-**A Complete Subdomain Enumeration Tool**
+**A Complete Subdomain Enumeration Tool** 
+
 The tool SubDomz uses various multiple open-source tools and OSINT search engines to gather subdomains.
 
-##Tools Used
+## Tools Used
 + Subfinder
 + Findomain
 + Amass
 + Assetfinder
 + Sublist3r
 
-##Search Engines
+## Search Engines
 + BufferOver.run
 + Riddler.io
 + Certspotter
@@ -19,7 +20,7 @@ The tool SubDomz uses various multiple open-source tools and OSINT search engine
 + Censys
 + Shodan
 
-##Features
+## Features
 + SubDomain Enumeration
 + Portscanning
 + Checking Alive Subdomains
