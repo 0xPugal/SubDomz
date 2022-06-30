@@ -20,6 +20,9 @@ echo "--------------------"
 echo ""
 sleep 1
 
+mkdir ~/bbht/
+cd ~/bbht/
+
 #Installing Packages
 sudo apt update
 sudo apt install git
