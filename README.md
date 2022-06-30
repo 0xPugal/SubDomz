@@ -3,6 +3,16 @@
 
 The tool SubDomz uses various multiple open-source tools and OSINT search engines to gather subdomains.
 
+## Usage
+```
+git clone https://github.com/0xlittleboy/subdomz
+cd subdomz
+sudo bash install.sh
+```
+```
+bash subdomz.sh target.com
+```
+
 ## Tools Used
 + Subfinder
 + Findomain
