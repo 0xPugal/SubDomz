@@ -36,6 +36,9 @@ amass enum -passive -d $1 -config ~/.config/amass/config.ini -o $1-amass.txt
 #Sublist3r
 sublist3r -d $1 --quiet -o $1-sublist3r.txt
 
+#Censys-Subdomain_finder
+censys-subdomain-finder.py $1 -o $1-censys.txt
+
 #BufferOver.run
 curl -s https://dns.bufferover.run/dns?q=.$1.com | jq -r .FDNS_A[] | cut -d',' -f2 | sort -u | tee $1-bufferover.txt
 
@@ -62,9 +65,9 @@ echo "----------------------"
 echo "Sorting the Subdomains"
 echo "----------------------"
 echo ""
-cat $1-assetfinder.txt $1-amass.txt $1-findomain.txt $1-sublist3r.txt $1-subfinder.txt $1-bufferover.txt $1-riddler.txt $1-certspotter.txt $1-archive.txt $1-jldc.txt $1-crtsh.txt | sort -u | tee -a $1-subs.txt
+cat $1-assetfinder.txt $1-amass.txt $1-findomain.txt $1-sublist3r.txt $1-subfinder.txt $1-bufferover.txt $1-riddler.txt $1-certspotter.txt $1-archive.txt $1-jldc.txt $1-crtsh.txt $1-censys.txt | sort -u | tee -a $1-subs.txt
 sleep 1
-rm $1-assetfinder.txt $1-amass.txt $1-findomain.txt $1-sublist3r.txt $1-subfinder.txt $1-bufferover.txt $1-riddler.txt $1-certspotter.txt $1-archive.txt $1-jldc.txt $1-crtsh.txt
+rm $1-assetfinder.txt $1-amass.txt $1-findomain.txt $1-sublist3r.txt $1-subfinder.txt $1-bufferover.txt $1-riddler.txt $1-certspotter.txt $1-archive.txt $1-jldc.txt $1-crtsh.txt $1-censys.txt
 
 #Checking Alive Domains
 sleep 1
