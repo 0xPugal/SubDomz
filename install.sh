@@ -50,7 +50,7 @@ echo ""
 echo "----------------------"
 echo "Installing Assetfinder"
 echo "----------------------"
-go get -u github.com/tomnomnom/assetfinder
+go install -v github.com/tomnomnom/assetfinder@latest
 sudo cp ~/go/bin/assetfinder /usr/local/bin
 
 #Installing Amass
@@ -94,6 +94,13 @@ python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 sudo mv censys-subdomain-finder.py /usr/local/bin
+
+#Installing Httpx
+echo "----------------"
+echo "INstalling httpx"
+echo "----------------"
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+sudo cp ~/go/bin/httpx /usr/local/bin
 
 echo ""
 sleep 1
