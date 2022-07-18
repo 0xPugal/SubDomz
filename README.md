@@ -8,9 +8,7 @@ The tool SubDomz uses various multiple open-source tools and OSINT search engine
 git clone https://github.com/0xlittleboy/subdomz
 cd subdomz
 sudo bash install.sh
-```
-```
-bash subdomz.sh target.com
+bash subdomz.sh -h
 ```
 
 ## Tools Used
@@ -19,21 +17,28 @@ bash subdomz.sh target.com
 + Amass
 + Assetfinder
 + Sublist3r
++ Waybackurls
++ Gauplus
++ Chrobat
++ Censys-subdomain-finder
++ github-subdomains
++ CTFR
++ Shodomain
 
 ## Search Engines
++ Wayback Machine
 + BufferOver.run
 + Riddler.io
 + Certspotter
 + Archive
 + JLDC
 + Crt.sh
-+ Censys
-+ Shodan
++ Security Trails
++ CommonCrawl
++ HackerTarget
++ ThreadCrowd
 
-## Features
-+ SubDomain Enumeration
-+ Portscanning
-+ Checking Alive Subdomains
-+ Scanning Subdomain Takeover
 
 ***This is under developement***
+### Note:
+***This script is originally made by [@itsbing0o](https://twitter.com/itsbing0o) and I made a changes to work more effectively.***
