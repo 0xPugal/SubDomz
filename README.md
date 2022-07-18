@@ -38,7 +38,7 @@ bash subdomz.sh -h
 + HackerTarget
 + ThreadCrowd
 
-### Credit
+## Credit
 ***This tool was inspired by @bing0o [SubEnum](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to them for the great idea!***
 --------------
 ***This is under developement***
