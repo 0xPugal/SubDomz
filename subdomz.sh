@@ -3,17 +3,17 @@
 # A small Bash script for subdomain enumeration using various tools and online services
 ##############################################################################
 ## ~~~~~~~~~~~~~ Tools ~~~~~~~~~~~~~~~~ ## ~~~~~~ Online Services ~~~~~~~~~ ##
-##	* Subfinder							##	* Wayback Machine	   			##
-##	* Assetfinder						##	* Crt.sh		   				##
-##	* Findomain							##	* Bufferover.run	   			##
-##	* Amass								##	* Riddler.io		   			##
-##	* Github-Subdomains					##	* Certspotter		   			##
-##	* Censys-Subdomain-Finder			##	* Archive		   				##
-##	* Shodomain							##	* JLDC			   				##
-##	* Chrobat							##	* Security Trails	   			##
-##	* Gauplus							##	* CommonCrawl		   			##
-##	* Waybackurls						##	* ThreadCrowd		   			##
-##	* CTFR								##	* HackerTarget		   			##
+##      * Subfinder                     ##      * Wayback Machine           ##
+##      * Assetfinder                   ##      * Crt.sh                    ##
+##      * Findomain                     ##      * Bufferover.run            ##
+##      * Amass                         ##      * Riddler.io                ##
+##      * Github-Subdomains             ##      * Certspotter               ##
+##      * Censys-Subdomain-Finder       ##      * Archive                   ##
+##      * Shodomain                     ##      * JLDC                      ##
+##      * Chrobat                       ##      * Security Trails           ##
+##      * Gauplus                       ##      * CommonCrawl               ##
+##      * Waybackurls                   ##      * ThreadCrowd               ##
+##      * CTFR                          ##      * HackerTarget              ##
 ##############################################################################
 # This script is originally made by @itsbing0o and I made a changes to work more effectively
 cat <<"EOF"
