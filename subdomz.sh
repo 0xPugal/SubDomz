@@ -10,7 +10,7 @@
 ##      * Github-Subdomains             ##      * Certspotter               ##
 ##      * Censys-Subdomain-Finder       ##      * Archive                   ##
 ##      * Shodomain                     ##      * JLDC                      ##
-##      * Chrobat                       ##      * Security Trails           ##
+##      * crobat                       ##      * Security Trails           ##
 ##      * Gauplus                       ##      * CommonCrawl               ##
 ##      * Waybackurls                   ##      * ThreadCrowd               ##
 ##      * CTFR                          ##      * HackerTarget              ##
@@ -167,14 +167,14 @@ Github-Subdomains() {
 }
 
 
-Chrobat() {
-  [ "$silent" == True ] && chrobat -s $domain  2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${bold}Chrobat${end}" &
+crobat() {
+  [ "$silent" == True ] && crobat -s $domain  2>/dev/null | anew subdomz-$domain.txt || {
+    [[ ${PARALLEL} == True ]] || { spinner "${bold}crobat${end}" &
       PID="$!"
     }
-    chrobat -s $domain 1> tmp-chrobat-$domain 2>/dev/null
+    crobat -s $domain 1> tmp-crobat-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Chrobat$end: $(echo && cat < tmp-chrobat-$domain && echo )"
+    echo -e "$bold[*] crobat$end: $(echo && cat < tmp-crobat-$domain && echo )"
   }
 }
 
@@ -274,7 +274,7 @@ OUT(){
 	[ "$silent" == False ] && {
 		[ -n "$1" ] && out="$1" || out="$domain-$(date +'%Y-%m-%d').txt"
 		sort -u tmp-* > $out
-		echo -e $green"[+] The Final Results:$end $(wc -l $out)"
+		echo -e $green"[+] The Final Results:$end $( cat $out)"
 		[ $resolve == True ] && ALIVE "$out" "$domain"
 
 		[ $delete == True ] && rm tmp-*
@@ -285,13 +285,13 @@ ALIVE() {
 	[ "$silent" == False ] && printf "$bold[+] Resolving $end"
 	printf "                        \r"
 	cat $1 | httprobe -c $thread > "resolved-$2.txt"
-	[ "$silent" == False ] && echo -e $green"[+] Resolved:$end $(wc -l < resolved-$2.txt)"
+	[ "$silent" == False ] && echo -e $green"[+] Resolved:$end $( cat < resolved-$2.txt)"
 
 }
 
 
 LIST() {
-	lines=$(wc -l < $hosts)
+	lines=$(cat < $hosts)
 	count=1
 	while read domain; do
 		[ "$silent" == False ] && echo -e "\n${Underlined}${bold}${green}[+] Domain ($count/$lines):${end} ${domain}"
@@ -299,9 +299,9 @@ LIST() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Reconnaissance" &
 				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Chrobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder spinner
+				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder spinner
 				export domain silent bold end
-				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Chrobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder
+				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder
 				kill ${PID}
 				OUT
 			} || {
@@ -312,7 +312,7 @@ LIST() {
         Gauplus
         Waybackurls
         Github-Subdomains
-        Chrobat
+        crobat
         CTFR
         Cero
         Sublister
@@ -335,9 +335,9 @@ Main() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Reconnaissance" &
 				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Chrobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder spinner
+				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder spinner
 				export domain silent bold end
-				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Chrobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder
+				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder
 				kill ${PID}
 			} || {
         SubFinder
@@ -347,7 +347,7 @@ Main() {
         Gauplus
         Waybackurls
         Github-Subdomains
-        Chrobat
+        Crobat
         CTFR
         Cero
         Sublister
@@ -389,7 +389,7 @@ list=(
         Gauplus
         Waybackurls
         Github-Subdomains
-        Chrobat
+        crobat
         CTFR
         Cero
         Sublister
