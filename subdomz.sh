@@ -203,11 +203,11 @@ Sublister() {
 
 
 Sudomy() {
-  [ "$silent" == True ] && subdomy -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && sudomy -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Sudomy${end}" &
       PID="$!"
     }
-    subdomy -d $domain | unfurl domains 1> tmp-sudomy-$domain 2>/dev/null
+    sudomy -d $domain | unfurl domains 1> tmp-sudomy-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Sudomy$end: $(echo && cat< tmp-sudomy-$domain)"
   }
