@@ -10,7 +10,7 @@
 ```
 git clone https://github.com/0xlittleboy/subdomz
 cd subdomz
-sudo bash install.sh
+bash install.sh
 bash subdomz.sh -h
 ```
 
