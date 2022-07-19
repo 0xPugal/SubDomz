@@ -101,7 +101,7 @@ Findomain() {
 		}
 		findomain -quiet -t $domain 1> tmp-findomain-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] Findomain$end: $(echo && cat< tmp-findomain-$domain)" 2>/dev/null | awk '{print $1}')"
+		echo -e "$bold[*] Findomain$end: $(echo && cat< tmp-findomain-$domain 2>/dev/null | awk '{print $1}')"
 	}
 }
 
