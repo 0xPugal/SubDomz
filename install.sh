@@ -173,7 +173,7 @@ Httprobe() {
 	         printf "[+] Httprobe Installed !.\n"
 }
 
-hash go 2>/dev/null && printf "[!] Golang is already installed.\n" || { printf "[+] Installing Golang!" && Glang; }
+hash go 2>/dev/null && printf "[!] Golang is already installed.\n" || { printf "[+] Installing Golang!" && Golang; }
 
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
