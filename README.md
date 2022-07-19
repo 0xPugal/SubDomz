@@ -29,7 +29,11 @@ shodomain <API-KEY> $domain
 
     censys-subdomain-finder.py --censys-api-id <CENSYS_API_ID> --censys-api-secret <CENSYS_API_SECRET> $domain 
 ```
-
+***Add your Github Access Token in line 159 and line 163***
+```
+github-subdomains -d $domain -t <TOKEN>
+github-subdomains -d $domain -t <TOKEN>
+```
 
 ## Tools Used
 + SubFinder
