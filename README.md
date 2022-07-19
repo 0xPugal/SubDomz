@@ -2,7 +2,7 @@
 
 **The All in One Subdomain Enumeration Tool** 
 
-The tool SubDomz uses multiple open-source tools and various OSINT search engines to find subdomains effectively.
+#### The tool SubDomz uses multiple open-source tools and various OSINT search engines to find subdomains effectively.
 -----------------------------
 
 ## Usage
