@@ -129,10 +129,8 @@ CTFR() {
             git clone https://github.com/UnaPibaGeek/ctfr.git &>/dev/null
             cd ctfr
             pip3 install -r requirements.txt &>/dev/null
-            sudo ln -svf ctfr.py /usr/bin/ctfr &>/dev/null
-            sudo chmod +x /usr/bin/ctfr &>/dev/null
             sudo cp ctfr.py /usr/local/bin
-            sudo chmod +x /usr/local/bin/ctfr
+            sudo chmod +x /usr/local/bin/ctfr.py
             printf "[+] CTFR Installed! \n"
 }
 
