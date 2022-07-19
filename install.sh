@@ -123,14 +123,16 @@ Crobat() {
             printf "[+] Crobat Installed! \n"
 }
 
-cd ~/subdomz/tools
 CTFR() {
             printf "                  \r"
+            cd ~/subdomz/tools
             git clone https://github.com/UnaPibaGeek/ctfr.git &>/dev/null
             cd ctfr
             pip3 install -r requirements.txt &>/dev/null
             sudo ln -svf ctfr.py /usr/bin/ctfr &>/dev/null
             sudo chmod +x /usr/bin/ctfr &>/dev/null
+            sudo cp ctfr.py /usr/local/bin
+            sudo chmod +x /usr/local/bin/ctfr
             printf "[+] CTFR Installed! \n"
 }
 
@@ -140,39 +142,43 @@ Cero() {
             printf "[+] Cero Installed! \n"
 }
 
-cd ~/subdomz/tools
 Sublister() {
             printf "                    \r"
+            cd ~/subdomz/tools
             git clone https://github.com/aboul3la/Sublist3r.git &>/dev/null
             cd Sublist3r
             pip3 install -r requirements.txt &>/dev/null
             sudo ln -svf sublist3r.py /usr/bin/sublist3r &>/dev/null
             sudo chmod +x /usr/bin/sublist3r &>/dev/null
+            sudo cp sublist3r.py /usr/local/bin
+            sudo chmod +x /usr/local/bin
             printf "[+] Sublister Installed! \n"
 }
 
-cd ~/subdomz/tools
 Sudomy() {
             printf "                          \r"
+            cd ~/subdomz/tools
             git clone --recursive https://github.com/screetsec/Sudomy.git &>/dev/null
             cd Sudomy && python3 -m pip install -r requirements.txt &>/dev/null
             sudo cp sudomy /usr/local/bin
             printf "[+] Sudomy Installed! \n"
 }
 
-cd ~/subdomz/tools
 Shodomain() {
             printf "                                    \r"
+            cd ~/subdomz/tools
             git clone https://github.com/SmoZy92/Shodomain &>/dev/null
             cd Shodomain && pip install -r requirements.txt &>/dev/null
             sudo ln -svf shodomain.py /usr/bin/shodomain &>/dev/null
             sudo chmod +x /usr/bin/shodomain &>/dev/null
+            sudo cp shodomain.py /usr/local/bin
+            sudo chmod +x /usr/local/bin/shodomain.py
             printf "[+] Shodomain! \n"
 }
 
-cd ~/subdomz/tools
 Censys-Subdomain-Finder() {
             printf "                  \r"
+            cd ~/subdomz/tools
             git clone https://github.com/christophetd/censys-subdomain-finder.git &>/dev/null
             cd censys-subdomain-finder
             python3 -m venv venv
@@ -229,8 +235,8 @@ list=(
   	Censys
   	Nmap
   	JQ
- 	Git
- 	Python
+  	Git
+  	Python
   	Parallel
 	Golang
 	Subfinder
