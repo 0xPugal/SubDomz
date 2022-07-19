@@ -1,6 +1,7 @@
 # SubDomz 
 
 **The All in One Subdomain Enumeration Tool** 
+![carbon](https://user-images.githubusercontent.com/75373225/179715470-f91bcfd5-1c59-4da6-927a-a0b02eef2920.png)
 
 #### The tool SubDomz uses multiple open-source tools and various OSINT search engines to find subdomains effectively.
 -----------------------------
@@ -35,31 +36,7 @@ github-subdomains -d $domain -t <TOKEN>
 github-subdomains -d $domain -t <TOKEN>
 ```
 
-## Tools Used
-+ SubFinder
-+ Assetfinder
-+ Findomain
-+ Amass
-+ Gauplus
-+ Waybackurls 
-+ Github-Subdomains 
-+ Chrobat 
-+ CTFR 
-+ Cero
-+ Sublister
-+ Sudomy
-+ Shodomain
-+ Censys-Subdomain-Finder
-+ nMap
-
-## Search Engines
-+ Wayback Machine
-+ BufferOver.run
-+ Riddler.io
-+ Certspotter
-+ JLDC
-+ Crt.sh
-+ HackerTarget
+![image](https://user-images.githubusercontent.com/75373225/179716552-4d7bb181-2077-4a37-8edc-66532e78e9b0.png)
 
 ## Credit
 ***This tool was inspired by @bing0o [SubEnum](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to them for the great idea!***
