@@ -49,16 +49,16 @@ Packages() {
 sleep 0.5
 
 Golang() {
-            printf "                        \r"
-            sys=$(uname -m)
-            LATEST=$(curl -s 'https://go.dev/VERSION?m=text')
-            [ $sys == "x86_64" ] && wget https://dl.google.com/go/go1.18.4.linux-amd64.tar.gz &>/dev/null || wget https://dl.google.com/go/go1.18.4.linux-amd64.tar.gz &>/dev/null
-            sudo tar -C /usr/local -xzf go1.18.4.linux-amd64.tar.gz
-	          echo "export GOROOT=/usr/local/go" >> $HOME/.bashrc
-	          echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
-	          echo 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> $HOME/.bashrc
+	printf "                                \r"
+	sys=$(uname -m)
+	LATEST=$(curl -s 'https://go.dev/VERSION?m=text')
+	[ $sys == "x86_64" ] && wget https://golang.org/dl/$LATEST.linux-amd64.tar.gz -O golang.tar.gz &>/dev/null || wget https://golang.org/dl/$LATEST.linux-386.tar.gz -O golang.tar.gz &>/dev/null
+	sudo tar -C /usr/local -xzf golang.tar.gz
+	echo "export GOROOT=/usr/local/go" >> $HOME/.bashrc
+	echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
+	echo 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> $HOME/.bashrc
 
-            printf "[+] Golang Installed! \n"
+	printf "[+] Golang Installed !.\n"
 }
 sleep 0.5
 
@@ -107,10 +107,10 @@ Github-Subdomains() {
             printf "[+] Github-Subdomains Installed! \n"
 }
 
-crobat() {
+Crobat() {
             printf "                  \r"
             go install github.com/cgboal/sonarsearch/cmd/crobat@latest &>/dev/null
-            printf "[+] crobat Installed! \n"
+            printf "[+] Crobat Installed! \n"
 }
 
 CTFR() {
@@ -173,15 +173,28 @@ Httprobe() {
 	         printf "[+] Httprobe Installed !.\n"
 }
 
-
-sleep 0.5
-
-hash go 2>/dev/null && printf "[!] Golang is already installed.\n" || { printf "[+] Installing Golang!" && GOlang; }
+hash go 2>/dev/null && printf "[!] Golang is already installed.\n" || { printf "[+] Installing GOlang!" && GOlang; }
 
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-sudo cp ~/go/bin/* /usr/local/bin
+
+hash findomain 2>/dev/null && printf "[!] Findomain is already installed.\n" || { printf "[+] Installing Findomain!" && Findomain; }
+hash subfinder 2>/dev/null && printf "[!] Subfinder is already installed.\n" || { printf "[+] Installing subfinder!" && Subfinder; }
+hash amass 2>/dev/null && printf "[!] Amass is already installed.\n" || { printf "[+] Installing Amass!" && Amass; }
+hash assetfinder 2>/dev/null && printf "[!] Assetfinder is already installed.\n" || { printf "[+] Installing Assetfinder!" && Assetfinder; }
+hash gauplus 2>/dev/null && printf "[!] Gauplus is already installed.\n" || { printf "[+] Installing Gauplus!" && Gauplus; }
+hash waybackurls 2>/dev/null && printf "[!] Waybackurls is already installed.\n" || { printf "[+] Installing Waybackurls!" && Waybackurls; }
+hash github-subdomains 2>/dev/null && printf "[!] Github-Subdoamins is already installed.\n" || { printf "[+] Installing Github-subdomains!" && Github-Subdomains; }
+hash crobat 2>/dev/null && printf "[!] Crobat is already installed.\n" || { printf "[+] Installing Crobat!" && Crobat; }
+hash ctfr 2>/dev/null && printf "[!] CTFR is already installed.\n" || { printf "[+] Installing CTFR!" && CTFR; }
+hash cero 2>/dev/null && printf "[!] Cero is already installed.\n" || { printf "[+] Installing Cero!" && Cero; }
+hash sublist3r 2>/dev/null && printf "[!] Sublister is already installed.\n" || { printf "[+] Installing Sublilster!" && Sublister; }
+hash sudomy 2>/dev/null && printf "[!] Sudomy is already installed.\n" || { printf "[+] Installing Sudomy!" && Sudomy; }
+hash shodomain 2>/dev/null && printf "[!] Shodomain is already installed.\n" || { printf "[+] Installing Shodomain!" && Shodomain; }
+hash censys-subdomain-finder.py 2>/dev/null && printf "[!] Censys-Subdomain-Finder is already installed.\n" || { printf "[+] Installing Censys-Subdomain-Finder!" && Censys-Subdomain-Finder; }
+hash httprobe 2>/dev/null && printf "[!] Httprobe is already installed.\n" || { printf "[+] Installing Httprobe!" && Httprobe; }
+
 
 
 list=(
