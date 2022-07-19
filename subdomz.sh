@@ -101,7 +101,7 @@ Findomain() {
 		}
 		findomain -quiet -t $domain 1> tmp-findomain-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] Findomain$end: $(echo && cat< tmp-findomain-$domain)"
+		echo -e "$bold[*] Findomain$end: $(echo && cat< tmp-findomain-$domain)" 2>/dev/null | awk '{print $1}')"
 	}
 }
 
@@ -359,7 +359,6 @@ OUT(){
 		sort -u tmp-* > $out
 		echo -e $green"[+] The Final Results:$end $(echo && cat $out)"
 		[ $resolve == True ] && ALIVE "$out" "$domain"
-
 		[ $delete == True ] && rm tmp-*
 	}
 }
