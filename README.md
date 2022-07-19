@@ -10,6 +10,24 @@ cd subdomz
 sudo bash install.sh
 bash subdomz.sh -h
 ```
+## API keys
+***Add your API keys in Subfinder and Amass configuration file***
+
+subfinder.yaml & amass.ini
+-------------------------------------
+***Add your Shodan API Key in line 231 and line 235***
+```
+shodomain <API-KEY> $domain 
+
+    shodomain <API-KEY> $domain 
+  ```
+  ***Add your Censys API ID and Secret key in line 243 and line 247***
+  ```
+    censys-subdomain-finder.py --censys-api-id <CENSYS_API_ID> --censys-api-secret <CENSYS_API_SECRET> $domain 
+
+    censys-subdomain-finder.py --censys-api-id <CENSYS_API_ID> --censys-api-secret <CENSYS_API_SECRET> $domain 
+```
+
 
 ## Tools Used
 + SubFinder
