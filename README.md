@@ -17,19 +17,19 @@ bash subdomz.sh -h
 + ***[subfinder.yaml](https://github.com/0xlittleboy/subdomz/blob/master/subfinder.yaml)***
 + ***[amass.ini](https://github.com/0xlittleboy/subdomz/blob/master/amass.ini)***
 ---
-***Add your Shodan API Key in line 231 and line 235***
+***Add your Shodan API Key in line 218 and line 222***
 ```
 shodomain <API-KEY> $domain 
 
     shodomain <API-KEY> $domain 
   ```
-  ***Add your Censys API ID and Secret key in line 243 and line 247***
+  ***Add your Censys API ID and Secret key in line 230 and line 234***
   ```
     censys-subdomain-finder.py --censys-api-id <CENSYS_API_ID> --censys-api-secret <CENSYS_API_SECRET> $domain 
 
     censys-subdomain-finder.py --censys-api-id <CENSYS_API_ID> --censys-api-secret <CENSYS_API_SECRET> $domain 
 ```
-***Add your Github Access Token in line 159 and line 163***
+***Add your Github Access Token in line 146 and line 150***
 ```
 github-subdomains -d $domain -t <TOKEN>
 github-subdomains -d $domain -t <TOKEN>
@@ -50,19 +50,16 @@ github-subdomains -d $domain -t <TOKEN>
 + Sudomy
 + Shodomain
 + Censys-Subdomain-Finder
++ nMap
 
 ## Search Engines
 + Wayback Machine
 + BufferOver.run
 + Riddler.io
 + Certspotter
-+ Archive
 + JLDC
 + Crt.sh
-+ Security Trails
-+ CommonCrawl
 + HackerTarget
-+ ThreadCrowd
 
 ## Credit
 ***This tool was inspired by @bing0o [SubEnum](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to them for the great idea!***
