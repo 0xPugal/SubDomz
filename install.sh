@@ -52,8 +52,8 @@ Golang() {
             printf "                        \r"
             sys=$(uname -m)
             LATEST=$(curl -s 'https://go.dev/VERSION?m=text')
-            [ $sys == "x86_64" ] && wget https://dl.google.com/go/$LATEST.linux-amd64.tar.gz &>/dev/null || wget https://dl.google.com/go/$LATEST.linux-amd64.tar.gz &>/dev/null
-	          sudo tar -C /usr/local -xzf $LATEST.linux-amd64.tar.gz
+            [ $sys == "x86_64" ] && wget https://dl.google.com/go/go1.18.4.linux-amd64.tar.gz &>/dev/null || wget https://dl.google.com/go/go1.18.4.linux-amd64.tar.gz &>/dev/null
+            sudo tar -C /usr/local -xzf go1.18.4.linux-amd64.tar.gz
 	          echo "export GOROOT=/usr/local/go" >> $HOME/.bashrc
 	          echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
 	          echo 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> $HOME/.bashrc
@@ -176,6 +176,7 @@ Httprobe() {
 
 sleep 0.5
 
+hash go 2>/dev/null && printf "[!] Golang is already installed.\n" || { printf "[+] Installing Golang!" && GOlang; }
 
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
