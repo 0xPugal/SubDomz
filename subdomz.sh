@@ -71,11 +71,11 @@ spinner(){
 
 
 Subfinder() {
-	[ "$silent" == True ] && subfinder -all -silent -d $domain -pc subfinder.yaml 2>/dev/null | anew subenum-$domain.txt || {
+	[ "$silent" == True ] && subfinder -all -silent -d $domain  2>/dev/null | anew subenum-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}SubFinder${end}" &
 			PID="$!"
 		}
-		subfinder -all -silent -d $domain -pc subfinder.yaml 1> tmp-subfinder-$domain 2>/dev/null
+		subfinder -all -silent -d $domain  1> tmp-subfinder-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$bold[*] SubFinder$end: $(echo && cat < tmp-subfinder-$domain && echo )"
 	}
@@ -107,11 +107,11 @@ Findomain() {
 
 
 Amass() {
-	[ "$silent" == True ] && amass enum -config amass.ini -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && amass enum  -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}Amass${end}" &
 			PID="$!"
 		}
-		amass enum -config amass.ini -d $domain 1> tmp-amass-$domain 2>/dev/null
+		amass enum  -d $domain 1> tmp-amass-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$bold[*] Amass$end: $(echo && cat < tmp-amass-$domain && echo )"
 	}
@@ -245,7 +245,7 @@ wayback() {
 		}
 		curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u > tmp-wayback-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] WayBackMachine$end: $(cat < tmp-wayback-$domain)"
+		echo -e "$bold[*] WayBackMachine$end: $(echo && cat < tmp-wayback-$domain && echo )"
 	}
 }
 
@@ -257,7 +257,7 @@ bufferover() {
 		}
 		curl -s "https://dns.bufferover.run/dns?q=.$domain" | grep $domain | awk -F, '{gsub("\"", "", $2); print $2}' | sort -u > tmp-bufferover-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] BufferOver$end: $(cat < tmp-bufferover-$domain)"
+		echo -e "$bold[*] BufferOver$end: $(echo && cat < tmp-bufferover-$domain && echo )"
 	}
 }
 
@@ -269,7 +269,7 @@ Crt() {
 		}
 		curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | sort -u > tmp-crt-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] crt.sh$end: $(cat < tmp-crt-$domain)"
+		echo -e "$bold[*] crt.sh$end: $(echo && cat < tmp-crt-$domain && echo )"
 	}
 }
 
@@ -281,7 +281,7 @@ Riddler() {
 		}
 		curl -sk "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-riddler-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] riddler.io$end: $(cat < tmp-riddler-$domain)"
+		echo -e "$bold[*] riddler.io$end: $(echo && cat < tmp-riddler-$domain && echo )"
 	}
 }
 
@@ -293,7 +293,7 @@ CertSpotter() {
 		}
 		curl -sk "https://certspotter.com/api/v1/issuances?domain=target.com&include_subdomains=true&expand=dns_names" | jq .[].dns_names | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-certspotter-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] CertSpotter$end: $(cat < tmp-certspotter-$domain)"
+		echo -e "$bold[*] CertSpotter$end: $(echo && cat < tmp-certspotter-$domain && echo)"
 	}
 }
 
@@ -305,7 +305,7 @@ JLDC() {
 		}
 		curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-jldc-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] JLDC$end: $(cat < tmp-jldc-$domain)"
+		echo -e "$bold[*] JLDC$end: $(echo && cat < tmp-jldc-$domain && echo )"
 	}
 }
 
@@ -357,7 +357,7 @@ OUT(){
 	[ "$silent" == False ] && {
 		[ -n "$1" ] && out="$1" || out="$domain-$(date +'%Y-%m-%d').txt"
 		sort -u tmp-* > $out
-		echo -e $green"[+] The Final Results:$end $( cat $out)"
+		echo -e $green"[+] The Final Results:$end $(echo && cat $out && echo )"
 		[ $resolve == True ] && ALIVE "$out" "$domain"
 
 		[ $delete == True ] && rm tmp-*
@@ -368,7 +368,7 @@ ALIVE() {
 	[ "$silent" == False ] && printf "$bold[+] Resolving $end"
 	printf "                        \r"
 	cat $1 | httprobe -c $thread > "resolved-$2.txt"
-	[ "$silent" == False ] && echo -e $green"[+] Resolved:$end $( cat < resolved-$2.txt)"
+	[ "$silent" == False ] && echo -e $green"[+] Resolved:$end $(echo && cat < resolved-$2.txt && echo )"
 
 }
 
@@ -388,7 +388,7 @@ LIST() {
 				kill ${PID}
 				OUT
 			} || {
-        SubFinder
+        Subfinder
         Assetfinder
         Findomain
         Amass
@@ -431,7 +431,7 @@ Main() {
 				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder WayBack BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget
 				kill ${PID}
 			} || {
-        SubFinder
+        Subfinder
         Assetfinder
         Findomain
         Amass
@@ -481,7 +481,7 @@ thread=40
 PARALLEL=False
 
 list=(
-        SubFinder
+        Subfinder
         Assetfinder
         Findomain
         Amass
