@@ -1,7 +1,9 @@
-# SubDomz
+# SubDomz 
+
 **The All in One Subdomain Enumeration Tool** 
 
-The tool SubDomz uses various multiple open-source tools and OSINT search engines to gather subdomains.
+The tool SubDomz uses multiple open-source tools and various OSINT search engines to find subdomains effectively.
+-----------------------------
 
 ## Usage
 ```
@@ -12,9 +14,9 @@ bash subdomz.sh -h
 ```
 ## API keys
 ***Add your API keys in Subfinder and Amass configuration file***
-
-subfinder.yaml & amass.ini
--------------------------------------
++ ***[subfinder.yaml](https://github.com/0xlittleboy/subdomz/blob/master/subfinder.yaml)***
++ ***[amass.ini](https://github.com/0xlittleboy/subdomz/blob/master/amass.ini)***
+---
 ***Add your Shodan API Key in line 231 and line 235***
 ```
 shodomain <API-KEY> $domain 
