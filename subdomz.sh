@@ -72,7 +72,7 @@ spinner(){
 
 Subfinder() {
 	[ "$silent" == True ] && subfinder -all -silent -d $domain  2>/dev/null | anew subenum-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${bold}SubFinder${end}" &
+		[[ ${PARALLEL} == True ]] || { spinner "${bold}Subfinder${end}" &
 			PID="$!"
 		}
 		subfinder -all -silent -d $domain  1> tmp-subfinder-$domain 2>/dev/null
@@ -84,7 +84,7 @@ Subfinder() {
 
 Assetfinder() {
 	[ "$silent" == True ] && assetfinder --subs-only $domain | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${bold}AssetFinder${end}" &
+		[[ ${PARALLEL} == True ]] || { spinner "${bold}Assetfinder${end}" &
 			PID="$!"
 		}
 		assetfinder --subs-only $domain 1> tmp-assetfinder-$domain 2>/dev/null
