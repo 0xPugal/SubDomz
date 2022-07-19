@@ -1,5 +1,5 @@
-# subdomz
-**A Complete Subdomain Enumeration Tool** 
+# SubDomz
+**The All in One Subdomain Enumeration Tool** 
 
 The tool SubDomz uses various multiple open-source tools and OSINT search engines to gather subdomains.
 
@@ -12,18 +12,20 @@ bash subdomz.sh -h
 ```
 
 ## Tools Used
-+ Subfinder
++ SubFinder
++ Assetfinder
 + Findomain
 + Amass
-+ Assetfinder
-+ Sublist3r
-+ Waybackurls
 + Gauplus
-+ Chrobat
-+ Censys-subdomain-finder
-+ github-subdomains
-+ CTFR
++ Waybackurls 
++ Github-Subdomains 
++ Chrobat 
++ CTFR 
++ Cero
++ Sublister
++ Sudomy
 + Shodomain
++ Censys-Subdomain-Finder
 
 ## Search Engines
 + Wayback Machine
