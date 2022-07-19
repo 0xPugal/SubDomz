@@ -84,11 +84,11 @@ spinner(){
 
 
 Subfinder() {
-	[ "$silent" == True ] && subfinder -all -silent -d $domain 2>/dev/null | anew subenum-$domain.txt || {
+	[ "$silent" == True ] && subfinder -all -silent -d $domain -pc subfinder.yaml 2>/dev/null | anew subenum-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}SubFinder${end}" &
 			PID="$!"
 		}
-		subfinder -all -silent -d $domain 1> tmp-subfinder-$domain 2>/dev/null
+		subfinder -all -silent -d $domain -pc subfinder.yaml 1> tmp-subfinder-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$bold[*] SubFinder$end: $(echo && cat < tmp-subfinder-$domain && echo )"
 	}
@@ -120,11 +120,11 @@ Findomain() {
 
 
 Amass() {
-	[ "$silent" == True ] && amass enum -config ~/.config/amass/config.ini -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && amass enum -config amass.ini -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}Amass${end}" &
 			PID="$!"
 		}
-		amass enum -config ~/.config/amass/config.ini -d $domain 1> tmp-amass-$domain 2>/dev/null
+		amass enum -config amass.ini -d $domain 1> tmp-amass-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$bold[*] Amass$end: $(echo && cat < tmp-amass-$domain && echo )"
 	}
@@ -156,11 +156,11 @@ Waybackurls() {
 
 
 Github-Subdomains() {
-  [ "$silent" == True ] && github-subdomains -d $domain -t tokens.txt | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && github-subdomains -d $domain -t <TOKEN> | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Github-Subdomains${end}" &
       PID="$!"
     }
-    github-subdomains -d $domain -t tokens.txt | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
+    github-subdomains -d $domain -t <TOKEN> | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Github-Subdomains$end: $(echo && cat < tmp-github-subdomains-$domain && echo )"
   }
