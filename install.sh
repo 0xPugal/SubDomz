@@ -16,37 +16,8 @@ cat <<"EOF"
 EOF
 sleep 0.5
 echo " "
-Packages() {
-              printf "                        \r"
-              printf "[+] Installing Packages...\n"
-              printf "            \r"
-              printf "[+] Updating... \n"
-              sudo apt update &>/dev/null
-              sudo apt install git &>/dev/null
-              sudo apt install python3 &>/dev/null
-              printf "[+] Installing Dependencies... \n"
-              sudo apt -y install python3-pip &>/dev/null
-              sudo apt-get install jq &>/dev/null
-              sudo pip3 install requests &>/dev/null
-              sudo pip3 install dnspython &>/dev/null
-              printf "[+] Installing Dependencies... \n"
-              sudo pip3 install argparse &>/dev/null
-              sudo apt install python2 &>/dev/null
-              sudo apt-get install parallel -y &>/dev/null
-              printf "[+] Installing Dependencies... \n"
-              sudo apt-get install nmap &>/dev/null
-              sudo apt install phantomjs &>/dev/null
-              sudo apt install npm &>/dev/null
-              printf "[+] Installing Dependencies... \n"
-              sudo apt install chromium &>/dev/null
-              npm i -g wappalyzer wscat &>/dev/null
-              sudo apt install shodan &>/dev/null
-              printf "[+] Installing Dependencies... \n"
-              sudo apt install censys &>/dev/null
+mkdir -p tools
 
-              printf "[+] Packages Installed! \n"
-}
-sleep 0.5
 
 Golang() {
 	printf "                                \r"
@@ -57,12 +28,51 @@ Golang() {
 	echo "export GOROOT=/usr/local/go" >> $HOME/.bashrc
 	echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
 	echo 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> $HOME/.bashrc
+  echo 'export PATH=$PATH:/usr/local/go/bin' >> $HOME/.profile
 
 	printf "[+] Golang Installed !.\n"
 }
 sleep 0.5
 
 echo "Installing Tools..."
+Shodan() {
+           printf "                               \r"
+           sudo apt install python3-shodan -y &>/dev/null
+           printf "[+] Shodan Installed! \n"
+}
+Censys() {
+          printf "                        \r"
+          sudo apt install python3-censys -y &>/dev/null
+          printf "[+] Censys Installed! \n"
+}
+Nmap() {
+          printf "                        \r"
+          sudo apt install nmap -y &>/dev/null
+          printf "[+] Nmap Installed! \n"
+}
+JQ() {
+          printf "                \r"
+          sudo apt install jq -y &>/dev/null
+          printf "[+] JQ Installed! \n"
+}
+Git() {
+          printf "              \r"
+          sudo apt install git -y &>/dev/null
+          printf "[+] Git Installed! \n"
+}
+Python() {
+          printf "              \r"
+          sudo apt install python3 -y &>/dev/null
+          sudo apt install python -y &>/dev/null
+          sudo apt-get -y install python3-pip &>/dev/null
+          printf "[+] Python Installed! \n"
+}
+Parallel() {
+          printf "                    \r"
+          sudo apt install -y parallel &>/dev/null
+          printf "[+] Parallel Installed! \n"
+}
+
 Subfinder() {
             printf "                                \r"
             GO111MODULE=on go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder &>/dev/null
@@ -113,10 +123,11 @@ Crobat() {
             printf "[+] Crobat Installed! \n"
 }
 
+cd ~/subdomz/tools
 CTFR() {
             printf "                  \r"
             git clone https://github.com/UnaPibaGeek/ctfr.git &>/dev/null
-            cd ctfr/
+            cd ctfr
             pip3 install -r requirements.txt &>/dev/null
             sudo ln -svf ctfr.py /usr/bin/ctfr &>/dev/null
             sudo chmod +x /usr/bin/ctfr &>/dev/null
@@ -129,15 +140,18 @@ Cero() {
             printf "[+] Cero Installed! \n"
 }
 
+cd ~/subdomz/tools
 Sublister() {
             printf "                    \r"
             git clone https://github.com/aboul3la/Sublist3r.git &>/dev/null
             cd Sublist3r
             pip3 install -r requirements.txt &>/dev/null
             sudo ln -svf sublist3r.py /usr/bin/sublist3r &>/dev/null
+            sudo chmod +x /usr/bin/sublist3r &>/dev/null
             printf "[+] Sublister Installed! \n"
 }
 
+cd ~/subdomz/tools
 Sudomy() {
             printf "                          \r"
             git clone --recursive https://github.com/screetsec/Sudomy.git &>/dev/null
@@ -146,6 +160,7 @@ Sudomy() {
             printf "[+] Sudomy Installed! \n"
 }
 
+cd ~/subdomz/tools
 Shodomain() {
             printf "                                    \r"
             git clone https://github.com/SmoZy92/Shodomain &>/dev/null
@@ -155,13 +170,14 @@ Shodomain() {
             printf "[+] Shodomain! \n"
 }
 
+cd ~/subdomz/tools
 Censys-Subdomain-Finder() {
             printf "                  \r"
-            git clone https://github.com/christophetd/censys-subdomain-finder.git
+            git clone https://github.com/christophetd/censys-subdomain-finder.git &>/dev/null
             cd censys-subdomain-finder
             python3 -m venv venv
             source venv/bin/activate
-            pip3 install -r requirements.txt
+            pip3 install -r requirements.txt &>/dev/null
             sudo ln -svf censys-subdomain-finder.py /usr/bin/censys-subdomain-finder.py &>/dev/null
             sudo chmod +x /usr/bin/censy-subdomain-finder.py &>/dev/null
             printf "[+] Censys-Subdomain-Finder Installed! \n"
@@ -170,14 +186,25 @@ Censys-Subdomain-Finder() {
 Httprobe() {
 	         printf "                                \r"
 	         go install -v github.com/tomnomnom/httprobe@latest &>/dev/null
-	         printf "[+] Httprobe Installed !.\n"
+	         printf "[+] Httprobe Installed! \n"
 }
+
 
 hash go 2>/dev/null && printf "[!] Golang is already installed.\n" || { printf "[+] Installing Golang!" && Golang; }
 
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin
+
+
+hash shodan 2>/dev/null && printf "[!] Shodan is already installed.\n" || { printf "[+] Installing Shodan!" && Shodan; }
+hash censys 2>/dev/null && printf "[!] Censys is already installed.\n" || { printf "[+] Installing Censys!" && Censys; }
+hash nmap 2>/dev/null && printf "[!] NMap is already installed.\n" || { printf "[+] Installing NMap!" && Nmap; }
+hash jq 2>/dev/null && printf "[!] JQ is already installed.\n" || { printf "[+] Installing JQ!" && JQ; }
+hash git 2>/dev/null && printf "[!] Git is already installed.\n" || { printf "[+] Installing Git!" && Git; }
+hash python3 2>/dev/null && printf "[!] Python is already installed.\n" || { printf "[+] Installing Python!" && Python; }
+hash parallel 2>/dev/null && printf "[!] Parallel is already installed.\n" || { printf "[+] Installing Parallel!" && Parallel; }
 
 hash findomain 2>/dev/null && printf "[!] Findomain is already installed.\n" || { printf "[+] Installing Findomain!" && Findomain; }
 hash subfinder 2>/dev/null && printf "[!] Subfinder is already installed.\n" || { printf "[+] Installing subfinder!" && Subfinder; }
@@ -198,23 +225,29 @@ hash httprobe 2>/dev/null && printf "[!] Httprobe is already installed.\n" || { 
 
 
 list=(
-  Packages
+  	Shodan
+  	Censys
+  	Nmap
+  	JQ
+ 	Git
+ 	Python
+  	Parallel
 	Golang
 	Subfinder
 	Assetfinder
 	Findomain
 	Amass
-  Gauplus
-  Waybackurls
-  Github-Subdomains
-  Crobat
-  CTFR
-  Cero
-  Sublister
-  Sudomy
-  Shodomain
-  Censys-Subdomain-Finder
-  Httprobe
+  	Gauplus
+  	Waybackurls
+  	Github-Subdomains
+  	Crobat
+  	CTFR
+  	Cero
+  	Sublister
+  	Sudomy
+  	Shodomain
+  	Censys-Subdomain-Finder
+  	Httprobe
 	)
 
       r="\e[31m"
