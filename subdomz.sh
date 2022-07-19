@@ -71,7 +71,7 @@ spinner(){
 
 
 Subfinder() {
-	[ "$silent" == True ] && subfinder -all -silent -d $domain  2>/dev/null | anew subenum-$domain.txt || {
+	[ "$silent" == True ] && subfinder -all -silent -pc ~/subdomz/API/subfinder.yaml -d $domain  2>/dev/null | anew subenum-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}Subfinder${end}" &
 			PID="$!"
 		}
@@ -107,7 +107,7 @@ Findomain() {
 
 
 Amass() {
-	[ "$silent" == True ] && amass enum  -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && amass enum -config ~/subdomz/API/amass.ini -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}Amass${end}" &
 			PID="$!"
 		}
@@ -143,11 +143,11 @@ Waybackurls() {
 
 
 Github-Subdomains() {
-  [ "$silent" == True ] && github-subdomains -d $domain -t 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 | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && github-subdomains -d $domain -t abcdefghijklmnopqrstuvwxyz | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Github-Subdomains${end}" &
       PID="$!"
     }
-    github-subdomains -d $domain -t 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 | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
+    github-subdomains -d $domain -t abcdefghijklmnopqrstuvwxyz | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Github-Subdomains$end: $(echo && cat< tmp-github-subdomains-$domain)"
   }
@@ -215,11 +215,11 @@ Sudomy() {
 
 
 Shodomain() {
-  [ "$silent" == True ] && shodomain Byt5PYpFiXb9qMHePaBaEFVbPWCRrJtc $domain 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && shodomain abcdefghijklmnopqrstuvwxyz $domain 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Shodomain${end}" &
       PID="$!"
     }
-    shodomain Byt5PYpFiXb9qMHePaBaEFVbPWCRrJtc $domain 1> tmp-shodomain-$domain 2>/dev/null
+    shodomain abcdefghijklmnopqrstuvwxyz $domain 1> tmp-shodomain-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Shodomain$end: $(echo && cat< tmp-shodomain-$domain)"
   }
@@ -227,11 +227,11 @@ Shodomain() {
 
 
 Censys-Subdomain-Finder() {
-  [ "$silent" == True ] && censys-subdomain-finder.py --censys-api-id 92414732-5e86-48ac-a93b-decd42e63d08 --censys-api-secret oF9U23WqfNpxFRNolcDLCf1Hy1Q9l6Fg $domain 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && censys-subdomain-finder.py --censys-api-id abcdefghijklmnopqrstuvwxyz --censys-api-secret abcdefghijklmnopqrstuvwxyz $domain 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Censys-Subdomain-Finder${end}" &
       PID="$!"
     }
-    censys-subdomain-finder.py --censys-api-id 92414732-5e86-48ac-a93b-decd42e63d08 --censys-api-secret oF9U23WqfNpxFRNolcDLCf1Hy1Q9l6Fg $domain 1> tmp-censys-subdomain-finder.py-$domain 2>/dev/null
+    censys-subdomain-finder.py --censys-api-id abcdefghijklmnopqrstuvwxyz --censys-api-secret abcdefghijklmnopqrstuvwxyz $domain 1> tmp-censys-subdomain-finder.py-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Censys-Subdomain-Finder$end: $(echo && cat< tmp-censys-subdomain-finder.py-$domain)"
   }
