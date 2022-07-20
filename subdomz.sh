@@ -154,14 +154,14 @@ Github-Subdomains() {
 }
 
 
-crobat() {
+Crobat() {
   [ "$silent" == True ] && crobat -s $domain  2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${bold}crobat${end}" &
+    [[ ${PARALLEL} == True ]] || { spinner "${bold}Crobat${end}" &
       PID="$!"
     }
     crobat -s $domain 1> tmp-crobat-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] crobat$end: $(echo && cat< tmp-crobat-$domain)"
+    echo -e "$bold[*] Crobat$end: $(echo && cat< tmp-crobat-$domain)"
   }
 }
 
@@ -203,11 +203,11 @@ Sublister() {
 
 
 Sudomy() {
-  [ "$silent" == True ] && subdomy -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && sudomy -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Sudomy${end}" &
       PID="$!"
     }
-    subdomy -d $domain | unfurl domains 1> tmp-sudomy-$domain 2>/dev/null
+    sudomy -d $domain | unfurl domains 1> tmp-sudomy-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Sudomy$end: $(echo && cat< tmp-sudomy-$domain)"
   }
@@ -238,19 +238,19 @@ Censys-Subdomain-Finder() {
 }
 
 
-wayback() {
+Archive() {
 	[ "$silent" == True ] && curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u | anew subenum-$domain.txt  || {
-		[[ ${PARALLEL} == True ]] || { spinner "${bold}WayBackMachine${end}" &
+		[[ ${PARALLEL} == True ]] || { spinner "${bold}Archive${end}" &
 			PID="$!"
 		}
-		curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u > tmp-wayback-$domain
+		curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u > tmp-archive-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] WayBackMachine$end: $(echo && cat< tmp-wayback-$domain)"
+		echo -e "$bold[*] Archive$end: $(echo && cat< tmp-archive-$domain)"
 	}
 }
 
 
-bufferover() {
+BufferOver() {
 	[ "$silent" == True ] && curl -s "https://dns.bufferover.run/dns?q=.$domain" | grep $domain | awk -F, '{gsub("\"", "", $2); print $2}' | anew subenum-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}BufferOver${end}" &
 			PID="$!"
@@ -381,9 +381,9 @@ LIST() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Reconnaissance" &
 				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder WayBack BufferOver Crt Riddler CertSpotter JLDC nMap spinner HackerTarget
+				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap spinner HackerTarget
 				export domain silent bold end
-				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder WayBack BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget
+				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget
 				kill ${PID}
 				OUT
 			} || {
@@ -394,14 +394,14 @@ LIST() {
         Gauplus
         Waybackurls
         Github-Subdomains
-        crobat
+        Crobat
         CTFR
         Cero
         Sublister
         Sudomy
         Shodomain
         Censys-Subdomain-Finder
-        WayBack
+        Archive 
         BufferOver
         Crt
         Riddler
@@ -425,9 +425,9 @@ Main() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Reconnaissance" &
 				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder WayBack BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget spinner
+				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget spinner
 				export domain silent bold end
-				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains crobat CTFR Cero Sublilster Sudomy Shodomain Censys-Subdomain-Finder WayBack BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget
+				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget
 				kill ${PID}
 			} || {
         Subfinder
@@ -444,7 +444,7 @@ Main() {
         Sudomy
         Shodomain
         Censys-Subdomain-Finder
-        WayBack
+        Archive 
         BufferOver
         Crt
         Riddler
@@ -494,7 +494,7 @@ list=(
         Sudomy
         Shodomain
         Censys-Subdomain-Finder
-        WayBack
+        Archive 
         BufferOver
         Crt
         Riddler
