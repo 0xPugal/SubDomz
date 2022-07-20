@@ -71,7 +71,7 @@ spinner(){
 
 
 Subfinder() {
-	[ "$silent" == True ] && subfinder -all -silent -pc ~/subdomz/API/subfinder.yaml -d $domain  2>/dev/null | anew subenum-$domain.txt || {
+	[ "$silent" == True ] && subfinder -all -silent -d $domain  2>/dev/null | anew subenum-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}Subfinder${end}" &
 			PID="$!"
 		}
@@ -107,7 +107,7 @@ Findomain() {
 
 
 Amass() {
-	[ "$silent" == True ] && amass enum -config ~/subdomz/API/amass.ini -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && amass enum -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}Amass${end}" &
 			PID="$!"
 		}
@@ -215,11 +215,11 @@ Sudomy() {
 
 
 Shodomain() {
-  [ "$silent" == True ] && shodomain abcdefghijklmnopqrstuvwxyz $domain 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && shodomain.py abcdefghijklmnopqrstuvwxyz $domain 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Shodomain${end}" &
       PID="$!"
     }
-    shodomain abcdefghijklmnopqrstuvwxyz $domain 1> tmp-shodomain-$domain 2>/dev/null
+    shodomain.py abcdefghijklmnopqrstuvwxyz $domain 1> tmp-shodomain-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Shodomain$end: $(echo && cat< tmp-shodomain-$domain)"
   }
@@ -323,11 +323,11 @@ nMap() {
 
 
 HackerTarget() {
-  [ "$silent" == True ] && curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${bold}HackerTarget${end}" &
 			PID="$!"
 		}
-		curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" 1> tmp-hackertarget-$domain 2>/dev/null
+		curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains 1> tmp-hackertarget-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$bold[*] HackerTarget$end: $(echo && cat< tmp-hackertarget-$domain)"
 	}
