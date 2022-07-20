@@ -167,11 +167,11 @@ Crobat() {
 
 
 CTFR() {
-  [ "$silent" == True ] && ctfr -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && ctfr.py -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}CTFR${end}" &
       PID="$!"
     }
-    ctfr -d $domain | unfurl domains 1> tmp-ctfr-$domain 2>/dev/null
+    ctfr.py -d $domain | unfurl domains 1> tmp-ctfr-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] CTFR$end: $(echo && cat< tmp-ctfr-$domain)"
   }
