@@ -334,6 +334,42 @@ HackerTarget() {
 }
 
 
+ThreatCrowd() {
+	[ "$silent" == True ] && curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains' | grep -o "\w.*$domain" | anew subdomz-$domain.txt || {
+		[[ ${PARALLEL} == True ]] || { spinner "${bold}ThreatCrowd${end}" &
+			PID="$!"
+		}
+		curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains'  | grep -o "\w.*$domain" 1> tmp-threatcrowd-$domain 2>/dev/null
+		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
+		echo -e "$bold[*] ThreatCrowd$end: $( wc -l< tmp-threatcrowd-$domain)"
+	}
+}
+
+
+Anubis() {
+	[ "$silent" == True ] && curl -sk "https://jldc.me/anubis/subdomains/$domain" | jq -r '.' | grep -o "\w.*$domain" | anew subdomz-$domain.txt || {
+		[[ ${PARALLEL} == True ]] || { spinner "${bold}Anubis${end}" &
+			PID="$!"
+		}
+		curl -sk "https://jldc.me/anubis/subdomains/$domain" | jq -r '.' | grep -o "\w.*$domain" 1> tmp-anubis-$domain 2>/dev/null
+		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
+		echo -e "$bold[*] Anubis$end: $( wc -l< tmp-anubis-$domain)"
+	}
+}
+
+
+ThreatMiner() {
+	[ "$silent" == True ] && curl -sk "https://api.threatminer.org/v2/domain.php?q=$domain&rt=5" | jq -r '.results[]' |grep -o "\w.*$domain" | sort -u   | anew subdomz-$domain.txt || {
+		[[ ${PARALLEL} == True ]] || { spinner "${bold}ThreatMiner${end}" &
+			PID="$!"
+		}
+		curl -sk "https://api.threatminer.org/v2/domain.php?q=$domain&rt=5" | jq -r '.results[]' |grep -o "\w.*$domain" | sort -u   1> tmp-threatminer-$domain 2>/dev/null
+		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
+		echo -e "$bold[*] ThreatMiner$end: $( wc -l< tmp-threatminer-$domain)"
+	}
+}
+
+
 USE() {
 	for i in $lu; do
 			$i
@@ -381,9 +417,9 @@ LIST() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Reconnaissance" &
 				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap spinner HackerTarget
+				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner spinner
 				export domain silent bold end
-				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget
+				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner
 				kill ${PID}
 				OUT
 			} || {
@@ -401,7 +437,7 @@ LIST() {
         Sudomy
         Shodomain
         Censys-Subdomain-Finder
-        Archive 
+        Archive
         BufferOver
         Crt
         Riddler
@@ -409,6 +445,9 @@ LIST() {
         JLDC
         nMap
         HackerTarget
+        ThreatCrowd
+        Anubis
+        ThreatMiner
 				OUT
 			}
 		}
@@ -425,9 +464,9 @@ Main() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Reconnaissance" &
 				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget spinner
+				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner spinner
 				export domain silent bold end
-				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget
+				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner
 				kill ${PID}
 			} || {
         Subfinder
@@ -444,7 +483,7 @@ Main() {
         Sudomy
         Shodomain
         Censys-Subdomain-Finder
-        Archive 
+        Archive
         BufferOver
         Crt
         Riddler
@@ -452,6 +491,9 @@ Main() {
         JLDC
         nMap
         HackerTarget
+        ThreatCrowd
+        Anubis
+        ThreatMiner
 			}
 			[ "$out" == False ] && OUT || OUT $out
 		} || {
@@ -494,7 +536,7 @@ list=(
         Sudomy
         Shodomain
         Censys-Subdomain-Finder
-        Archive 
+        Archive
         BufferOver
         Crt
         Riddler
@@ -502,6 +544,9 @@ list=(
         JLDC
         nMap
         HackerTarget
+        ThreatCrowd
+        Anubis
+        ThreatMiner
 	)
 
 while [ -n "$1" ]; do
