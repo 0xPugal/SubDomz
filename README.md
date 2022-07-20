@@ -6,7 +6,7 @@
 #### The tool SubDomz uses multiple open-source tools and various OSINT search engines to find subdomains effectively.
 -----------------------------
 
-## Usage
+## Installation
 ```
 git clone https://github.com/0xlittleboy/subdomz
 cd subdomz
@@ -14,8 +14,7 @@ bash install.sh
 bash subdomz.sh -h
 ```
 
-![image](https://user-images.githubusercontent.com/75373225/179716552-4d7bb181-2077-4a37-8edc-66532e78e9b0.png)
-
+![image](https://user-images.githubusercontent.com/75373225/179997082-b53011e7-f173-4de4-80c6-042401ed7209.png)
 ## Credit
 ***This tool was inspired by @bing0o [SubEnum](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to them for the great idea!***
 --------------
