@@ -16,7 +16,6 @@ cat <<"EOF"
 EOF
 sleep 0.5
 echo " "
-mkdir -p tools
 
 
 Golang() {
@@ -75,7 +74,7 @@ Parallel() {
 
 Subfinder() {
             printf "                                \r"
-            GO111MODULE=on go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder &>/dev/null
+            GO111MODULE=on go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest &>/dev/null
             printf "[+] Subfinder Installed! \n"
 }
 
@@ -95,7 +94,7 @@ Findomain() {
 
 Amass() {
             printf "                                \r"
-	          GO111MODULE=on go get -v github.com/OWASP/Amass/v3/... &>/dev/null
+	          GO111MODULE=on go install -v github.com/OWASP/Amass/v3/...@latest &>/dev/null
 	          printf "[+] Amass Installed! \n"
 }
 
@@ -125,12 +124,13 @@ Crobat() {
 
 CTFR() {
             printf "                  \r"
-            cd ~/subdomz/tools
             git clone https://github.com/UnaPibaGeek/ctfr.git &>/dev/null
             cd ctfr
             pip3 install -r requirements.txt &>/dev/null
+            sudo ln -svf ctfr.py /usr/bin/ctfr &>/dev/null
+            sudo chmod +x /usr/bin/ctfr &>/dev/null
             sudo cp ctfr.py /usr/local/bin
-            sudo chmod +x /usr/local/bin/ctfr.py
+            sudo chmod +x /usr/local/bin/ctfr
             printf "[+] CTFR Installed! \n"
 }
 
@@ -142,7 +142,6 @@ Cero() {
 
 Sublister() {
             printf "                    \r"
-            cd ~/subdomz/tools
             git clone https://github.com/aboul3la/Sublist3r.git &>/dev/null
             cd Sublist3r
             pip3 install -r requirements.txt &>/dev/null
@@ -155,7 +154,6 @@ Sublister() {
 
 Sudomy() {
             printf "                          \r"
-            cd ~/subdomz/tools
             git clone --recursive https://github.com/screetsec/Sudomy.git &>/dev/null
             cd Sudomy && python3 -m pip install -r requirements.txt &>/dev/null
             sudo cp sudomy /usr/local/bin
@@ -164,7 +162,6 @@ Sudomy() {
 
 Shodomain() {
             printf "                                    \r"
-            cd ~/subdomz/tools
             git clone https://github.com/SmoZy92/Shodomain &>/dev/null
             cd Shodomain && pip install -r requirements.txt &>/dev/null
             sudo ln -svf shodomain.py /usr/bin/shodomain &>/dev/null
@@ -176,7 +173,6 @@ Shodomain() {
 
 Censys-Subdomain-Finder() {
             printf "                  \r"
-            cd ~/subdomz/tools
             git clone https://github.com/christophetd/censys-subdomain-finder.git &>/dev/null
             cd censys-subdomain-finder
             python3 -m venv venv
