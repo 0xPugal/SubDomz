@@ -38,7 +38,6 @@ Usage(){
 	\r
 	\r# ${bold}${blue}Options${end}:
 	\r    -d, --domain       - Domain To Enumerate
-	\r    -l, --list         - List of domains
 	\r    -o, --output       - The output file to save the Final Results
 	\r    -s, --silent       - The Only output will be the found subdomains
 	\r    -p, --parallel     - To Use Parallel For Faster Results.
@@ -77,7 +76,7 @@ Subfinder() {
 		}
 		subfinder -all -silent -d $domain  1> tmp-subfinder-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] SubFinder$end: $(echo && cat< tmp-subfinder-$domain)"
+		echo -e "$bold[*] SubFinder$end: $(wc -l< tmp-subfinder-$domain)"
 	}
 }
 
@@ -89,7 +88,7 @@ Assetfinder() {
 		}
 		assetfinder --subs-only $domain 1> tmp-assetfinder-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] AssetFinder$end: $(echo && cat< tmp-assetfinder-$domain)"
+		echo -e "$bold[*] AssetFinder$end: $(wc -l< tmp-assetfinder-$domain)"
 	}
 }
 
@@ -101,7 +100,7 @@ Findomain() {
 		}
 		findomain -quiet -t $domain 1> tmp-findomain-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] Findomain$end: $(echo && cat< tmp-findomain-$domain 2>/dev/null | awk '{print $1}')"
+		echo -e "$bold[*] Findomain$end: $(wc -l< tmp-findomain-$domain 2>/dev/null | awk '{print $1}')"
 	}
 }
 
@@ -113,7 +112,7 @@ Amass() {
 		}
 		amass enum  -d $domain 1> tmp-amass-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] Amass$end: $(echo && cat< tmp-amass-$domain)"
+		echo -e "$bold[*] Amass$end: $(wc -l< tmp-amass-$domain)"
 	}
 }
 
@@ -125,7 +124,7 @@ Gauplus() {
     }
     gauplus -t 5 -random-agent -subs $domain | unfurl -u domains 1> tmp-gauplus-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Gauplus$end: $(echo && cat< tmp-gauplus-$domain)"
+    echo -e "$bold[*] Gauplus$end: $(wc -l< tmp-gauplus-$domain)"
   }
 }
 
@@ -137,7 +136,7 @@ Waybackurls() {
     }
     gauplus $domain | unfurl -u domains 1> tmp-waybackurls-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Waybackurls$end: $(echo && cat< tmp-waybackurls-$domain)"
+    echo -e "$bold[*] Waybackurls$end: $(wc -l< tmp-waybackurls-$domain)"
   }
 }
 
@@ -149,7 +148,7 @@ Github-Subdomains() {
     }
     github-subdomains -d $domain -t abcdefghijklmnopqrstuvwxyz | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Github-Subdomains$end: $(echo && cat< tmp-github-subdomains-$domain)"
+    echo -e "$bold[*] Github-Subdomains$end: $(wc -l< tmp-github-subdomains-$domain)"
   }
 }
 
@@ -161,7 +160,7 @@ Crobat() {
     }
     crobat -s $domain 1> tmp-crobat-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Crobat$end: $(echo && cat< tmp-crobat-$domain)"
+    echo -e "$bold[*] Crobat$end: $(wc -l< tmp-crobat-$domain)"
   }
 }
 
@@ -173,7 +172,7 @@ CTFR() {
     }
     ctfr -d $domain | unfurl domains 1> tmp-ctfr-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] CTFR$end: $(echo && cat< tmp-ctfr-$domain)"
+    echo -e "$bold[*] CTFR$end: $(wc -l< tmp-ctfr-$domain)"
   }
 }
 
@@ -185,7 +184,7 @@ Cero() {
 		}
 		cero $domain 1> tmp-cero-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] Cero$end: $(echo && cat< tmp-cero-$domain)"
+		echo -e "$bold[*] Cero$end: $(wc -l< tmp-cero-$domain)"
 	}
 }
 
@@ -197,7 +196,7 @@ Sublister() {
     }
     sublist3r -d $domain | unfurl domains 1> tmp-sublister-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Sublister$end: $(echo && cat< tmp-sublister-$domain)"
+    echo -e "$bold[*] Sublister$end: $(wc -l< tmp-sublister-$domain)"
   }
 }
 
@@ -209,7 +208,7 @@ Sudomy() {
     }
     sudomy -d $domain | unfurl domains 1> tmp-sudomy-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Sudomy$end: $(echo && cat< tmp-sudomy-$domain)"
+    echo -e "$bold[*] Sudomy$end: $(wc -l< tmp-sudomy-$domain)"
   }
 }
 
@@ -221,7 +220,7 @@ Shodomain() {
     }
     shodomain.py abcdefghijklmnopqrstuvwxyz $domain 1> tmp-shodomain-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Shodomain$end: $(echo && cat< tmp-shodomain-$domain)"
+    echo -e "$bold[*] Shodomain$end: $(wc -l< tmp-shodomain-$domain)"
   }
 }
 
@@ -233,7 +232,7 @@ Censys-Subdomain-Finder() {
     }
     censys-subdomain-finder.py --censys-api-id abcdefghijklmnopqrstuvwxyz --censys-api-secret abcdefghijklmnopqrstuvwxyz $domain 1> tmp-censys-subdomain-finder.py-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "$bold[*] Censys-Subdomain-Finder$end: $(echo && cat< tmp-censys-subdomain-finder.py-$domain)"
+    echo -e "$bold[*] Censys-Subdomain-Finder$end: $(wc -l< tmp-censys-subdomain-finder.py-$domain)"
   }
 }
 
@@ -245,7 +244,7 @@ Archive() {
 		}
 		curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u > tmp-archive-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] Archive$end: $(echo && cat< tmp-archive-$domain)"
+		echo -e "$bold[*] Archive$end: $(wc -l< tmp-archive-$domain)"
 	}
 }
 
@@ -257,7 +256,7 @@ BufferOver() {
 		}
 		curl -s "https://dns.bufferover.run/dns?q=.$domain" | grep $domain | awk -F, '{gsub("\"", "", $2); print $2}' | sort -u > tmp-bufferover-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] BufferOver$end: $(echo && cat< tmp-bufferover-$domain)"
+		echo -e "$bold[*] BufferOver$end: $(wc -l< tmp-bufferover-$domain)"
 	}
 }
 
@@ -269,7 +268,7 @@ Crt() {
 		}
 		curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | sort -u > tmp-crt-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] crt.sh$end: $(echo && cat< tmp-crt-$domain)"
+		echo -e "$bold[*] crt.sh$end: $(wc -l< tmp-crt-$domain)"
 	}
 }
 
@@ -281,7 +280,7 @@ Riddler() {
 		}
 		curl -sk "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-riddler-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] riddler.io$end: $(echo && cat< tmp-riddler-$domain)"
+		echo -e "$bold[*] riddler.io$end: $(wc -l< tmp-riddler-$domain)"
 	}
 }
 
@@ -293,7 +292,7 @@ CertSpotter() {
 		}
 		curl -sk "https://certspotter.com/api/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq .[].dns_names | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-certspotter-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] CertSpotter$end: $(echo && cat< tmp-certspotter-$domain && echo)"
+		echo -e "$bold[*] CertSpotter$end: $(wc -l< tmp-certspotter-$domain && echo)"
 	}
 }
 
@@ -305,7 +304,7 @@ JLDC() {
 		}
 		curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-jldc-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] JLDC$end: $(echo && cat< tmp-jldc-$domain)"
+		echo -e "$bold[*] JLDC$end: $(wc -l< tmp-jldc-$domain)"
 	}
 }
 
@@ -317,7 +316,7 @@ nMap() {
 		}
 		nmap --script hostmap-crtsh.nse $domain | unfurl domains 1> tmp-nmap-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] NMap$end: $(echo && cat< tmp-nmap-$domain)"
+		echo -e "$bold[*] NMap$end: $(wc -l< tmp-nmap-$domain)"
 	}
 }
 
@@ -329,7 +328,7 @@ HackerTarget() {
 		}
 		curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains 1> tmp-hackertarget-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$bold[*] HackerTarget$end: $(echo && cat< tmp-hackertarget-$domain)"
+		echo -e "$bold[*] HackerTarget$end: $(wc -l< tmp-hackertarget-$domain)"
 	}
 }
 
@@ -393,7 +392,7 @@ OUT(){
 	[ "$silent" == False ] && {
 		[ -n "$1" ] && out="$1" || out="$domain-subs.txt"
 		sort -u tmp-* > $out
-		echo -e $green"[+] The Final Results:$end $(echo && cat $out)"
+		echo -e $green"[+] The Final Results:$end $(wc -l $out)"
 		[ $delete == True ] && rm tmp-*
 	}
 }
@@ -531,9 +530,6 @@ while [ -n "$1" ]; do
 	case $1 in
 		-d|--domain)
 			domain=$2
-			shift ;;
-		-l|--list)
-			hosts=$2
 			shift ;;
 		-o|--output)
 			out=$2
