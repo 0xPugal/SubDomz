@@ -167,11 +167,11 @@ Crobat() {
 
 
 CTFR() {
-  [ "$silent" == True ] && ctfr.py -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && ctfr -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}CTFR${end}" &
       PID="$!"
     }
-    ctfr.py -d $domain | unfurl domains 1> tmp-ctfr-$domain 2>/dev/null
+    ctfr -d $domain | unfurl domains 1> tmp-ctfr-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] CTFR$end: $(echo && cat< tmp-ctfr-$domain)"
   }
@@ -394,17 +394,8 @@ OUT(){
 		[ -n "$1" ] && out="$1" || out="$domain-subs.txt"
 		sort -u tmp-* > $out
 		echo -e $green"[+] The Final Results:$end $(echo && cat $out)"
-		[ $resolve == True ] && ALIVE "$out" "$domain"
 		[ $delete == True ] && rm tmp-*
 	}
-}
-
-ALIVE() {
-	[ "$silent" == False ] && printf "$bold[+] Resolving $end"
-	printf "                        \r"
-	cat $1 | httprobe -c $thread > "resolved-$2.txt"
-	[ "$silent" == False ]-e $green"[+] Resolved:$end $(echo && cat< resolved-$2.txt)"
-
 }
 
 
@@ -451,8 +442,6 @@ LIST() {
 				OUT
 			}
 		}
-		[ $prv == "e" ] && EXCLUDE
-		[ $prv == "u" ] && USE
 		let count+=1
 	done < $hosts
 }
@@ -460,7 +449,6 @@ LIST() {
 Main() {
 	[ $domain == False ] && [ $hosts == False ] && { echo -e $red"[-] Argument -d/--domain OR -l/--list is Required!"$end; Usage; }
 	[ $domain != False ] && {
-		[ $use == False ] && [ $exclude == False ] && {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Reconnaissance" &
 				PID="$!"
@@ -496,17 +484,7 @@ Main() {
         ThreatMiner
 			}
 			[ "$out" == False ] && OUT || OUT $out
-		} || {
-			[ $use != False ] && USE
-			[ $exclude != False ] && EXCLUDE
 		}
-	}
-	[ "$hosts" != False ] && {
-		[ $use != False ] && prv=u
-		[ $exclude != False ] && prv=e
-		[ $use == False ] && [ $exclude == False ] && prv=a
-		LIST
-	 }
 }
 
 
@@ -556,26 +534,6 @@ while [ -n "$1" ]; do
 			shift ;;
 		-l|--list)
 			hosts=$2
-			shift ;;
-		-u|--use)
-			use=$2
-			lu=${use//,/ }
-			for i in $lu; do
-				if [[ ! " ${list[@]} " =~ " ${i} " ]]; then
-					echo -e $red$Underlined"[-] Unknown Function: $i"$end
-					Usage
-				fi
-			done
-			shift ;;
-		-e|--exclude)
-			exclude=$2
-			le=${exclude//,/ }
-			for i in $le; do
-				if [[ ! " ${list[@]} " =~ " ${i} " ]]; then
-					echo -e $red$Underlined"[-] Unknown Function: $i"$end
-					Usage
-				fi
-			done
 			shift ;;
 		-o|--output)
 			out=$2
