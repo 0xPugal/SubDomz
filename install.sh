@@ -124,7 +124,7 @@ Crobat() {
 
 CTFR() {
             printf "                  \r"
-	    cd ~/subdomz/tools
+	    cd ~/SubDomz/tools
             git clone https://github.com/UnaPibaGeek/ctfr.git &>/dev/null
             cd ctfr
             pip3 install -r requirements.txt &>/dev/null
@@ -141,7 +141,7 @@ Cero() {
 
 Sublister() {
             printf "                    \r"
-	    cd ~/subdomz/tools
+	    cd ~/SubDomz/tools
             git clone https://github.com/aboul3la/Sublist3r.git &>/dev/null
             cd Sublist3r
             pip3 install -r requirements.txt &>/dev/null
@@ -154,7 +154,7 @@ Sublister() {
 
 Sudomy() {
             printf "                          \r"
-	    cd ~/subdomz/tools
+	    cd ~/SubDomz/tools
             git clone --recursive https://github.com/screetsec/Sudomy.git &>/dev/null
             cd Sudomy && python3 -m pip install -r requirements.txt &>/dev/null
             sudo cp sudomy /usr/local/bin
@@ -163,7 +163,7 @@ Sudomy() {
 
 Shodomain() {
             printf "                                    \r"
-	    cd ~/subdomz/tools
+	    cd ~/SubDomz/tools
             git clone https://github.com/SmoZy92/Shodomain &>/dev/null
             cd Shodomain && pip install -r requirements.txt &>/dev/null
             sudo cp shodomain.py /usr/local/bin
@@ -173,7 +173,7 @@ Shodomain() {
 
 Censys-Subdomain-Finder() {
             printf "                  \r"
-	    cd ~/subdomz/tools
+	    cd ~/SubDomz/tools
             git clone https://github.com/christophetd/censys-subdomain-finder.git &>/dev/null
             cd censys-subdomain-finder
             python3 -m venv venv
