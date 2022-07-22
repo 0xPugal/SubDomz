@@ -26,7 +26,7 @@ red="\e[31m"
 green="\e[32m"
 blue="\e[34m"
 end="\e[0m"
-VERSION="2022-03-20"
+VERSION="SEF_v0.1"
 
 PRG=${0##*/}
 
@@ -37,11 +37,12 @@ Usage(){
 	done <<-EOF
 	\r
 	\r# ${bold}${blue}Options${end}:
-	\r    -d, --domain       - Domain To Enumerate
-	\r    -o, --output       - The output file to save the Final Results
+	\r    -d, --domain       - Domain To enumerate
+	\r    -o, --output       - Output file to save the Final Results
 	\r    -s, --silent       - The Only output will be the found subdomains
 	\r    -p, --parallel     - To Use Parallel For Faster Results.
 	\r    -h, --help         - Displays this help message and exit.
+  	\r    -v, --version      - Displays this version and exit.
 
 EOF
 	exit 1
@@ -369,25 +370,6 @@ ThreatMiner() {
 }
 
 
-USE() {
-	for i in $lu; do
-			$i
-	done
-	OUT
-}
-
-
-EXCLUDE() {
-	for i in ${list[@]}; do
-		if [[ " ${le[@]} " =~ " ${i} " ]]; then
-			continue
-		else
-			$i
-		fi
-	done
-	OUT
-}
-
 OUT(){
 	[ "$silent" == False ] && {
 		[ -n "$1" ] && out="$1" || out="$domain-subs.txt"
@@ -395,54 +377,6 @@ OUT(){
 		echo -e $green"[+] The Final Results:$end $(wc -l $out)"
 		[ $delete == True ] && rm tmp-*
 	}
-}
-
-
-LIST() {
-	lines=$(cat< $hosts)
-	count=1
-	while read domain; do
-		[ "$silent" == False ]-e "\n${Underlined}${bold}${green}[+] Domain ($count/$lines):${end} ${domain}"
-		[ $prv == "a" ] && {
-			[[ ${PARALLEL} == True ]] && {
-				spinner "Reconnaissance" &
-				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner spinner
-				export domain silent bold end
-				parallel ::: Subfinder Assetfinder Findomain Amass Gauplus Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Sudomy Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner
-				kill ${PID}
-				OUT
-			} || {
-        Subfinder
-        Assetfinder
-        Findomain
-        Amass
-        Gauplus
-        Waybackurls
-        Github-Subdomains
-        Crobat
-        CTFR
-        Cero
-        Sublister
-        Sudomy
-        Shodomain
-        Censys-Subdomain-Finder
-        Archive
-        BufferOver
-        Crt
-        Riddler
-        CertSpotter
-        JLDC
-        nMap
-        HackerTarget
-        ThreatCrowd
-        Anubis
-        ThreatMiner
-				OUT
-			}
-		}
-		let count+=1
-	done < $hosts
 }
 
 Main() {
@@ -488,14 +422,8 @@ Main() {
 
 
 domain=False
-hosts=False
-use=False
-exclude=False
 silent=False
-delete=True
 out=False
-resolve=False
-thread=40
 PARALLEL=False
 
 list=(
@@ -540,6 +468,9 @@ while [ -n "$1" ]; do
 			Usage;;
 		-p|--parallel)
 			PARALLEL=True ;;
+    -v|--version)
+  		echo "Version: $VERSION"
+  		exit 0 ;;
 		*)
 			echo "[-] Unknown Option: $1"
 			Usage ;;
