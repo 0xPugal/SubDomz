@@ -1,11 +1,6 @@
 #!/bin/bash
 #
-# script for subdomain enumeration using 4 of the best tools and some online services:
-#   * findomain: https://github.com/Edu4rdSHL/findomain
-#   * SubFinder: https://github.com/projectdiscovery/subfinder
-#   * Amass: https://github.com/OWASP/Amass
-#   * AssetFinder: https://github.com/tomnomnom/assetfinder
-#
+# This Script is Inspired from @bing0o's SubEnum tool & I copied and made changes to work effectively
 cat<<"EOF"
 
    _____         __     ____
@@ -189,11 +184,11 @@ Cero() {
 }
 
 Sublister() {
-  [ "$silent" == True ] && sublist3r -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && sublist3r.py -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Sublister${end}" &
       PID="$!"
     }
-    sublist3r -d $domain | unfurl domains 1> tmp-sublister-$domain 2>/dev/null
+    sublist3r.py -d $domain | unfurl domains 1> tmp-sublister-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Sublister$end: $(wc -l< tmp-sublister-$domain)"
   }
