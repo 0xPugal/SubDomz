@@ -16,7 +16,7 @@ cat <<"EOF"
 EOF
 sleep 0.5
 echo " "
-
+mkdir -p tools
 
 Golang() {
 	printf "                                \r"
@@ -124,11 +124,10 @@ Crobat() {
 
 CTFR() {
             printf "                  \r"
+	    cd ~/subdomz/tools
             git clone https://github.com/UnaPibaGeek/ctfr.git &>/dev/null
             cd ctfr
             pip3 install -r requirements.txt &>/dev/null
-            sudo ln -svf ctfr.py /usr/bin/ctfr.py &>/dev/null
-            sudo chmod +x /usr/bin/ctfr.py &>/dev/null
             sudo cp ctfr.py /usr/local/bin
             sudo chmod +x /usr/local/bin/ctfr.py
             printf "[+] CTFR Installed! \n"
@@ -142,6 +141,7 @@ Cero() {
 
 Sublister() {
             printf "                    \r"
+	    cd ~/subdomz/tools
             git clone https://github.com/aboul3la/Sublist3r.git &>/dev/null
             cd Sublist3r
             pip3 install -r requirements.txt &>/dev/null
@@ -154,6 +154,7 @@ Sublister() {
 
 Sudomy() {
             printf "                          \r"
+	    cd ~/subdomz/tools
             git clone --recursive https://github.com/screetsec/Sudomy.git &>/dev/null
             cd Sudomy && python3 -m pip install -r requirements.txt &>/dev/null
             sudo cp sudomy /usr/local/bin
@@ -162,10 +163,9 @@ Sudomy() {
 
 Shodomain() {
             printf "                                    \r"
+	    cd ~/subdomz/tools
             git clone https://github.com/SmoZy92/Shodomain &>/dev/null
             cd Shodomain && pip install -r requirements.txt &>/dev/null
-            sudo ln -svf shodomain.py /usr/bin/shodomain &>/dev/null
-            sudo chmod +x /usr/bin/shodomain &>/dev/null
             sudo cp shodomain.py /usr/local/bin
             sudo chmod +x /usr/local/bin/shodomain.py
             printf "[+] Shodomain! \n"
@@ -173,6 +173,7 @@ Shodomain() {
 
 Censys-Subdomain-Finder() {
             printf "                  \r"
+	    cd ~/subdomz/tools
             git clone https://github.com/christophetd/censys-subdomain-finder.git &>/dev/null
             cd censys-subdomain-finder
             python3 -m venv venv
@@ -218,7 +219,7 @@ hash ctfr.py 2>/dev/null && printf "[!] CTFR is already installed.\n" || { print
 hash cero 2>/dev/null && printf "[!] Cero is already installed.\n" || { printf "[+] Installing Cero!" && Cero; }
 hash sublist3r 2>/dev/null && printf "[!] Sublister is already installed.\n" || { printf "[+] Installing Sublilster!" && Sublister; }
 hash sudomy 2>/dev/null && printf "[!] Sudomy is already installed.\n" || { printf "[+] Installing Sudomy!" && Sudomy; }
-hash shodomain 2>/dev/null && printf "[!] Shodomain is already installed.\n" || { printf "[+] Installing Shodomain!" && Shodomain; }
+hash shodomain.py 2>/dev/null && printf "[!] Shodomain is already installed.\n" || { printf "[+] Installing Shodomain!" && Shodomain; }
 hash censys-subdomain-finder.py 2>/dev/null && printf "[!] Censys-Subdomain-Finder is already installed.\n" || { printf "[+] Installing Censys-Subdomain-Finder!" && Censys-Subdomain-Finder; }
 hash httprobe 2>/dev/null && printf "[!] Httprobe is already installed.\n" || { printf "[+] Installing Httprobe!" && Httprobe; }
 
