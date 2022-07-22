@@ -3,7 +3,7 @@
 # A small Bash script for subdomain enumeration using various tools and online services
 #
 # This script is originally made by @itsbing0o and I made a changes to work more effectively
-sleep 1
+sleep 0.2
 cat<<"EOF"
                __        __
    _______  __/ /_  ____/ /___  ____ ___  ____
@@ -18,7 +18,7 @@ cat<<"EOF"
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 EOF
-sleep 1
+sleep 0.2
 
 bold="\e[1m"
 Underlined="\e[4m"
@@ -26,7 +26,7 @@ red="\e[31m"
 green="\e[32m"
 blue="\e[34m"
 end="\e[0m"
-VERSION="SEF_v0.1"
+VERSION="SEF_v1.0"
 
 PRG=${0##*/}
 
