@@ -248,7 +248,7 @@ list=(
   	Sudomy
   	Shodomain
   	Censys-Subdomain-Finder
-  	Httprobe
+  	Httpx
 	)
 
       r="\e[31m"
