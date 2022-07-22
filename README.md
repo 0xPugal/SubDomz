@@ -1,8 +1,7 @@
 # SubDomz 
 
 **The All in One Subdomain Enumeration Tool** 
-![carbon](https://user-images.githubusercontent.com/75373225/179715470-f91bcfd5-1c59-4da6-927a-a0b02eef2920.png)
-
+![image](https://user-images.githubusercontent.com/75373225/180365124-a72e9f8c-1f89-4b2e-bd14-ccdd44f3714c.png)
 #### The tool SubDomz uses multiple open-source tools and various OSINT search engines to find subdomains effectively.
 -----------------------------
 
