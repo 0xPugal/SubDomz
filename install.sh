@@ -127,10 +127,10 @@ CTFR() {
             git clone https://github.com/UnaPibaGeek/ctfr.git &>/dev/null
             cd ctfr
             pip3 install -r requirements.txt &>/dev/null
-            sudo ln -svf ctfr.py /usr/bin/ctfr &>/dev/null
-            sudo chmod +x /usr/bin/ctfr &>/dev/null
+            sudo ln -svf ctfr.py /usr/bin/ctfr.py &>/dev/null
+            sudo chmod +x /usr/bin/ctfr.py &>/dev/null
             sudo cp ctfr.py /usr/local/bin
-            sudo chmod +x /usr/local/bin/ctfr
+            sudo chmod +x /usr/local/bin/ctfr.py
             printf "[+] CTFR Installed! \n"
 }
 
@@ -214,7 +214,7 @@ hash gauplus 2>/dev/null && printf "[!] Gauplus is already installed.\n" || { pr
 hash waybackurls 2>/dev/null && printf "[!] Waybackurls is already installed.\n" || { printf "[+] Installing Waybackurls!" && Waybackurls; }
 hash github-subdomains 2>/dev/null && printf "[!] Github-Subdoamins is already installed.\n" || { printf "[+] Installing Github-subdomains!" && Github-Subdomains; }
 hash crobat 2>/dev/null && printf "[!] Crobat is already installed.\n" || { printf "[+] Installing Crobat!" && Crobat; }
-hash ctfr 2>/dev/null && printf "[!] CTFR is already installed.\n" || { printf "[+] Installing CTFR!" && CTFR; }
+hash ctfr.py 2>/dev/null && printf "[!] CTFR is already installed.\n" || { printf "[+] Installing CTFR!" && CTFR; }
 hash cero 2>/dev/null && printf "[!] Cero is already installed.\n" || { printf "[+] Installing Cero!" && Cero; }
 hash sublist3r 2>/dev/null && printf "[!] Sublister is already installed.\n" || { printf "[+] Installing Sublilster!" && Sublister; }
 hash sudomy 2>/dev/null && printf "[!] Sudomy is already installed.\n" || { printf "[+] Installing Sudomy!" && Sudomy; }
