@@ -31,11 +31,12 @@ Usage(){
 	\r
 	\r ${bold}${blue}Options${end}:
 	\r    -d ==> Domain To enumerate
-  \r    -l ==> List of Domains to enumerate
+  	\r    -l ==> List of Domains to enumerate
 	\r    -o ==> Output file to save the Final Results
 	\r    -p ==> To Use Parallel For Faster Results
+	\r    -p ==> To resolve Sudomains		
 	\r    -h ==> Displays this help message and exit
-  \r    -v ==> Displays this version and exit
+  	\r    -v ==> Displays this version and exit
 
 EOF
 	exit 1
@@ -373,9 +374,10 @@ EXCLUDE() {
 OUT(){
 	[ "$silent" == False ] && {
 		[ -n "$1" ] && out="$1" || out="$domain-$(date +'%Y-%m-%d').txt"
-		cat tmp-* | sort -u | > $out
+		sort -u tmp-* > $out
 		echo -e $green"[+] The Final Results:$end $(wc -l $out)"
 		[ $resolve == True ] && ALIVE "$out" "$domain"
+
 		[ $delete == True ] && rm tmp-*
 	}
 }
@@ -384,7 +386,7 @@ OUT(){
 ALIVE(){
   [ "$silent" == False ] && printf "$bold[+] Resolving $end"
   printf "                  \r"
-  cat $1 | httpx -ports 66,80,81,443,8081,8090,8008,8180,445,457,1080,1100,1241,1352,1433,1434,1521,1944,2301,3000,3128,3306,4000,4001,4002,4100,5000,5432,5800,5801,5802,6346,6347,7001,7002,8080,8000,8443,8888,30821,8009,9000,9001,9090 > "resolved-$2.txt"
+  cat $1 | httpx -silent -timeout 15 > "resolved-$2.txt"
   [ "$silent" == False ] && echo -e $green:"[+] Resolved:$end $(wc -l < resolved-$2.txt)"
 }
 
