@@ -94,8 +94,8 @@ Findomain() {
 
 Amass() {
             printf "                                \r"
-	          GO111MODULE=on go install -v github.com/OWASP/Amass/v3/...@latest &>/dev/null
-	          printf "[+] Amass Installed! \n"
+	    GO111MODULE=on go install -v github.com/OWASP/Amass/v3/...@latest &>/dev/null
+	    printf "[+] Amass Installed! \n"
 }
 
 Gauplus() {
