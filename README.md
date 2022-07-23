@@ -11,7 +11,7 @@
 ### Installation
 ```
 git clone https://github.com/0xlittleboy/SubDomz.git
-cd SubDomz.git 
+cd SubDomz 
 chmod +x install.sh SubDomz
 ./install.sh
 ```
