@@ -197,7 +197,7 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
-
+sudo cp ~/go/bin/* /usr/local/bin
 
 hash shodan 2>/dev/null && printf "[!] Shodan is already installed.\n" || { printf "[+] Installing Shodan!" && Shodan; }
 hash censys 2>/dev/null && printf "[!] Censys is already installed.\n" || { printf "[+] Installing Censys!" && Censys; }
