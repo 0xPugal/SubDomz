@@ -1,5 +1,11 @@
-# SubDomz 
-**All in One Subdomain Enumeration Tool** 
+<h1 align="center">
+  <b>SubDomz</b>
+  <br>
+</h1> 
+<h3 align="center">
+All in One Subdomain Enumeration Tool
+</p>
+<br/>
 
 ![image](https://user-images.githubusercontent.com/75373225/180496159-c9953403-6580-4d6b-9136-d0d78f5d8920.png)
 
