@@ -134,7 +134,7 @@ Waybackurls() {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Waybackurls${end}" &
       PID="$!"
     }
-    gauplus $domain | unfurl -u domains 1> tmp-waybackurls-$domain 2>/dev/null
+    waybackurls $domain | unfurl -u domains 1> tmp-waybackurls-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "$bold[*] Waybackurls$end: $(wc -l< tmp-waybackurls-$domain)"
   }
