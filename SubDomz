@@ -34,7 +34,7 @@ Usage(){
   	\r    -l ==> List of Domains to enumerate
 	\r    -o ==> Output file to save the Final Results
 	\r    -p ==> To Use Parallel For Faster Results
-	\r    -p ==> To resolve Sudomains		
+	\r    -r ==> To resolve Sudomains		
 	\r    -h ==> Displays this help message and exit
   	\r    -v ==> Displays this version and exit
 
@@ -573,9 +573,6 @@ while [ -n "$1" ]; do
 			delete=False ;;
 		-r)
 			resolve=True ;;
-		-t)
-			thread=$2
-			shift ;;
 		-h)
 			Usage;;
 		-p)
