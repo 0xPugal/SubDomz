@@ -98,10 +98,10 @@ Amass() {
 	    printf "[+] Amass Installed! \n"
 }
 
-Gauplus() {
+Gau() {
             printf "                                \r"
-            go install github.com/bp0lr/gauplus@latest &>/dev/null
-            printf "[+] Gauplus Installed! \n"
+            go install github.com/lc/gau@latest &>/dev/null
+            printf "[+] Gau Installed! \n"
 }
 
 Waybackurls() {
@@ -211,7 +211,7 @@ hash findomain 2>/dev/null && printf "[!] Findomain is already installed.\n" || 
 hash subfinder 2>/dev/null && printf "[!] Subfinder is already installed.\n" || { printf "[+] Installing subfinder!" && Subfinder; }
 hash amass 2>/dev/null && printf "[!] Amass is already installed.\n" || { printf "[+] Installing Amass!" && Amass; }
 hash assetfinder 2>/dev/null && printf "[!] Assetfinder is already installed.\n" || { printf "[+] Installing Assetfinder!" && Assetfinder; }
-hash gauplus 2>/dev/null && printf "[!] Gauplus is already installed.\n" || { printf "[+] Installing Gauplus!" && Gauplus; }
+hash gau 2>/dev/null && printf "[!] Gauplus is already installed.\n" || { printf "[+] Installing Gauplus!" && Gau; }
 hash waybackurls 2>/dev/null && printf "[!] Waybackurls is already installed.\n" || { printf "[+] Installing Waybackurls!" && Waybackurls; }
 hash github-subdomains 2>/dev/null && printf "[!] Github-Subdomains is already installed.\n" || { printf "[+] Installing Github-subdomains!" && Github-Subdomains; }
 hash crobat 2>/dev/null && printf "[!] Crobat is already installed.\n" || { printf "[+] Installing Crobat!" && Crobat; }
@@ -238,7 +238,7 @@ list=(
 	Assetfinder
 	Findomain
 	Amass
-  	Gauplus
+  	Gau
   	Waybackurls
   	Github-Subdomains
   	Crobat
