@@ -51,9 +51,9 @@ chmod +x install.sh SubDomz
 + ThreatMiner
 
 ### API keys
-+ Add Shodan API key in line [209](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L209) and [213](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L213)
-+ Add Censys API & SECRET in line [220](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L220) and [224](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L224)
-+ Add Github Token in line [143](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L143) and [147](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L147)
++ Add Shodan API key in line [199](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L209) and [203](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L213)
++ Add Censys API & SECRET in line [210](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L220) and [214](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L224)
++ Add Github Token in line [144](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L143) and [148](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L147)
 
 ### Credit
 This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to him for the great idea!
