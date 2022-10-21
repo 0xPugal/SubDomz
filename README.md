@@ -49,6 +49,7 @@ chmod +x install.sh SubDomz
 + ThreatCrowd
 + Anubis
 + ThreatMiner
++ Omnisint(Crobat)
 
 ### API keys
 + Add Shodan API key in line [199](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L209) and [203](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L213)
