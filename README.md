@@ -7,7 +7,7 @@ All in One Subdomain Enumeration Tool
 </p>
 <br/>
 
-![image](https://user-images.githubusercontent.com/75373225/180496159-c9953403-6580-4d6b-9136-d0d78f5d8920.png)
+![image](https://user-images.githubusercontent.com/75373225/198861891-0a3a69ca-3a58-482d-8be2-d64cbdd5e35d.png)
 
 -----------------------------
 ### What is SubDomz ?
