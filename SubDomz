@@ -46,6 +46,10 @@ EOF
 subfinder=~/.config/subfinder/provider-config.yaml
 amass=~/.config/amass/config.ini
 wordlist=Wordlist/dns.txt
+GITHUB_TOKEN="TOKEN_HERE"
+SHODAN_APIKEY="API_KEY_HERE"
+CENSYS_ID="ID_HERE"
+CENSYS_SECRET="SECRET_HERE"
 
 spinner(){
 	processing="${1}"
@@ -141,11 +145,11 @@ Waybackurls() {
 }
 
 Github-Subdomains() {
-  [ "$silent" == True ] && github-subdomains -d $domain -t {{GITHUB-TOKEN}} | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Github-Subdomains${end}" &
       PID="$!"
     }
-    github-subdomains -d $domain -t {{GITHUB-TOKEN}} | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
+    github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "${green}${bold}[*] Github-Subdomains$end: $(wc -l< tmp-github-subdomains-$domain)"
   }
@@ -196,22 +200,22 @@ Sublister() {
 }
 
 Shodomain() {
-  [ "$silent" == True ] && shodomain.py {{SHODAN-APIKEY}} $domain 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && shodomain.py $SHODAN_APIKEY $domain 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Shodomain${end}" &
       PID="$!"
     }
-    shodomain.py {{SHODAN-APIKEY}} $domain 1> tmp-shodomain-$domain 2>/dev/null
+    shodomain.py $SHODAN_APIKEY $domain 1> tmp-shodomain-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "${green}${bold}[*] Shodomain$end: $(wc -l< tmp-shodomain-$domain)"
   }
 }
 
 Censys-Subdomain-Finder() {
-  [ "$silent" == True ] && censys-subdomain-finder.py --censys-api-id {{CENSYS-ID}} --censys-api-secret {{CENSYS-SECRET}} $domain 2>/dev/null | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] && censys-subdomain-finder.py --censys-api-id $CENSYS_ID --censys-api-secret $CENSYS_SECRET $domain 2>/dev/null | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Censys-Subdomain-Finder${end}" &
       PID="$!"
     }
-    censys-subdomain-finder.py --censys-api-id {{CENSYS-ID}} --censys-api-secret {{CENSYS-SECRET}} $domain 1> tmp-censys-subdomain-finder.py-$domain 2>/dev/null
+    censys-subdomain-finder.py --censys-api-id $CENSYS_ID --censys-api-secret $CENSYS_SECRET $domain 1> tmp-censys-subdomain-finder.py-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "${green}${bold}[*] Censys-Subdomain-Finder$end: $(wc -l< tmp-censys-subdomain-finder.py-$domain)"
   }
