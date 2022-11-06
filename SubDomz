@@ -17,8 +17,8 @@ echo -e "$blue${bold}   \__ \ / / / // __ \ / / / // __ \ / __  __ \/_  /  $end"
 echo -e "$blue${bold}  ___/ // /_/ // /_/ // /_/ // /_/ // / / / / / / /_  $end"
 echo -e "$blue${bold} /____/ \__,_//_.___//_____/ \____//_/ /_/ /_/ /___/  $end"
 echo -e "$end"
-echo -e "$green${bold}        All in One Subdomain Enumeration Tool         $end"
-echo -e "$green${bold}             Made with ❤️ by 0xlittleboy               $end"
+echo -e "$blue${bold}        All in One Subdomain Enumeration Tool         $end"
+echo -e "$blue${bold}             Made with${end} ${red}${bold}<3${end} ${blue}${bold}by 0xlittleboy               $end"
 echo -e "$end"
 
 PRG=${0##*/}
@@ -30,13 +30,13 @@ Usage(){
 	done <<-EOF
 	\r
 	\r ${bold}Options${end}:
-	\r    ${red}${bold}-d${end} ==> ${red}Domain To enumerate${end}
-  	\r    ${red}${bold}-l${end} ==> ${red}List of Domains to enumerate${end}
-	\r    ${red}${bold}-o${end} ==> ${red}Output file to save the Final Results${end}
-	\r    ${red}${bold}-p${end} ==> ${red}To Use Parallel For Faster Results${end}
-	\r    ${red}${bold}-r${end} ==> ${red}To resolve Sudomains${end}
-	\r    ${red}${bold}-h${end} ==> ${red}Displays this help message and exit${end}
-  	\r    ${red}${bold}-v${end} ==> ${red}Displays this version and exit${end}
+	\r    -d ==> Domain To enumerate
+  	\r    -l ==> List of Domains to enumerate
+	\r    -o ==> Output file to save the Final Results
+	\r    -p ==> To Use Parallel For Faster Results
+	\r    -r ==> To resolve Sudomains
+	\r    -h ==> Displays this help message and exit
+  	\r    -v ==> Displays this version and exit
 
 EOF
 	exit 1
