@@ -1,15 +1,6 @@
 #!/bin/bash
 # Installation script
 cat <<"EOF"
-            _         _
-  ___ _   _| |__   __| | ___  _ __ ___  ____
- / __| | | | '_ \ / _` |/ _ \| '_ ` _ \|_  /
- \__ \ |_| | |_) | (_| | (_) | | | | | |/ /
- |___/\__,_|_.__/ \__,_|\___/|_| |_| |_/___|
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@  The All in One Subdomain Enumeration Tool  @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
 ***********************************************
 *           Installation Started              *
 ***********************************************
@@ -85,10 +76,10 @@ Assetfinder() {
 }
 
 Findomain() {
-            wget https://github.com/Edu4rdSHL/findomain/releases/latest/download/findomain-linux &>/dev/null
-            chmod +x findomain-linux
-            ./findomain-linux -h &>/dev/null &&
-            sudo mv findomain-linux /usr/local/bin/findomain;
+	    cd ~/SubDomz/tools
+            curl -LO https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip && unzip findomain-linux.zip &>/dev/null
+            chmod +x findomain
+            sudo mv findomain /usr/local/bin/findomain;
             printf "[+] Findomain Installed! \n"
 }
 
@@ -168,7 +159,7 @@ Shodomain() {
             cd Shodomain && pip install -r requirements.txt &>/dev/null
             sudo cp shodomain.py /usr/local/bin
             sudo chmod +x /usr/local/bin/shodomain.py
-            printf "[+] Shodomain! \n"
+            printf "[+] Shodomain Installed! \n"
 }
 
 Censys-Subdomain-Finder() {
