@@ -9,7 +9,7 @@ red="\e[31m"
 green="\e[32m"
 blue="\e[34m"
 end="\e[0m"
-VERSION="SubDomz_v1.1"
+VERSION="SubDomz_v1.0"
 
 echo -e "$blue${bold}    _____         __     ____                         $end"
 echo -e "$blue${bold}   / ___/ __  __ / /_   / __ \ ____   ________  ____  $end"
@@ -90,11 +90,11 @@ Assetfinder() {
 }
 
 Findomain() {
-	[ "$silent" == True ] && findomain -t $domain -quiet 2>/dev/null | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && findomain --target $domain --quiet 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Findomain${end}" &
 			PID="$!"
 		}
-		findomain -quiet -t $domain 1> tmp-findomain-$domain 2>/dev/null
+		findomain --quiet --target $domain 1> tmp-findomain-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "${green}${bold}[*] Findomain$end: $(wc -l< tmp-findomain-$domain 2>/dev/null | awk '{print $1}')"
 	}
