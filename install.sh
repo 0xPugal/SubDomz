@@ -202,7 +202,7 @@ hash findomain 2>/dev/null && printf "[!] Findomain is already installed.\n" || 
 hash subfinder 2>/dev/null && printf "[!] Subfinder is already installed.\n" || { printf "[+] Installing subfinder!" && Subfinder; }
 hash amass 2>/dev/null && printf "[!] Amass is already installed.\n" || { printf "[+] Installing Amass!" && Amass; }
 hash assetfinder 2>/dev/null && printf "[!] Assetfinder is already installed.\n" || { printf "[+] Installing Assetfinder!" && Assetfinder; }
-hash gau 2>/dev/null && printf "[!] Gauplus is already installed.\n" || { printf "[+] Installing Gauplus!" && Gau; }
+hash gau 2>/dev/null && printf "[!] Gau is already installed.\n" || { printf "[+] Installing Gau!" && Gau; }
 hash waybackurls 2>/dev/null && printf "[!] Waybackurls is already installed.\n" || { printf "[+] Installing Waybackurls!" && Waybackurls; }
 hash github-subdomains 2>/dev/null && printf "[!] Github-Subdomains is already installed.\n" || { printf "[+] Installing Github-subdomains!" && Github-Subdomains; }
 hash crobat 2>/dev/null && printf "[!] Crobat is already installed.\n" || { printf "[+] Installing Crobat!" && Crobat; }
