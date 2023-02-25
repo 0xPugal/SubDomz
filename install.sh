@@ -13,8 +13,8 @@ Golang() {
 	printf "                                \r"
 	sys=$(uname -m)
 	LATEST=$(curl -s 'https://go.dev/VERSION?m=text')
-	[ $sys == "x86_64" ] && wget https://golang.org/dl/$LATEST.linux-amd64.tar.gz -O golang.tar.gz || wget https://golang.org/dl/$LATEST.linux-386.tar.gz -O golang.tar.gz
-	sudo tar -C /usr/local -xzf golang.tar.gz
+	[ $sys == "x86_64" ] && wget https://golang.org/dl/$LATEST.linux-amd64.tar.gz -O golang.tar.gz &>/dev/null || wget https://golang.org/dl/$LATEST.linux-386.tar.gz -O golang.tar.gz &>/dev/null
+	sudo tar -C /usr/local -xzf golang.tar.gz &>/dev/null
 	echo "export GOROOT=/usr/local/go" >> $HOME/.bashrc
 	echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
 	echo 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> $HOME/.bashrc
@@ -27,39 +27,39 @@ sleep 0.5
 echo "Installing Depencies..."
 Shodan() {
            printf "                               \r"
-           sudo apt install python3-shodan -y 
+           sudo apt install python3-shodan -y &>/dev/null
            printf "[+] Shodan Installed! \n"
 }
 Censys() {
           printf "                        \r"
-          sudo apt install python3-censys -y 
+          sudo apt install python3-censys -y &>/dev/null
           printf "[+] Censys Installed! \n"
 }
 Nmap() {
           printf "                        \r"
-          sudo apt install nmap -y 
+          sudo apt install nmap -y &>/dev/null
           printf "[+] Nmap Installed! \n"
 }
 JQ() {
           printf "                \r"
-          sudo apt install jq -y 
+          sudo apt install jq -y &>/dev/null
           printf "[+] JQ Installed! \n"
 }
 Git() {
           printf "              \r"
-          sudo apt install git -y 
+          sudo apt install git -y &>/dev/null
           printf "[+] Git Installed! \n"
 }
 Python() {
           printf "              \r"
-          sudo apt install python3 -y 
-          sudo apt install python -y 
-          sudo apt-get -y install python3-pip 
+          sudo apt install python3 -y &>/dev/null
+          sudo apt install python -y &>/dev/null
+          sudo apt-get -y install python3-pip &>/dev/null
           printf "[+] Python Installed! \n"
 }
 Parallel() {
           printf "                    \r"
-          sudo apt install -y parallel 
+          sudo apt install -y parallel &>/dev/null
           printf "[+] Parallel Installed! \n"
 }
 
@@ -76,9 +76,15 @@ Assetfinder() {
             printf "[+] Assetfinder Installed! \n"
 }
 
+Chaos() {
+            printf "                  \r"
+            go install -v github.com/projectdiscovery/chaos-client/cmd/chaos@latest
+            printf "[+] Chaos Installed! \n"
+}
+
 Findomain() {
 	    cd ~/SubDomz/tools
-            curl -LO https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip && unzip findomain-linux.zip &>/dev/null
+            curl -LO https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip &>/dev/null && unzip findomain-linux.zip &>/dev/null
             chmod +x findomain
             sudo mv findomain /usr/local/bin/findomain;
             printf "[+] Findomain Installed! \n"
@@ -210,6 +216,7 @@ hash findomain 2>/dev/null && printf "[!] Findomain is already installed.\n" || 
 hash subfinder 2>/dev/null && printf "[!] Subfinder is already installed.\n" || { printf "[+] Installing subfinder!" && Subfinder; }
 hash amass 2>/dev/null && printf "[!] Amass is already installed.\n" || { printf "[+] Installing Amass!" && Amass; }
 hash assetfinder 2>/dev/null && printf "[!] Assetfinder is already installed.\n" || { printf "[+] Installing Assetfinder!" && Assetfinder; }
+hash chaos 2>/dev/null && printf "[!] Chaos is already installed.\n" || { printf "[+] Installing Chaos!" && Chaos; }
 hash gau 2>/dev/null && printf "[!] Gau is already installed.\n" || { printf "[+] Installing Gau!" && Gau; }
 hash waybackurls 2>/dev/null && printf "[!] Waybackurls is already installed.\n" || { printf "[+] Installing Waybackurls!" && Waybackurls; }
 hash github-subdomains 2>/dev/null && printf "[!] Github-Subdomains is already installed.\n" || { printf "[+] Installing Github-subdomains!" && Github-Subdomains; }
@@ -236,6 +243,7 @@ list=(
 	  Golang
 	  Subfinder
 	  Assetfinder
+    Chaos
 	  Findomain
 	  Amass
   	Gau
