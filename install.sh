@@ -13,7 +13,7 @@ Golang() {
 	printf "                                \r"
 	sys=$(uname -m)
 	LATEST=$(curl -s 'https://go.dev/VERSION?m=text')
-	[ $sys == "x86_64" ] && wget https://golang.org/dl/$LATEST.linux-amd64.tar.gz -O golang.tar.gz &>/dev/null || wget https://golang.org/dl/$LATEST.linux-386.tar.gz -O golang.tar.gz &>/dev/null
+	[ $sys == "x86_64" ] && wget https://golang.org/dl/$LATEST.linux-amd64.tar.gz -O golang.tar.gz || wget https://golang.org/dl/$LATEST.linux-386.tar.gz -O golang.tar.gz
 	sudo tar -C /usr/local -xzf golang.tar.gz
 	echo "export GOROOT=/usr/local/go" >> $HOME/.bashrc
 	echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
@@ -24,45 +24,46 @@ Golang() {
 }
 sleep 0.5
 
-echo "Installing Tools..."
+echo "Installing Depencies..."
 Shodan() {
            printf "                               \r"
-           sudo apt install python3-shodan -y &>/dev/null
+           sudo apt install python3-shodan -y 
            printf "[+] Shodan Installed! \n"
 }
 Censys() {
           printf "                        \r"
-          sudo apt install python3-censys -y &>/dev/null
+          sudo apt install python3-censys -y 
           printf "[+] Censys Installed! \n"
 }
 Nmap() {
           printf "                        \r"
-          sudo apt install nmap -y &>/dev/null
+          sudo apt install nmap -y 
           printf "[+] Nmap Installed! \n"
 }
 JQ() {
           printf "                \r"
-          sudo apt install jq -y &>/dev/null
+          sudo apt install jq -y 
           printf "[+] JQ Installed! \n"
 }
 Git() {
           printf "              \r"
-          sudo apt install git -y &>/dev/null
+          sudo apt install git -y 
           printf "[+] Git Installed! \n"
 }
 Python() {
           printf "              \r"
-          sudo apt install python3 -y &>/dev/null
-          sudo apt install python -y &>/dev/null
-          sudo apt-get -y install python3-pip &>/dev/null
+          sudo apt install python3 -y 
+          sudo apt install python -y 
+          sudo apt-get -y install python3-pip 
           printf "[+] Python Installed! \n"
 }
 Parallel() {
           printf "                    \r"
-          sudo apt install -y parallel &>/dev/null
+          sudo apt install -y parallel 
           printf "[+] Parallel Installed! \n"
 }
 
+# Installing Tools
 Subfinder() {
             printf "                                \r"
             GO111MODULE=on go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest &>/dev/null
@@ -107,6 +108,11 @@ Github-Subdomains() {
             printf "[+] Github-Subdomains Installed! \n"
 }
 
+Gitlab-Subdomains() {
+            printf "          \r"
+            go install github.com/gwen001/gitlab-subdomains@latest
+            printf "[+] Gitlab-Subdomains Installed! \n"
+}
 Crobat() {
             printf "                  \r"
             go install github.com/cgboal/sonarsearch/cmd/crobat@latest &>/dev/null
@@ -190,6 +196,7 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
 sudo cp ~/go/bin/* /usr/local/bin
 
+#Checking Dependencies
 hash shodan 2>/dev/null && printf "[!] Shodan is already installed.\n" || { printf "[+] Installing Shodan!" && Shodan; }
 hash censys 2>/dev/null && printf "[!] Censys is already installed.\n" || { printf "[+] Installing Censys!" && Censys; }
 hash nmap 2>/dev/null && printf "[!] NMap is already installed.\n" || { printf "[+] Installing NMap!" && Nmap; }
@@ -198,6 +205,7 @@ hash git 2>/dev/null && printf "[!] Git is already installed.\n" || { printf "[+
 hash python3 2>/dev/null && printf "[!] Python is already installed.\n" || { printf "[+] Installing Python!" && Python; }
 hash parallel 2>/dev/null && printf "[!] Parallel is already installed.\n" || { printf "[+] Installing Parallel!" && Parallel; }
 
+#Checking Tools
 hash findomain 2>/dev/null && printf "[!] Findomain is already installed.\n" || { printf "[+] Installing Findomain!" && Findomain; }
 hash subfinder 2>/dev/null && printf "[!] Subfinder is already installed.\n" || { printf "[+] Installing subfinder!" && Subfinder; }
 hash amass 2>/dev/null && printf "[!] Amass is already installed.\n" || { printf "[+] Installing Amass!" && Amass; }
@@ -205,6 +213,7 @@ hash assetfinder 2>/dev/null && printf "[!] Assetfinder is already installed.\n"
 hash gau 2>/dev/null && printf "[!] Gau is already installed.\n" || { printf "[+] Installing Gau!" && Gau; }
 hash waybackurls 2>/dev/null && printf "[!] Waybackurls is already installed.\n" || { printf "[+] Installing Waybackurls!" && Waybackurls; }
 hash github-subdomains 2>/dev/null && printf "[!] Github-Subdomains is already installed.\n" || { printf "[+] Installing Github-subdomains!" && Github-Subdomains; }
+hash gitlab-subdomains 2>/dev/null && printf "[!] Gitlab-Subdomains is already installed.\n" || { printf "[+] Installing Gitlab-subdomains!" && Gitlab-Subdomains; }
 hash crobat 2>/dev/null && printf "[!] Crobat is already installed.\n" || { printf "[+] Installing Crobat!" && Crobat; }
 hash ctfr.py 2>/dev/null && printf "[!] CTFR is already installed.\n" || { printf "[+] Installing CTFR!" && CTFR; }
 hash cero 2>/dev/null && printf "[!] Cero is already installed.\n" || { printf "[+] Installing Cero!" && Cero; }
@@ -224,14 +233,15 @@ list=(
   	Git
   	Python
   	Parallel
-	Golang
-	Subfinder
-	Assetfinder
-	Findomain
-	Amass
+	  Golang
+	  Subfinder
+	  Assetfinder
+	  Findomain
+	  Amass
   	Gau
   	Waybackurls
   	Github-Subdomains
+    Gitlab-Subdomains
   	Crobat
   	CTFR
   	Cero
