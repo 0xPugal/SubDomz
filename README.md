@@ -33,7 +33,7 @@ chmod +x install.sh SubDomz
  /____/ \__,_//_.___//_____/ \____//_/ /_/ /_/ /___/  
 
         All in One Subdomain Enumeration Tool         
-             Made with <3 by 0xlittleboy               
+             Made with <3 by 0xPugazh              
 
 
  Options:
@@ -49,11 +49,13 @@ chmod +x install.sh SubDomz
 ### Tools Included
 + Subfinder
 + Assetfinder
++ Chaos
 + Findomain
 + Amass
 + Gauplus
 + Waybackurls 
 + Github-Subdomains
++ Gitlab-Subdomains
 + Crobat
 + CTFR
 + Cero
@@ -81,5 +83,3 @@ chmod +x install.sh SubDomz
 ### Credit
 This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to him for the great idea!
 
-<h3 align="left">Support:</h3>
-<p><a href="https://www.buymeacoffee.com/litt1eb0y"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="litt1eb0y" /></a></p><br> <br>
