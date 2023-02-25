@@ -18,7 +18,7 @@ echo -e "$blue${bold}  ___/ // /_/ // /_/ // /_/ // /_/ // / / / / / / /_  $end"
 echo -e "$blue${bold} /____/ \__,_//_.___//_____/ \____//_/ /_/ /_/ /___/  $end"
 echo -e "$end"
 echo -e "$blue${bold}        All in One Subdomain Enumeration Tool         $end"
-echo -e "$blue${bold}             Made with${end} ${red}${bold}<3${end} ${blue}${bold}by 0xlittleboy               $end"
+echo -e "$blue${bold}             Made with${end} ${red}${bold}<3${end} ${blue}${bold}by 0xPugazh              $end"
 echo -e "$end"
 
 PRG=${0##*/}
@@ -43,13 +43,16 @@ EOF
 }
 
 #Variables
+#Add your api keys, tokens here
 subfinder=~/.config/subfinder/provider-config.yaml
 amass=~/.config/amass/config.ini
 wordlist=Wordlist/dns.txt
 GITHUB_TOKEN="TOKEN_HERE"
+GITLAB_TOKEN="TOKEN_HERE"
 SHODAN_APIKEY="API_KEY_HERE"
 CENSYS_ID="ID_HERE"
 CENSYS_SECRET="SECRET_HERE"
+CHAOS_APIKEY="API_KEY_HERE"
 
 spinner(){
 	processing="${1}"
@@ -86,6 +89,17 @@ Assetfinder() {
 		assetfinder --subs-only $domain 1> tmp-assetfinder-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "${green}${bold}[*] AssetFinder$end: $(wc -l< tmp-assetfinder-$domain)"
+	}
+}
+
+Chaos() {
+	[ "$silent" == True ] && chaos -silent -d $domain -key $CHAOS_APIKEY 2>/dev/null | anew subdomz-$domain.txt || {
+		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Chaos${end}" &
+			PID="$!"
+		}
+		chaos -silent -d $domain -key $CHAOS_APIKEY 1> tmp-chaos-$domain 2>/dev/null
+		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
+		echo -e "${green}${bold}[*] Chaos$end: $(wc -l< tmp-chaos-$domain)"
 	}
 }
 
@@ -152,6 +166,17 @@ Github-Subdomains() {
     github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "${green}${bold}[*] Github-Subdomains$end: $(wc -l< tmp-github-subdomains-$domain)"
+  }
+}
+
+Gitlab-Subdomains() {
+  [ "$silent" == True ] && gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
+    [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Gitlab-Subdomains${end}" &
+      PID="$!"
+    }
+    gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains 1> tmp-gitlab-subdomains-$domain 2>/dev/null
+    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
+    echo -e "${green}${bold}[*] Gitlab-Subdomains$end: $(wc -l< tmp-gitlab-subdomains-$domain)"
   }
 }
 
@@ -404,20 +429,22 @@ LIST() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Reconnaissance" &
 				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint spinner
+				export -f Subfinder Assetfinder Chaos Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero Sublister Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint spinner
 				export domain silent bold end
-				parallel -j7 ::: Subfinder Assetfinder Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint
+				parallel -j7 ::: Subfinder Assetfinder Chaos Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero Sublister Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint
 				kill ${PID}
 				OUT
 			} || {
 				Subfinder
         Assetfinder
+		Chaos
         Findomain
         Amass_Passive
         Amass_Active
         Gau
         Waybackurls
         Github-Subdomains
+		Gitlab_Subdomains
         Crobat
         CTFR
         Cero
@@ -453,19 +480,21 @@ Main() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "${bold}${red}Reconnaissance${end}" &
 				PID="$!"
-				export -f Subfinder Assetfinder Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint spinner
+				export -f Subfinder Assetfinder Chaos Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero Sublister Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint spinner
 				export domain silent bold end
-				parallel -j7 ::: Subfinder Assetfinder Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Crobat CTFR Cero Sublister Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint
+				parallel -j7 ::: Subfinder Assetfinder Chaos Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero Sublister Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint
 				kill ${PID}
 			} || {
 				Subfinder
         Assetfinder
+		Chaos
         Findomain
         Amass_Passive
         Amass_Active
         Gau
         Waybackurls
         Github-Subdomains
+		Gitlab_Subdomains
         Crobat
         CTFR
         Cero
@@ -514,12 +543,14 @@ PARALLEL=False
 list=(
 		Subfinder
 		Assetfinder
+		Chaos
 		Findomain
 		Amass_Passive
 		Amass_Active
 		Gau
 		Waybackurls
 		Github-Subdomains
+		Gitlab_Subdomains
 		Crobat
 		CTFR
 		Cero
