@@ -53,7 +53,6 @@ Golang() {
 }
 sleep 0.5
 
-echo "Installing Depencies..."
 Shodan() {
            printf "                               \r"
            sudo apt install python3-shodan -y &>/dev/null
