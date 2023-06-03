@@ -82,6 +82,12 @@ Chaos() {
             printf "[+] Chaos Installed! \n"
 }
 
+Shuffledns() {
+            printf "                  \r"
+            go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
+            printf "[+] Shuffledns Installed! \n"
+}
+
 Findomain() {
 	    cd ~/SubDomz/tools
             curl -LO https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip &>/dev/null && unzip findomain-linux.zip &>/dev/null
@@ -203,6 +209,7 @@ hash subfinder 2>/dev/null && printf "[!] Subfinder is already installed.\n" || 
 hash amass 2>/dev/null && printf "[!] Amass is already installed.\n" || { printf "[+] Installing Amass!" && Amass; }
 hash assetfinder 2>/dev/null && printf "[!] Assetfinder is already installed.\n" || { printf "[+] Installing Assetfinder!" && Assetfinder; }
 hash chaos 2>/dev/null && printf "[!] Chaos is already installed.\n" || { printf "[+] Installing Chaos!" && Chaos; }
+hash shuffledns 2>/dev/null && printf "[!] Shuffledns is already installed.\n" || { printf "[+] Installing Shuffledns!" && Shuffledns; }
 hash gau 2>/dev/null && printf "[!] Gau is already installed.\n" || { printf "[+] Installing Gau!" && Gau; }
 hash waybackurls 2>/dev/null && printf "[!] Waybackurls is already installed.\n" || { printf "[+] Installing Waybackurls!" && Waybackurls; }
 hash github-subdomains 2>/dev/null && printf "[!] Github-Subdomains is already installed.\n" || { printf "[+] Installing Github-subdomains!" && Github-Subdomains; }
