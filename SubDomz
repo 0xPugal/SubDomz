@@ -376,19 +376,15 @@ Omnisint() {
 	}
 }
 
-#Output
+# Output
 OUT(){
-    [ "$silent" == False ] && {
-        if [ -n "$1" ]; then
-            out="$1"
-        else
-            out="$domain-$(date +'%Y-%m-%d').txt"
-        fi
-        sort -u tmp-* > "$out"
-        echo -e "${green}[+] The Final Results:$end $(wc -l "$out")"
-        [ "$resolve" == True ] && ALIVE "$out" "$domain"
-        [ "$delete" == True ] && rm tmp-*
-    }
+    if [ -n "$1" ]; then
+        out="$1"
+    else
+        out="$domain-$(date +'%Y-%m-%d').txt"
+    fi
+    sort -u tmp-* > "$out"
+    echo -e "${green}[+] The Final Results:$end $(wc -l "$out")"
 }
 
 
@@ -488,3 +484,4 @@ while [ -n "$1" ]; do
 done
 
 Main
+OUT "$out"
