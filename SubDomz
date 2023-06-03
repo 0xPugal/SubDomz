@@ -31,10 +31,7 @@ Usage(){
 	\r
 	\r ${bold}Options${end}:
 	\r    -d ==> Domain To enumerate
-  	\r    -l ==> List of Domains to enumerate
 	\r    -o ==> Output file to save the Final Results
-	\r    -p ==> To Use Parallel For Faster Results
-	\r    -r ==> To resolve Sudomains
 	\r    -h ==> Displays this help message and exit
   	\r    -v ==> Displays this version and exit
 
@@ -391,91 +388,29 @@ OUT(){
 	}
 }
 
-#Alive-Domains
-ALIVE(){
-  [ "$silent" == False ] && printf "$bold[+] Resolving $end"
-  printf "                  \r"
-  cat $1 | httpx -silent -timeout 15 > "resolved-$2.txt"
-  [ "$silent" == False ] && echo -e $green:"[+] Resolved:$end $(wc -l < resolved-$2.txt)"
-}
 
 
-LIST() {
-	lines=$(wc -l < $hosts)
-	count=1
-	while read domain; do
-		[ "$silent" == False ] && echo -e "\n${Underlined}${bold}${green}[+] Domain ($count/$lines):${end} ${domain}"
-		[ $prv == "a" ] && {
-			[[ ${PARALLEL} == True ]] && {
-				spinner "Reconnaissance" &
-				PID="$!"
-				export -f Subfinder Assetfinder Chaos Shuffledns Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero  Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint spinner
-				export domain silent bold end
-				parallel -j7 ::: Subfinder Assetfinder Chaos Shuffledns Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero  Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint
-				kill ${PID}
-				OUT
-			} || {
-				Subfinder
-        Assetfinder
-		Chaos
-		Shuffledns
-        Findomain
-        Amass_Passive
-        Amass_Active
-        Gau
-        Waybackurls
-        Github-Subdomains
-		Gitlab_Subdomains
-        Crobat
-        CTFR
-        Cero 
-        Shodomain
-        Censys-Subdomain-Finder
-        Archive
-        BufferOver
-        Crt
-        Riddler
-        CertSpotter
-        JLDC
-        nMap
-        HackerTarget
-        ThreatCrowd
-        Anubis
-        ThreatMiner
-		Omnisint
-				OUT
-			}
-		}
-		[ $prv == "e" ] && EXCLUDE
-		[ $prv == "u" ] && USE
-		let count+=1
-	done < $hosts
-}
-
+#Main
 Main() {
 	[ $domain == False ] && [ $hosts == False ] && { echo -e $red"[-] Argument -d/--domain OR -l/--list is Required!"$end; Usage; }
-	[ $use != False ] && [ $exclude != False ] && { echo -e $Underlined$red"[!] You can use only one Option: -e/--exclude OR -u/--use"$end; Usage; }
 	[ $domain != False ] && {
-		[ $use == False ] && [ $exclude == False ] && {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "${bold}${red}Reconnaissance${end}" &
 				PID="$!"
 				export -f Subfinder Assetfinder Chaos Shuffledns Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero  Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint spinner
-				export domain silent bold end
-				parallel -j7 ::: Subfinder Assetfinder Chaos Shuffledns Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero  Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint
 				kill ${PID}
 			} || {
-				Subfinder
+	Subfinder
         Assetfinder
-		Chaos
-		Shuffledns
+	Chaos
+	Shuffledns
         Findomain
         Amass_Passive
         Amass_Active
         Gau
         Waybackurls
         Github-Subdomains
-		Gitlab_Subdomains
+	Gitlab_Subdomains
         Crobat
         CTFR
         Cero
@@ -494,31 +429,11 @@ Main() {
         ThreatMiner
 	Omnisint
 			}
-			[ "$out" == False ] && OUT || OUT $out
-		} || {
-			[ $use != False ] && USE
-			[ $exclude != False ] && EXCLUDE
-		}
-	}
-	[ "$hosts" != False ] && {
-		[ $use != False ] && prv=u
-		[ $exclude != False ] && prv=e
-		[ $use == False ] && [ $exclude == False ] && prv=a
-		LIST
-	 }
+}
 }
 
-
 domain=False
-hosts=False
-use=False
-exclude=False
-silent=False
-delete=True
 out=False
-resolve=False
-thread=40
-PARALLEL=False
 
 list=(
 		Subfinder
@@ -559,16 +474,8 @@ while [ -n "$1" ]; do
 		-o)
 			out=$2
 			shift ;;
-		-s)
-			silent=True ;;
-		-k)
-			delete=False ;;
-		-r)
-			resolve=True ;;
 		-h)
 			Usage;;
-		-p)
-			PARALLEL=True ;;
 		-v)
 			echo "Version: $VERSION"
 			exit 0 ;;
