@@ -145,11 +145,11 @@ Amass_Active() {
 }
 
 Gau() {
-  [ "$silent" == True ] &&  gau --threads 5 --subs $domain |  unfurl -u domains 2>/dev/null  | anew subdomz-$domain.txt || {
+  [ "$silent" == True ] &&  gau -subs $domain |  unfurl -u domains 2>/dev/null  | anew subdomz-$domain.txt || {
     [[ ${PARALLEL} == True ]] || { spinner "${bold}Gau${end}" &
       PID="$!"
     }
-    gau --threads 5 --subs $domain | unfurl -u domains 1> tmp-gau-$domain 2>/dev/null
+    gau -subs $domain | unfurl -u domains 1> tmp-gau-$domain 2>/dev/null
     [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
     echo -e "${green}${bold}[*] Gau$end: $(wc -l< tmp-gau-$domain)"
   }
@@ -378,39 +378,39 @@ Omnisint() {
 
 #Output
 OUT(){
-	[ "$silent" == False ] && {
-		[ -n "$1" ] && out="$1" || out="$domain-$(date +'%Y-%m-%d').txt"
-		sort -u tmp-* > $out
-		echo -e $green"[+] The Final Results:$end $(wc -l $out)"
-		[ $resolve == True ] && ALIVE "$out" "$domain"
-
-		[ $delete == True ] && rm tmp-*
-	}
+    [ "$silent" == False ] && {
+        if [ -n "$1" ]; then
+            out="$1"
+        else
+            out="$domain-$(date +'%Y-%m-%d').txt"
+        fi
+        sort -u tmp-* > "$out"
+        echo -e "${green}[+] The Final Results:$end $(wc -l "$out")"
+        [ "$resolve" == True ] && ALIVE "$out" "$domain"
+        [ "$delete" == True ] && rm tmp-*
+    }
 }
 
 
 
 #Main
 Main() {
-	[ $domain == False ] && [ $hosts == False ] && { echo -e $red"[-] Argument -d/--domain OR -l/--list is Required!"$end; Usage; }
-	[ $domain != False ] && {
-			[[ ${PARALLEL} == True ]] && {
-				spinner "${bold}${red}Reconnaissance${end}" &
-				PID="$!"
-				export -f Subfinder Assetfinder Chaos Shuffledns Findomain Amass_Passive Amass_Active Gau Waybackurls Github-Subdomains Gitlab_Subdomains Crobat CTFR Cero  Shodomain Censys-Subdomain-Finder Archive BufferOver Crt Riddler CertSpotter JLDC nMap HackerTarget ThreatCrowd Anubis ThreatMiner Omnisint spinner
-				kill ${PID}
-			} || {
-	Subfinder
-        Assetfinder
-	Chaos
-	Shuffledns
+	if [ "$domain" == False ]; then
+        echo -e "${red}[-] Argument -d/--domain is Required!$end"
+        Usage
+    fi
+    if [ "$domain" != False ]; then
+		Subfinder
+    	Assetfinder
+		Chaos
+		Shuffledns
         Findomain
         Amass_Passive
         Amass_Active
         Gau
         Waybackurls
         Github-Subdomains
-	Gitlab_Subdomains
+		Gitlab-Subdomains
         Crobat
         CTFR
         Cero
@@ -427,10 +427,11 @@ Main() {
         ThreatCrowd
         Anubis
         ThreatMiner
-	Omnisint
-			}
+		Omnisint
+		OUT "$out"  # Call OUT function with the output file name
+    fi
 }
-}
+
 
 domain=False
 out=False
@@ -446,7 +447,7 @@ list=(
 		Gau
 		Waybackurls
 		Github-Subdomains
-		Gitlab_Subdomains
+		Gitlab-Subdomains
 		Crobat
 		CTFR
 		Cero
