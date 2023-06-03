@@ -377,15 +377,16 @@ Omnisint() {
 }
 
 # Output
-OUT(){
+# Output
+OUT() {
     if [ -n "$1" ]; then
         out="$1"
-    else
-        out="$domain-$(date +'%Y-%m-%d').txt"
     fi
-    sort -u tmp-* > "$out"
+    sort -u tmp-$domain* > "$out"
     echo -e "${green}[+] The Final Results:$end $(wc -l "$out")"
+    rm tmp-*-"$domain"*
 }
+
 
 
 
@@ -428,9 +429,6 @@ Main() {
     fi
 }
 
-
-domain=False
-out=False
 
 list=(
 		Subfinder
@@ -484,4 +482,4 @@ while [ -n "$1" ]; do
 done
 
 Main
-OUT "$out"
+OUT 
