@@ -379,26 +379,6 @@ Omnisint() {
 	}
 }
 
-#Tools to Use
-USE() {
-	for i in $lu; do
-		$i
-	done
-	OUT
-}
-
-#Tools to Exclude
-EXCLUDE() {
-	for i in ${list[@]}; do
-		if [[ " ${le[@]} " =~ " ${i} " ]]; then
-			continue
-		else
-			$i
-		fi
-	done
-	OUT
-}
-
 #Output
 OUT(){
 	[ "$silent" == False ] && {
@@ -575,29 +555,6 @@ while [ -n "$1" ]; do
 	case $1 in
 		-d)
 			domain=$2
-			shift ;;
-		-l)
-			hosts=$2
-			shift ;;
-		-u)
-			use=$2
-			lu=${use//,/ }
-			for i in $lu; do
-				if [[ ! " ${list[@]} " =~ " ${i} " ]]; then
-					echo -e $red$Underlined"[-] Unknown Function: $i"$end
-					Usage
-				fi
-			done
-			shift ;;
-		-e)
-			exclude=$2
-			le=${exclude//,/ }
-			for i in $le; do
-				if [[ ! " ${list[@]} " =~ " ${i} " ]]; then
-					echo -e $red$Underlined"[-] Unknown Function: $i"$end
-					Usage
-				fi
-			done
 			shift ;;
 		-o)
 			out=$2
