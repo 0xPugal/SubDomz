@@ -7,7 +7,7 @@ All in One Subdomain Enumeration Tool
 </p>
 <br/>
 
-![image](https://user-images.githubusercontent.com/75373225/198861891-0a3a69ca-3a58-482d-8be2-d64cbdd5e35d.png)
+![image](https://github.com/0xPugazh/SubDomz/assets/75373225/babdfa91-acba-4b10-b25e-dd804aacbde5)
 
 -----------------------------
 ### What is SubDomz ?
@@ -38,10 +38,7 @@ chmod +x install.sh SubDomz
 
  Options:
     -d ==> Domain To enumerate
-    -l ==> List of Domains to enumerate
     -o ==> Output file to save the Final Results
-    -p ==> To Use Parallel For Faster Results
-    -r ==> To resolve Sudomains
     -h ==> Displays this help message and exit
     -v ==> Displays this version and exit
  ```
@@ -50,6 +47,7 @@ chmod +x install.sh SubDomz
 + Subfinder
 + Assetfinder
 + Chaos
++ Shuffledns
 + Findomain
 + Amass
 + Gauplus
