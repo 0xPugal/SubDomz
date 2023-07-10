@@ -78,6 +78,9 @@ chmod +x install.sh SubDomz
 ### API keys
 + Add your API keys in [here](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L45)
 
+## Support Me
+<a href="https://www.buymeacoffee.com/0xPugazh" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 ### Credit
 This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to him for the great idea!
 
