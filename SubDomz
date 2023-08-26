@@ -25,22 +25,22 @@ PRG=${0##*/}
 
 #Tools
 Usage(){
-	while read -r line; do
-		printf "%b\n" "$line"
-	done <<-EOF
-	\r
-	\r ${bold}Options${end}:
-	\r    -d ==> Domain To enumerate
-	\r    -o ==> Output file to save the Final Results
-	\r    -h ==> Displays this help message and exit
-  	\r    -v ==> Displays this version and exit
+    while read -r line; do
+        printf "%b\n" "$line"
+    done <<-EOF
+    \r
+    \r ${bold}Options${end}:
+    \r    -d ==> Domain to enumerate
+    \r    -o ==> Output file to save the final results
+    \r    -h ==> Display this help message and exit
+    \r    -v ==> Display the version and exit
 
 EOF
-	exit 1
+    exit 1
 }
 
-#Variables
-#Add your api keys, tokens here
+# Variables
+# Add your api keys, tokens here
 subfinder=~/.config/subfinder/provider-config.yaml
 amass=~/.config/amass/config.ini
 wordlist=Wordlist/dns.txt
@@ -51,434 +51,126 @@ CENSYS_ID="ID_HERE"
 CENSYS_SECRET="SECRET_HERE"
 CHAOS_APIKEY="API_KEY_HERE"
 
-spinner(){
-	processing="${1}"
-	while true;
-	do
-		dots=( "/" "-" "\\" "|" )
-		for dot in ${dots[@]};
-		do
-			printf "[${dot}] ${processing} \U1F50E"
-			printf "                                    \r"
-			sleep 0.3
-		done
 
-	done
+RunEnumeration() {
+    local func_name="$1"
+    echo -e "\n${bold}Running $func_name...${end}\n"
 }
 
-#Tools
+# Tools
 Subfinder() {
-	[ "$silent" == True ] && subfinder -all -silent -d $domain -pc $subfinder 2>/dev/null | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Subfinder${end}" &
-			PID="$!"
-		}
-		subfinder -all -silent -d $domain -pc $subfinder 1> tmp-subfinder-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] SubFinder$end: $(wc -l< tmp-subfinder-$domain)"
-	}
+	RunEnumeration "Subfinder"
+    subfinder -all -silent -d "$domain" -pc "$subfinder" -silent | anew "$domain"-subs.txt
 }
 
 Assetfinder() {
-	[ "$silent" == True ] && assetfinder --subs-only $domain 2>/dev/null | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Assetfinder${end}" &
-			PID="$!"
-		}
-		assetfinder --subs-only $domain 1> tmp-assetfinder-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] AssetFinder$end: $(wc -l< tmp-assetfinder-$domain)"
-	}
+	RunEnumeration "Assetfinder"
+    assetfinder --subs-only "$domain" | anew "$domain"-subs.txt
 }
 
 Chaos() {
-	[ "$silent" == True ] && chaos -silent -d $domain -key $CHAOS_APIKEY 2>/dev/null | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Chaos${end}" &
-			PID="$!"
-		}
-		chaos -silent -d $domain -key $CHAOS_APIKEY 1> tmp-chaos-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Chaos$end: $(wc -l< tmp-chaos-$domain)"
-	}
+	RunEnumeration "Chaos"
+    chaos -silent -d "$domain" -key "$CHAOS_APIKEY" -silent | anew "$domain"-subs.txt
 }
 
 Shuffledns() {
-	[ "$silent" == True ] && shuffledns -silent -d $domain -w $wordlist -r $resolvers 2>/dev/null | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Shuffledns${end}" &
-			PID="$!"
-		}
-		shuffledns -silent -d $domain -w $wordlist -r $resolvers 1> tmp-shuffledns-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Shuffledns$end: $(wc -l< tmp-shuffledns-$domain)"
-	}
+	RunEnumeration "Shuffledns"
+    shuffledns -silent -d "$domain" -w "$wordlist" -r "$resolvers" -silent | anew "$domain"-subs.txt
 }
 
 Findomain() {
-	[ "$silent" == True ] && findomain --target $domain --quiet 2>/dev/null | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Findomain${end}" &
-			PID="$!"
-		}
-		findomain --quiet --target $domain 1> tmp-findomain-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Findomain$end: $(wc -l< tmp-findomain-$domain 2>/dev/null | awk '{print $1}')"
-	}
+RunEnumeration "Findomain"
+	findomain --target $domain --quiet | anew "$domain"-subs.txt
 }
 
 Amass_Passive() {
-	[ "$silent" == True ] && amass enum -d $domain -config $amass 2>/dev/null | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Amass_Passive${end}" &
-			PID="$!"
-		}
-		amass enum  -d $domain -config $amass 1> tmp-amass-passive-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Amass_Passive$end: $(wc -l< tmp-amass-passive-$domain)"
-	}
-}
-
-Amass_Active() {
-	[ "$silent" == True ] && amass enum -active -brute -w Wordlist/dns.txt -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Amass_Active${end}" &
-			PID="$!"
-		}
-		amass enum -active -brute -w Wordlist/dns.txt -d $domain 1> tmp-amass-active-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Amass_Active$end: $(wc -l< tmp-amass-active-$domain)"
-	}
+	RunEnumeration "Amass Passive"
+	amass enum -d $domain -config $amass | anew "$domain"-subs.txt
 }
 
 Gau() {
-  [ "$silent" == True ] &&  gau -subs $domain |  unfurl -u domains 2>/dev/null  | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${bold}Gau${end}" &
-      PID="$!"
-    }
-    gau -subs $domain | unfurl -u domains 1> tmp-gau-$domain 2>/dev/null
-    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "${green}${bold}[*] Gau$end: $(wc -l< tmp-gau-$domain)"
-  }
+	RunEnumeration "Gau"
+	gau -subs $domain | unfurl -u domains | anew "$domain"-subs.txt 
 }
 
 Waybackurls() {
-  [ "$silent" == True ] &&  waybackurls $domain |  unfurl -u domains 2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Waybackurls${end}" &
-      PID="$!"
-    }
-    waybackurls $domain | unfurl -u domains 1> tmp-waybackurls-$domain 2>/dev/null
-    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "${green}${bold}[*] Waybackurls$end: $(wc -l< tmp-waybackurls-$domain)"
-  }
+	RunEnumeration "Waybackurls"
+	waybackurls $domain |  unfurl -u domains | anew "$domain"-subs.txt
 }
 
 Github-Subdomains() {
-  [ "$silent" == True ] && github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Github-Subdomains${end}" &
-      PID="$!"
-    }
-    github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains 1> tmp-github-subdomains-$domain 2>/dev/null
-    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "${green}${bold}[*] Github-Subdomains$end: $(wc -l< tmp-github-subdomains-$domain)"
-  }
+	RunEnumeration "Github-Subdomains"
+	github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains | anew "$domain"-subs.txt || {
 }
 
 Gitlab-Subdomains() {
-  [ "$silent" == True ] && gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Gitlab-Subdomains${end}" &
-      PID="$!"
-    }
-    gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains 1> tmp-gitlab-subdomains-$domain 2>/dev/null
-    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "${green}${bold}[*] Gitlab-Subdomains$end: $(wc -l< tmp-gitlab-subdomains-$domain)"
-  }
+	RunEnumeration "Gitlab-Subdomains"
+	gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains | anew "$domain"-subs.txt || {
 }
 
 Crobat() {
-  [ "$silent" == True ] && crobat -s $domain  2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${bold}Crobat${end}" &
-      PID="$!"
-    }
-    crobat -s $domain 1> tmp-crobat-$domain 2>/dev/null
-    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "${green}${bold}[*] Crobat$end: $(wc -l< tmp-crobat-$domain)"
-  }
-}
-
-CTFR() {
-  [ "$silent" == True ] && ctfr.py -d $domain | unfurl domains 2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}CTFR${end}" &
-      PID="$!"
-    }
-    ctfr.py -d $domain | unfurl domains 1> tmp-ctfr-$domain 2>/dev/null
-    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "${green}${bold}[*] CTFR$end: $(wc -l< tmp-ctfr-$domain)"
-  }
+	RunEnumeration "Crobat"
+	crobat -s $domain | anew "$domain"-subs.txt
 }
 
 Cero() {
-	[ "$silent" == True ] && cero $domain 2>/dev/null | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Cero${end}" &
-			PID="$!"
-		}
-		cero $domain 1> tmp-cero-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Cero$end: $(wc -l< tmp-cero-$domain)"
-	}
+	RunEnumeration "Cero"
+	cero $domain | anew subdomz-$domain.txt
 }
 
-Shodomain() {
-  [ "$silent" == True ] && shodomain.py $SHODAN_APIKEY $domain 2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Shodomain${end}" &
-      PID="$!"
-    }
-    shodomain.py $SHODAN_APIKEY $domain 1> tmp-shodomain-$domain 2>/dev/null
-    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "${green}${bold}[*] Shodomain$end: $(wc -l< tmp-shodomain-$domain)"
-  }
-}
-
-Censys-Subdomain-Finder() {
-  [ "$silent" == True ] && censys-subdomain-finder.py --censys-api-id $CENSYS_ID --censys-api-secret $CENSYS_SECRET $domain 2>/dev/null | anew subdomz-$domain.txt || {
-    [[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Censys-Subdomain-Finder${end}" &
-      PID="$!"
-    }
-    censys-subdomain-finder.py --censys-api-id $CENSYS_ID --censys-api-secret $CENSYS_SECRET $domain 1> tmp-censys-subdomain-finder.py-$domain 2>/dev/null
-    [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-    echo -e "${green}${bold}[*] Censys-Subdomain-Finder$end: $(wc -l< tmp-censys-subdomain-finder.py-$domain)"
-  }
-}
-
-#Online_Services
-Archive() {
-	[ "$silent" == True ] && curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u | anew subenum-$domain.txt  || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Archive${end}" &
-			PID="$!"
-		}
-		curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u > tmp-archive-$domain
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Archive$end: $(wc -l< tmp-archive-$domain)"
-	}
-}
-
-BufferOver() {
-	[ "$silent" == True ] && curl -s "https://dns.bufferover.run/dns?q=.$domain" | grep $domain | awk -F, '{gsub("\"", "", $2); print $2}' | anew subenum-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}BufferOver${end}" &
-			PID="$!"
-		}
-		curl -s "https://dns.bufferover.run/dns?q=.$domain" | grep $domain | awk -F, '{gsub("\"", "", $2); print $2}' | sort -u > tmp-bufferover-$domain
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] BufferOver$end: $(wc -l< tmp-bufferover-$domain)"
-	}
-}
-
-Crt() {
-	[ "$silent" == True ] && curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | anew subenum-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}crt.sh${end}" &
-			PID="$!"
-		}
-		curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | sort -u > tmp-crt-$domain
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] crt.sh$end: $(wc -l< tmp-crt-$domain)"
-	}
-}
-
-Riddler() {
-  [ "$silent" == True ] && curl -sk "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew subenum-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}riddler.io${end}" &
-			PID="$!"
-		}
-		curl -sk "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-riddler-$domain
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] riddler.io$end: $(wc -l< tmp-riddler-$domain)"
-	}
-}
-
-CertSpotter() {
-  [ "$silent" == True ] && curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq .[].dns_names | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew subenum-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}CertSpotter${end}" &
-			PID="$!"
-		}
-		curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq .[].dns_names | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-certspotter-$domain
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] CertSpotter$end: $(wc -l< tmp-certspotter-$domain && echo)"
-	}
-}
-
-JLDC() {
-  [ "$silent" == True ] && curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew subenum-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}JLDC${end}" &
-			PID="$!"
-		}
-		curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u > tmp-jldc-$domain
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] JLDC$end: $(wc -l< tmp-jldc-$domain)"
-	}
-}
-
-nMap() {
-  [ "$silent" == True ] && nmap --script hostmap-crtsh.nse $domain | unfurl domains | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}NMap${end}" &
-			PID="$!"
-		}
-		nmap --script hostmap-crtsh.nse $domain | unfurl domains 1> tmp-nmap-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] NMap$end: $(wc -l< tmp-nmap-$domain)"
-	}
-}
-
-HackerTarget() {
-  [ "$silent" == True ] && curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}HackerTarget${end}" &
-			PID="$!"
-		}
-		curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains 1> tmp-hackertarget-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] HackerTarget$end: $(wc -l< tmp-hackertarget-$domain)"
-	}
-}
-
-ThreatCrowd() {
-	[ "$silent" == True ] && curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains' | grep -o "\w.*$domain" | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}ThreatCrowd${end}" &
-			PID="$!"
-		}
-		curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains'  | grep -o "\w.*$domain" 1> tmp-threatcrowd-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] ThreatCrowd$end: $( wc -l< tmp-threatcrowd-$domain)"
-	}
-}
-
-Anubis() {
-	[ "$silent" == True ] && curl -sk "https://jldc.me/anubis/subdomains/$domain" | jq -r '.' | grep -o "\w.*$domain" | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Anubis${end}" &
-			PID="$!"
-		}
-		curl -sk "https://jldc.me/anubis/subdomains/$domain" | jq -r '.' | grep -o "\w.*$domain" 1> tmp-anubis-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Anubis$end: $( wc -l< tmp-anubis-$domain)"
-	}
-}
-
-ThreatMiner() {
-	[ "$silent" == True ] && curl -sk "https://api.threatminer.org/v2/domain.php?q=$domain&rt=5" | jq -r '.results[]' |grep -o "\w.*$domain" | sort -u   | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}ThreatMiner${end}" &
-			PID="$!"
-		}
-		curl -sk "https://api.threatminer.org/v2/domain.php?q=$domain&rt=5" | jq -r '.results[]' |grep -o "\w.*$domain" | sort -u   1> tmp-threatminer-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] ThreatMiner$end: $( wc -l< tmp-threatminer-$domain)"
-	}
-}
-
-Omnisint() {
-	[ "$silent" == True ] && curl -sk "https://sonar.omnisint.io/subdomains/$domain" | cut -d "[" -f1 | cut -d "]" -f1 | cut -d "\"" -f 2 | sort -u | anew subdomz-$domain.txt || {
-		[[ ${PARALLEL} == True ]] || { spinner "${green}${bold}Omnisint${end}" &
-			PID="$!"
-		}
-		curl -sk "https://sonar.omnisint.io/subdomains/$domain" | cut -d "[" -f1 | cut -d "]" -f1 | cut -d "\"" -f 2 | sort -u 1> tmp-omnisint-$domain 2>/dev/null
-		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "${green}${bold}[*] Omnisint$end: $( wc -l< tmp-omnisint-$domain)"
-	}
-}
-
+		
 # Output
 OUT() {
+    local date=$(date +'%Y-%m-%d')
+    local out="$domain-$date.txt"
+    
     if [ -n "$1" ]; then
-        out="$1"
-    else
-        out="$domain-$(date +'%Y-%m-%d').txt"
+        out="$domain-$1.txt"
     fi
-    sort -u tmp-*-"$domain" > "$out"
-    echo -e "${green}[+] The Final Results:$end $(wc -l "$out")"
-    rm tmp-*-"$domain"*
 }
 
-
-#Main
+# Main
 Main() {
-	if [ "$domain" == False ]; then
-        echo -e "${red}[-] Argument -d/--domain is Required!$end"
+    if [ -z "$domain" ]; then
+        echo -e "${red}[-] Argument -d is required!$end"
         Usage
     fi
-    if [ "$domain" != False ]; then
-		Subfinder
-    	Assetfinder
-		Chaos
-		Shuffledns
-        Findomain
-        Amass_Passive
-        Amass_Active
-        Gau
-        Waybackurls
-        Github-Subdomains
-		Gitlab-Subdomains
-        Crobat
-        CTFR
-        Cero
-        Shodomain
-        Censys-Subdomain-Finder
-        Archive
-        BufferOver
-        Crt
-        Riddler
-        CertSpotter
-        JLDC
-        nMap
-        HackerTarget
-        ThreatCrowd
-        Anubis
-        ThreatMiner
-		Omnisint
-		OUT "$out"  # Call OUT function with the output file name
-    fi
+
+    Subfinder
+    Assetfinder
+    Chaos
+    Shuffledns
+	Findomain
+	Amass_Passive
+	Gau
+	Waybackurls
+	Github-Subdomains
+	Gitlab-Subdomains
+	Crobat
+	Cero
+
+    OUT "$out"  # Call OUT function with the output file name
 }
 
-
-list=(
-		Subfinder
-		Assetfinder
-		Chaos
-		Shuffledns
-		Findomain
-		Amass_Passive
-		Amass_Active
-		Gau
-		Waybackurls
-		Github-Subdomains
-		Gitlab-Subdomains
-		Crobat
-		CTFR
-		Cero
-		Shodomain
-		Censys-Subdomain-Finder
-		Archive
-		BufferOver
-		Crt
-		Riddler
-		CertSpotter
-		JLDC
-		nMap
-		HackerTarget
-		ThreatCrowd
-		Anubis
-		ThreatMiner
-		Omnisint
-	)
-
+# Parse command-line arguments
 while [ -n "$1" ]; do
-	case $1 in
-		-d)
-			domain=$2
-			shift ;;
-		-o)
-			out=$2
-			shift ;;
-		-h)
-			Usage;;
-		-v)
-			echo "Version: $VERSION"
-			exit 0 ;;
-		*)
-			echo "[-] Unknown Option: $1"
-			Usage ;;
-	esac
-	shift
+    case $1 in
+        -d)
+            domain="$2"
+            shift ;;
+        -o)
+            out="$2"
+            shift ;;
+        -h | --help)
+            Usage ;;
+        -v)
+            echo "Version: $VERSION"
+            exit 0 ;;
+        *)
+            echo "[-] Unknown Option: $1"
+            Usage ;;
+    esac
+    shift
 done
 
 Main
-OUT 
