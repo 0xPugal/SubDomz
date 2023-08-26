@@ -118,6 +118,67 @@ Cero() {
 	cero $domain | anew subdomz-$domain.txt
 }
 
+#Online_Services
+Archive() {
+	RunEnumeration "Archive"
+	curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u | anew "$domain"-subs.txt 
+}
+
+BufferOver() {
+	RunEnumeration "BufferOver"
+	curl -s "https://dns.bufferover.run/dns?q=.$domain" | grep $domain | awk -F, '{gsub("\"", "", $2); print $2}' | anew "$domain"-subs.txt
+}
+
+Crt() {
+	RunEnumeration "Crt"
+	curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | anew "$domain"-subs.txt
+}
+
+Riddler() {
+	RunEnumeration "Riddler"
+	curl -sk "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew "$domain"-subs.txt
+}
+
+CertSpotter() {
+	RunEnumeration "CertSpotter"
+	curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq .[].dns_names | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew "$domain"-subs.txt
+}
+
+JLDC() {
+	RunEnumeration "JLDC"
+	curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew "$domain"-subs.txt
+}
+
+nMap() {
+	RunEnumeration "nmap"
+	nmap --script hostmap-crtsh.nse $domain | unfurl domains | anew "$domain"-subs.txt
+}
+
+HackerTarget() {
+	RunEnumeration "HackerTarget"
+	curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains | anew "$domain"-subs.txt
+}
+
+ThreatCrowd() {
+	RunEnumeration "ThreatCrowd"
+	curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains' | grep -o "\w.*$domain" | anew "$domain"-subs.txt
+}
+
+Anubis() {
+	RunEnumeration "Anubis"
+	curl -sk "https://jldc.me/anubis/subdomains/$domain" | jq -r '.' | grep -o "\w.*$domain" | anew "$domain"-subs.txt
+}
+
+ThreatMiner() {
+	RunEnumeration "ThreatMiner"
+	curl -sk "https://api.threatminer.org/v2/domain.php?q=$domain&rt=5" | jq -r '.results[]' |grep -o "\w.*$domain" | sort -u   | anew "$domain"-subs.txt
+}
+
+Omnisint() {
+	RunEnumeration "Omnisint"
+	curl -sk "https://sonar.omnisint.io/subdomains/$domain" | cut -d "[" -f1 | cut -d "]" -f1 | cut -d "\"" -f 2 | sort -u | anew "$domain"-subs.txt
+}
+
 		
 # Output
 OUT() {
@@ -148,6 +209,18 @@ Main() {
 	Gitlab-Subdomains
 	Crobat
 	Cero
+	Archive
+	BufferOver
+	Crt
+	Riddler
+	CertSpotter
+	JLDC
+	nMap
+	HackerTarget
+	ThreatCrowd
+	Anubis
+	ThreatMiner
+	Omnisint
 
     OUT "$out"  # Call OUT function with the output file name
 }
