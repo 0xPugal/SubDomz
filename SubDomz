@@ -100,12 +100,12 @@ Waybackurls() {
 
 Github-Subdomains() {
 	RunEnumeration "Github-Subdomains"
-	github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains | anew "$domain"-subs.txt || {
+	github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains | anew "$domain"-subs.txt 
 }
 
 Gitlab-Subdomains() {
 	RunEnumeration "Gitlab-Subdomains"
-	gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains | anew "$domain"-subs.txt || {
+	gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains | anew "$domain"-subs.txt 
 }
 
 Crobat() {
