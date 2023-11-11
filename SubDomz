@@ -90,7 +90,7 @@ Amass_Passive() {
 
 Gau() {
 	RunEnumeration "Gau"
-	gau -subs $domain | unfurl -u domains | anew "$domain"-subs.txt 
+	gau -ssubs $domain | unfurl -u domains | anew "$domain"-subs.txt 
 }
 
 Waybackurls() {
