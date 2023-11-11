@@ -16,10 +16,10 @@ Golang() {
 	LATEST=$(curl -s 'https://go.dev/VERSION?m=text')
 	[ $sys == "x86_64" ] && wget https://golang.org/dl/$LATEST.linux-amd64.tar.gz -O golang.tar.gz &>/dev/null || wget https://golang.org/dl/$LATEST.linux-386.tar.gz -O golang.tar.gz &>/dev/null
 	sudo tar -C /usr/local -xzf golang.tar.gz &>/dev/null
-	echo "export GOROOT=/usr/local/go" >> $HOME/.bashrc
+	echo "export GOROOT=~/go/bin" >> $HOME/.bashrc
 	echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
 	echo 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> $HOME/.bashrc
-  echo 'export PATH=$PATH:/usr/local/go/bin' >> $HOME/.profile
+  echo 'export PATH=$PATH:~/go/bin' >> $HOME/.profile
 
 	printf "[+] Golang Installed !.\n"
 }
@@ -89,7 +89,7 @@ Shuffledns() {
 }
 
 Findomain() {
-	    cd ~/SubDomz/tools
+	    cd ~/Desktop/github/Desktop/github/SubDomz/tools
             curl -LO https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip &>/dev/null && unzip findomain-linux.zip &>/dev/null
             chmod +x findomain
             sudo mv findomain /usr/local/bin/findomain;
@@ -133,7 +133,7 @@ Crobat() {
 
 CTFR() {
             printf "                  \r"
-	    cd ~/SubDomz/tools
+	    cd ~/Desktop/github/SubDomz/tools
             git clone https://github.com/UnaPibaGeek/ctfr.git &>/dev/null
             cd ctfr
             pip3 install -r requirements.txt &>/dev/null
@@ -150,7 +150,7 @@ Cero() {
 
 Sudomy() {
             printf "                          \r"
-	    cd ~/SubDomz/tools
+	    cd ~/Desktop/github/SubDomz/tools
             git clone --recursive https://github.com/screetsec/Sudomy.git &>/dev/null
             cd Sudomy && python3 -m pip install -r requirements.txt &>/dev/null
             sudo cp sudomy /usr/local/bin
@@ -159,7 +159,7 @@ Sudomy() {
 
 Shodomain() {
             printf "                                    \r"
-	    cd ~/SubDomz/tools
+	    cd ~/Desktop/github/SubDomz/tools
             git clone https://github.com/SmoZy92/Shodomain &>/dev/null
             cd Shodomain && pip install -r requirements.txt &>/dev/null
             sudo cp shodomain.py /usr/local/bin
@@ -169,7 +169,7 @@ Shodomain() {
 
 Censys-Subdomain-Finder() {
             printf "                  \r"
-	    cd ~/SubDomz/tools
+	    cd ~/Desktop/github/SubDomz/tools
             git clone https://github.com/christophetd/censys-subdomain-finder.git &>/dev/null
             cd censys-subdomain-finder
             python3 -m venv venv
@@ -186,10 +186,10 @@ Httpx() {
 	         printf "[+] Httpx Installed! \n"
 }
 
-export GOROOT=/usr/local/go
+export GOROOT=~/go/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/go/bin
 sudo cp ~/go/bin/* /usr/local/bin
 
 hash go 2>/dev/null && printf "[!] Golang is already installed.\n" || { printf "[+] Installing Golang!" && Golang; }
