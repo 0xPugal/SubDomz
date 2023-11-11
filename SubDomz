@@ -43,13 +43,14 @@ EOF
 # Add your api keys, tokens here
 subfinder=~/.config/subfinder/provider-config.yaml
 amass=~/.config/amass/config.ini
-wordlist=Wordlist/dns.txt
-GITHUB_TOKEN="TOKEN_HERE"
-GITLAB_TOKEN="TOKEN_HERE"
-SHODAN_APIKEY="API_KEY_HERE"
-CENSYS_ID="ID_HERE"
-CENSYS_SECRET="SECRET_HERE"
-CHAOS_APIKEY="API_KEY_HERE"
+wordlist=/home/kali/Desktop/github/SubDomz/dns-wordlist.txt
+resolvers=/home/kali/Desktop/github/SubDomz/resolvers.txt
+GITHUB_TOKEN="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"
+GITLAB_TOKEN="glpat-kSPzn9L68xbKqhe9zYaz"
+SHODAN_APIKEY="7TrCTfIKRUxc6PyS9j6sJIZXWlEQj41l"
+CENSYS_ID="845ae081-eb51-4f5b-9bf4-357d2f46a73c"
+CENSYS_SECRET="4kSxzaKRtfnS5xYSFUWLGtIgFS1Rz5kv"
+CHAOS_APIKEY="t0wO79b3UQy5kPtlMia2DYXkl8UAk78aZfymw52kBBRGdaNt7IEQtMBk4DQYXOrA"
 
 
 RunEnumeration() {
@@ -90,7 +91,7 @@ Amass_Passive() {
 
 Gau() {
 	RunEnumeration "Gau"
-	gau -subs $domain | unfurl -u domains | anew "$domain"-subs.txt 
+	gau --subs $domain | unfurl -u domains | anew "$domain"-subs.txt 
 }
 
 Waybackurls() {
@@ -159,10 +160,10 @@ HackerTarget() {
 	curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains | anew "$domain"-subs.txt
 }
 
-ThreatCrowd() {
-	RunEnumeration "ThreatCrowd"
-	curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains' | grep -o "\w.*$domain" | anew "$domain"-subs.txt
-}
+#ThreatCrowd() {
+#	RunEnumeration "ThreatCrowd"
+#	curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains' | grep -o "\w.*$domain" | anew "$domain"-subs.txt
+#}
 
 Anubis() {
 	RunEnumeration "Anubis"
