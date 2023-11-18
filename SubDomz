@@ -44,12 +44,12 @@ EOF
 subfinder=~/.config/subfinder/provider-config.yaml
 amass=~/.config/amass/config.ini
 wordlist=Wordlist/dns.txt
-GITHUB_TOKEN="TOKEN_HERE"
-GITLAB_TOKEN="TOKEN_HERE"
-SHODAN_APIKEY="API_KEY_HERE"
-CENSYS_ID="ID_HERE"
-CENSYS_SECRET="SECRET_HERE"
-CHAOS_APIKEY="API_KEY_HERE"
+GITHUB_TOKEN="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"
+GITLAB_TOKEN="glpat-2WRc9G34kQKJJo9seEzy"
+SHODAN_APIKEY="2UyxxOiRNILjI0geKcdifefp0soLxDkH"
+CENSYS_ID="0d2bc370-8922-4e42-aeee-c33b41d30a74"
+CENSYS_SECRET="FMKul1AbqteiVzzjGXFN55vFfNG6ZMB5"
+CHAOS_APIKEY="6Q3CXQ6pTEcrkdQD9LcnrOD6cxXctME3oRSc5VBnmquakNoCCwpiELqElrFgu2BP"
 
 
 RunEnumeration() {
