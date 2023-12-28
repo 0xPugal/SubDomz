@@ -9,6 +9,9 @@ blue="\e[34m"
 end="\e[0m"
 VERSION="SubDomz_v1.0"
 
+# Load configurations from config.txt
+source config.txt
+
 echo -e "$blue${bold}    _____         __     ____                         $end"
 echo -e "$blue${bold}   / ___/ __  __ / /_   / __ \ ____   ________  ____  $end"
 echo -e "$blue${bold}   \__ \ / / / // __ \ / / / // __ \ / __  __ \/_  /  $end"
@@ -38,19 +41,6 @@ EOF
 }
 
 mkdir -p ~/SubDomz/output/$domain/
-
-# Variables
-# Add your api keys, tokens here
-subfinder=~/.config/subfinder/provider-config.yaml
-amass=~/.config/amass/config.ini
-wordlist=Wordlist/dns.txt
-GITHUB_TOKEN="TOKEN_HERE"
-GITLAB_TOKEN="TOKEN_HERE"
-SHODAN_APIKEY="API_KEY_HERE"
-CENSYS_ID="ID_HERE"
-CENSYS_SECRET="SECRET_HERE"
-CHAOS_APIKEY="API_KEY_HERE"
-
 
 RunEnumeration() {
     local func_name="$1"
@@ -106,6 +96,7 @@ Github-Subdomains() {
 Gitlab-Subdomains() {
 	RunEnumeration "Gitlab-Subdomains"
 	gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains | tee ~/SubDomz/output/$domain/tmp-gitlab.txt
+}
 
 Crobat() {
 	RunEnumeration "Crobat"

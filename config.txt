@@ -1,0 +1,11 @@
+# configuration files and API keys
+
+export subfinder=~/.config/subfinder/provider-config.yaml
+export amass=~/.config/amass/config.ini
+export wordlist=Wordlist/dns.txt
+export GITHUB_TOKEN="TOKEN_HERE"
+export GITLAB_TOKEN="TOKEN_HERE"
+export SHODAN_APIKEY="API_KEY_HERE"
+export CENSYS_ID="ID_HERE"
+export CENSYS_SECRET="SECRET_HERE"
+export CHAOS_APIKEY="API_KEY_HERE"
