@@ -50,17 +50,15 @@ chmod +x install.sh SubDomz
 + Shuffledns
 + Findomain
 + Amass
-+ Gauplus
++ Gau
 + Waybackurls 
 + Github-Subdomains
 + Gitlab-Subdomains
 + Crobat
-+ CTFR
 + Cero
 + Sublist3r
 + Shodomain
 + Censys-Subdomain-Finder
-+ Nmap
 
 ### Online Search Engines & Services
 + Archive (Wayback Machine)
@@ -76,7 +74,7 @@ chmod +x install.sh SubDomz
 + Omnisint(Crobat)
 
 ### API keys
-+ Add your API keys in [here](https://github.com/0xlittleboy/SubDomz/blob/master/SubDomz#L45)
++ Add your API keys in [config.txt](https://github.com/0xPugazh/SubDomz/blob/master/config.txt)
 
 ## Support Me
 <a href="https://www.buymeacoffee.com/0xPugazh" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
