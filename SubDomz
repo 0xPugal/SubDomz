@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-# This Script is Inspired from @bing0o's domains.sh script & I copied and made changes to work effectively
 
 #Colours
 bold="\e[1m"
@@ -39,6 +37,8 @@ EOF
     exit 1
 }
 
+mkdir -p ~/SubDomz/output/$domain/
+
 # Variables
 # Add your api keys, tokens here
 subfinder=~/.config/subfinder/provider-config.yaml
@@ -60,140 +60,135 @@ RunEnumeration() {
 # Tools
 Subfinder() {
 	RunEnumeration "Subfinder"
-    subfinder -all -silent -d "$domain" -pc "$subfinder" -silent | anew "$domain"-subs.txt
+    subfinder -all -silent -d $domain -pc $subfinder -silent | tee ~/SubDomz/output/$domain/tmp-subfinder.txt
 }
 
 Assetfinder() {
 	RunEnumeration "Assetfinder"
-    assetfinder --subs-only "$domain" | anew "$domain"-subs.txt
+    assetfinder --subs-only $domain | tee ~/SubDomz/output/$domain/tmp-assetfinder.txt
 }
 
 Chaos() {
 	RunEnumeration "Chaos"
-    chaos -silent -d "$domain" -key "$CHAOS_APIKEY" -silent | anew "$domain"-subs.txt
+    chaos -silent -d $domain -key $CHAOS_APIKEY -silent | tee ~/SubDomz/output/$domain/tmp-chaos.txt
 }
 
 Shuffledns() {
 	RunEnumeration "Shuffledns"
-    shuffledns -silent -d "$domain" -w "$wordlist" -r "$resolvers" -silent | anew "$domain"-subs.txt
+    shuffledns -silent -d $domain -w $wordlist -r $resolvers -silent | tee ~/SubDomz/output/$domain/tmp-shuffledns.txt
 }
 
 Findomain() {
 RunEnumeration "Findomain"
-	findomain --target $domain --quiet | anew "$domain"-subs.txt
+	findomain --target $domain --quiet | tee ~/SubDomz/output/$domain/tmp-findomain.txt
 }
 
 Amass_Passive() {
 	RunEnumeration "Amass Passive"
-	amass enum -d $domain -config $amass | anew "$domain"-subs.txt
+	amass enum -d $domain -config $amass | tee ~/SubDomz/output/$domain/tmp-amass.txt
 }
 
 Gau() {
 	RunEnumeration "Gau"
-	gau --subs $domain | unfurl -u domains | anew "$domain"-subs.txt 
+	gau --subs $domain | unfurl -u domains | tee ~/SubDomz/output/$domain/tmp-gau.txt
 }
 
 Waybackurls() {
 	RunEnumeration "Waybackurls"
-	waybackurls $domain |  unfurl -u domains | anew "$domain"-subs.txt
+	waybackurls $domain |  unfurl -u domains | tee ~/SubDomz/output/$domain/tmp-waybackurls.txt
 }
 
 Github-Subdomains() {
 	RunEnumeration "Github-Subdomains"
-	github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains | anew "$domain"-subs.txt 
+	github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains | tee ~/SubDomz/output/$domain/tmp-github.txt
 }
 
 Gitlab-Subdomains() {
 	RunEnumeration "Gitlab-Subdomains"
-	gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains | anew "$domain"-subs.txt 
-}
+	gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains | tee ~/SubDomz/output/$domain/tmp-gitlab.txt
 
 Crobat() {
 	RunEnumeration "Crobat"
-	crobat -s $domain | anew "$domain"-subs.txt
+	crobat -s $domain | tee ~/SubDomz/output/$domain/tmp-crobat.txt
 }
 
 Cero() {
 	RunEnumeration "Cero"
-	cero $domain | anew subdomz-$domain.txt
+	cero $domain | tee ~/SubDomz/output/$domain/tmp-cero.txt
 }
 
 #Online_Services
 Archive() {
 	RunEnumeration "Archive"
-	curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u | anew "$domain"-subs.txt 
+	curl -sk "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=txt&fl=original&collapse=urlkey&page=" | awk -F/ '{gsub(/:.*/, "", $3); print $3}' | sort -u | tee ~/SubDomz/output/$domain/tmp-archive.txt
 }
 
 BufferOver() {
 	RunEnumeration "BufferOver"
-	curl -s "https://dns.bufferover.run/dns?q=.$domain" | grep $domain | awk -F, '{gsub("\"", "", $2); print $2}' | anew "$domain"-subs.txt
+	curl -s "https://dns.bufferover.run/dns?q=.$domain" | grep $domain | awk -F, '{gsub("\"", "", $2); print $2}' | tee ~/SubDomz/output/$domain/tmp-bufferover.txt
 }
 
 Crt() {
 	RunEnumeration "Crt"
-	curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | anew "$domain"-subs.txt
+	curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | tee ~/SubDomz/output/$domain/tmp-crtsh.txt
 }
 
 Riddler() {
 	RunEnumeration "Riddler"
-	curl -sk "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew "$domain"-subs.txt
+	curl -sk "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | tee ~/SubDomz/output/$domain/tmp-riddler.txt
 }
 
 CertSpotter() {
 	RunEnumeration "CertSpotter"
-	curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq .[].dns_names | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew "$domain"-subs.txt
+	curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq .[].dns_names | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | tee ~/SubDomz/output/$domain/tmp-certspotter.txt
 }
 
 JLDC() {
 	RunEnumeration "JLDC"
-	curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew "$domain"-subs.txt
-}
-
-nMap() {
-	RunEnumeration "nmap"
-	nmap --script hostmap-crtsh.nse $domain | unfurl domains | anew "$domain"-subs.txt
+	curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | tee ~/SubDomz/output/$domain/tmp-jldc.txt
 }
 
 HackerTarget() {
 	RunEnumeration "HackerTarget"
-	curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains | anew "$domain"-subs.txt
+	curl -sk "https://api.hackertarget.com/hostsearch/?q=$domain" | unfurl domains | tee ~/SubDomz/output/$domain/tmp-hackertarget.txt
 }
 
 ThreatCrowd() {
 	RunEnumeration "ThreatCrowd"
-	curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains' | grep -o "\w.*$domain" | anew "$domain"-subs.txt
+	curl -sk "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains' | grep -o "\w.*$domain" | tee ~/SubDomz/output/$domain/tmp-threatcrowd.txt
 }
 
 Anubis() {
 	RunEnumeration "Anubis"
-	curl -sk "https://jldc.me/anubis/subdomains/$domain" | jq -r '.' | grep -o "\w.*$domain" | anew "$domain"-subs.txt
+	curl -sk "https://jldc.me/anubis/subdomains/$domain" | jq -r '.' | grep -o "\w.*$domain" | tee ~/SubDomz/output/$domain/tmp-anubis.txt
 }
 
 ThreatMiner() {
 	RunEnumeration "ThreatMiner"
-	curl -sk "https://api.threatminer.org/v2/domain.php?q=$domain&rt=5" | jq -r '.results[]' |grep -o "\w.*$domain" | sort -u   | anew "$domain"-subs.txt
+	curl -sk "https://api.threatminer.org/v2/domain.php?q=$domain&rt=5" | jq -r '.results[]' |grep -o "\w.*$domain" | sort -u   | tee ~/SubDomz/output/$domain/tmp-threatminer.txt
 }
 
 Omnisint() {
 	RunEnumeration "Omnisint"
-	curl -sk "https://sonar.omnisint.io/subdomains/$domain" | cut -d "[" -f1 | cut -d "]" -f1 | cut -d "\"" -f 2 | sort -u | anew "$domain"-subs.txt
+	curl -sk "https://sonar.omnisint.io/subdomains/$domain" | cut -d "[" -f1 | cut -d "]" -f1 | cut -d "\"" -f 2 | sort -u | tee ~/SubDomz/output/$domain/tmp-ominsint.txt
 }
 
-		
-# Output
-OUT() {
-    local date=$(date +'%Y-%m-%d')
-    local out="$domain-$date.txt"
-    
-    if [ -n "$1" ]; then
-        out="$domain-$1.txt"
-    fi
+
+Output() {
+    local custom_output="$1"
+    local output_dir="~/SubDomz/output/$domain/"
+    local consolidated_file="$output_dir/$custom_output"
+
+    cat ~/SubDomz/$domain/tmp-*.txt | anew | "$consolidated_file"
+
+    echo "Subdomains are saved to: $consolidated_file"
 }
+
 
 # Main
 Main() {
     if [ -z "$domain" ]; then
-        echo -e "${red}[-] Argument -d is required!$end"
+        echo -e "${red}[-] Argument -d and -o are required!$end"
         Usage
     fi
 
@@ -215,14 +210,13 @@ Main() {
 	Riddler
 	CertSpotter
 	JLDC
-	nMap
 	HackerTarget
 	ThreatCrowd
 	Anubis
 	ThreatMiner
 	Omnisint
 
-    OUT "$out"  # Call OUT function with the output file name
+    Output
 }
 
 # Parse command-line arguments
