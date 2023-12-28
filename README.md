@@ -56,8 +56,7 @@ chmod +x install.sh SubDomz
 + Gitlab-Subdomains
 + Crobat
 + Cero
-+ Sublist3r
-+ Shodomain
++ Shosubsgo
 + Censys-Subdomain-Finder
 
 ### Online Search Engines & Services
