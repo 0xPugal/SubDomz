@@ -108,6 +108,16 @@ Cero() {
 	cero $domain | tee ~/SubDomz/output/$domain/tmp-cero.txt
 }
 
+shosubgo() {
+	RunEnumeration "shosubgo"
+	shosubgo -d $domain -s $SHODAN_API_KEY | tee ~/SubDomz/output/$domain/tmp-shosubgo.txt
+}
+
+censys-subdomain-finder() {
+	RunEnumeration "censys-subdomain-finder"
+	python censys-subdomain-finder.py $domain --censys-api-id CENSYS_ID --censys-api-secret CENSYS_SECRET -o ~/SubDomz/output/$domain/tmp-censyssubdomainfinder.txt
+}
+
 #Online_Services
 Archive() {
 	RunEnumeration "Archive"
@@ -195,6 +205,8 @@ Main() {
 	Gitlab-Subdomains
 	Crobat
 	Cero
+	shosubgo
+	censys-subdomain-finder
 	Archive
 	BufferOver
 	Crt
