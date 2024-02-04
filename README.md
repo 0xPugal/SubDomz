@@ -81,3 +81,12 @@ chmod +x install.sh SubDomz
 ### Credit
 This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to him for the great idea!
 
+## Star History
+
+<a href="https://star-history.com/#0xPugazh/SubDomz&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=0xPugazh/SubDomz&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=0xPugazh/SubDomz&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=0xPugazh/SubDomz&type=Date" />
+  </picture>
+</a>
