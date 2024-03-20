@@ -1,11 +1,7 @@
 #!/bin/bash
-
-mkdir tools
-
 echo -e "Installation Started..."
-echo " "
-sudo apt install jq -y 
-sudo apt install python3 -y 
+sudo apt install -y jq
+sudo apt install -y python3 
 sudo apt-get -y install python3-pip 
 sudo apt install -y parallel 
 pip3 install censys
