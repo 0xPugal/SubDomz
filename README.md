@@ -3,18 +3,16 @@
   <br>
 </h1> 
 <h3 align="center">
-All in One Subdomain Enumeration Tool
+All in One (Passive) Subdomain Enumeration Tool
 </p>
 <br/>
-
-![image](https://github.com/0xPugazh/SubDomz/assets/75373225/babdfa91-acba-4b10-b25e-dd804aacbde5)
+  
+![carbon](https://github.com/0xPugazh/SubDomz/assets/75373225/6049a018-e6af-4d67-9034-1eeba3231ece)
 
 -----------------------------
 ### What is SubDomz ?
- SubDomz is an automation tool for finding the subdomains of the given target or targets. It uses multiple tools and various online search engines and services in parallel to find subdomains effectively and sort and save them in an organised way.
+ SubDomz is an automation tool for finding the subdomains passively of the given target or targets. It uses multiple tools and various online search engines and services in parallel to find subdomains effectively and sort and save them in an organised way.
 
-#### Platforms Tested:
- + Debian based Linux
 
 ### Installation
 ```
@@ -26,51 +24,42 @@ chmod +x install.sh SubDomz
 
 ### Usage
 ```
-    _____         __     ____                         
-   / ___/ __  __ / /_   / __ \ ____   ________  ____  
-   \__ \ / / / // __ \ / / / // __ \ / __  __ \/_  /  
-  ___/ // /_/ // /_/ // /_/ // /_/ // / / / / / / /_  
- /____/ \__,_//_.___//_____/ \____//_/ /_/ /_/ /___/  
+# Options:
+      -d, --domain            - Domain to enumerate
+      -l, --list              - List of root domains to enumerate
+      -u, --use               - Specify which tools to be used (Ex: subfinder, amass, crt,...)
+      -e, --exclude           - Specify which tools to be excluded (Ex: findomain, wayback, gau,...)
+      -o, --output            - Output file to save final results ( Default: <target>-Date-Time.txt)
+      -s, --silent            - Show only subdomains in output
+      -hp, --http-probe       - probe for working http/https servers
+      -k, --keep              - keep the temporary files ( output from each tools)
+      -p, --parallel          - Run parallely for faster results. Doesn't Work With -e/--exclude or -u/--use.
+      -h, --help              - Display this help message and exit
+      -v, --version           - Display the version and exit
+      -ls, --list-sources     - Display all available sources/tools
+```
 
-        All in One Subdomain Enumeration Tool         
-             Made with <3 by 0xPugazh              
-
-
- Options:
-    -d ==> Domain To enumerate
-    -o ==> Output file to save the Final Results
-    -h ==> Displays this help message and exit
-    -v ==> Displays this version and exit
- ```
-
-### Tools Included
-+ Subfinder
-+ Assetfinder
-+ Chaos
-+ Shuffledns
-+ Findomain
-+ Amass
-+ Gau
-+ Waybackurls 
-+ Github-Subdomains
-+ Gitlab-Subdomains
-+ Crobat
-+ Cero
-+ Shosubsgo
-+ Censys-Subdomain-Finder
-
-### Online Search Engines & Services
-+ Archive (Wayback Machine)
-+ BufferOver
-+ Crtsh
-+ Riddler
-+ CertSpotter
-+ JLDC
-+ HackerTarget
-+ ThreatCrowd
-+ Anubis
-+ ThreatMiner
-+ Omnisint(Crobat)
+### Available Sources/tools
+```
+Subfinder
+Amass
+Assetfinder
+Chaos
+Findomain
+Haktrails
+Gau
+Github-subdomains
+Gitlab-subdomains
+Crobat
+Cero
+Shosubgo
+Censys
+Crtsh
+JLDC-anubis
+Alienvault
+Subdomain-center
+Certspotter
+```
 
 ### API keys
 + Add your API keys in [config.txt](https://github.com/0xPugazh/SubDomz/blob/master/config.txt)
@@ -82,7 +71,7 @@ chmod +x install.sh SubDomz
 <a href="https://www.buymeacoffee.com/0xPugazh" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
 ### Credit
-This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script. Thanks to him for the great idea!
+This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script.
 
 ## Star History
 
