@@ -1,12 +1,10 @@
 # configuration files and API keys
 # feed with your api keys and tokens to subfinder and amass config files for moreee subdomains
 
-export subfinder=~/.config/subfinder/provider-config.yaml
-export amass=~/.config/amass/config.ini
-export wordlist=Wordlist/dns.txt
+export SUBFINDER_CONFIG=~/.config/subfinder/provider-config.yaml
+export AMASS_CONFIG=~/.config/amass/config.ini
+export HAKTRAILS_CONFIG=~/.config/haktools/haktrails-config.yml
 export GITHUB_TOKEN="TOKEN_HERE"
 export GITLAB_TOKEN="TOKEN_HERE"
 export SHODAN_API_KEY="API_KEY_HERE"
-export CENSYS_ID="ID_HERE"
-export CENSYS_SECRET="SECRET_HERE"
-export CHAOS_APIKEY="API_KEY_HERE"
+export CHAOS_API_KEY="API_KEY_HERE"
