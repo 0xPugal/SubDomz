@@ -6,8 +6,8 @@
 All in One (Passive) Subdomain Enumeration Tool
 </p>
 <br/>
-
-![image](https://github.com/0xPugazh/SubDomz/assets/75373225/babdfa91-acba-4b10-b25e-dd804aacbde5)
+  
+![carbon](https://github.com/0xPugazh/SubDomz/assets/75373225/6049a018-e6af-4d67-9034-1eeba3231ece)
 
 -----------------------------
 ### What is SubDomz ?
