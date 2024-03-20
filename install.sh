@@ -22,6 +22,8 @@ go install github.com/cgboal/sonarsearch/cmd/crobat@latest
 go install -v github.com/glebarez/cero@latest 
 go install github.com/incogbyte/shosubgo@latest
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install github.com/tomnomnom/unfurl@latest
+go install -v github.com/tomnomnom/anew@latest
 
 wget https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip  && unzip findomain-linux.zip 
 chmod +x findomain
