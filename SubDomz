@@ -249,22 +249,22 @@ Alienvault() {
 }
 
 Subdomain-center() {
-  [ "$silent" == True ] && curl "https://api.subdomain.center/?domain=apple.com" -s | jq -r '.[]' | sort -u | anew subenum-$domain.txt || {
+  [ "$silent" == True ] && curl "https://api.subdomain.center/?domain=$domain" -s | jq -r '.[]' | sort -u | anew subenum-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Subdomain center${NC}" &
 			PID="$!"
 		}
-		curl "https://api.subdomain.center/?domain=apple.com" -s | jq -r '.[]' | sort -u > tmp-subdomaincenter-$domain
+		curl "https://api.subdomain.center/?domain=$domain" -s | jq -r '.[]' | sort -u > tmp-subdomaincenter-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$BOLD[*] Subdomain center$NC: $( wc -l < tmp-subdomaincenter-$domain)"
 	}
 }
 
-CertSpotter() {
-  [ "$silent" == True ] && curl -sk "https://api.certspotter.com/v1/issuances?domain=apple.com&include_subdomains=true&expand=dns_names" | jq -r '.[].dns_names[]' | anew subenum-$domain.txt || {
+Certspotter() {
+  [ "$silent" == True ] && curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq -r '.[].dns_names[]' | anew subenum-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}CertSpotter${NC}" &
 			PID="$!"
 		}
-		curl -sk "https://api.certspotter.com/v1/issuances?domain=apple.com&include_subdomains=true&expand=dns_names" | jq -r '.[].dns_names[]' | sort -u > tmp-certspotter-$domain
+		curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq -r '.[].dns_names[]' | sort -u > tmp-certspotter-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$BOLD[*] CertSpotter$NC: $( wc -l < tmp-certspotter-$domain && echo)"
 	}
