@@ -1,49 +1,165 @@
 #!/bin/bash
-echo -e "Installation Started..."
-sudo apt install -y jq
-sudo apt install -y python3 
-sudo apt-get -y install python3-pip 
-sudo apt install -y parallel 
-pip3 install censys
-pip3 install shodan
+#
+Parallel(){
+    printf "                                \r"
+        sudo apt-get install parallel -y
+}
 
-GO111MODULE=on go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest 
-go install -v github.com/tomnomnom/assetfinder@latest 
-go install -v github.com/projectdiscovery/chaos-client/cmd/chaos@latest
-GO111MODULE=on go install -v github.com/OWASP/Amass/v3/...@latest 
-go install github.com/lc/gau@latest 
-go install -v github.com/gwen001/github-subdomains@latest 
-go install github.com/gwen001/gitlab-subdomains@latest
-go install github.com/cgboal/sonarsearch/cmd/crobat@latest 
-go install -v github.com/glebarez/cero@latest 
-go install github.com/incogbyte/shosubgo@latest
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-go install github.com/tomnomnom/unfurl@latest
-go install -v github.com/tomnomnom/anew@latest
+JQ() {
+    printf "                                \r"
+        sudo apt-get install jq -y
+}
 
-wget https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip  && unzip findomain-linux.zip 
-chmod +x findomain
-sudo mv findomain /usr/local/bin/findomain;
+Python() {
+    printf "                                \r"
+        sudo apt-get install python3 -y
+}
 
-echo ""
+Pip() {
+    printf "                                \r"
+        sudo apt-get install python3-pip3 -y
+}
 
-#Checking Tools
-hash findomain 2>/dev/null && printf "[+] Findomain - Installed\n" || printf "[-] Findomain - Not installed\n" 
-hash subfinder 2>/dev/null && printf "[+] Subfinder - Installed.\n" ||printf "[-] Subfinder - Not installed\n" 
-hash amass 2>/dev/null && printf "[+] Amass - Installed.\n" || printf "[-] Amass - Not installed\n" 
-hash assetfinder 2>/dev/null && printf "[+] Assetfinder - Installed.\n" || printf "[-] Assetfinder - Not installed\n" 
-hash chaos 2>/dev/null && printf "[+] Chaos - Installed.\n" || printf "[-] Chaos - Not installed\n" 
-hash gau 2>/dev/null && printf "[+] Gau - Installed.\n" || printf "[-] Gau - Not installed\n" 
-hash waybackurls 2>/dev/null && printf "[+] Waybackurls - Installed.\n" || printf "[-] Waybackurls - Not installed\n" 
-hash github-subdomains 2>/dev/null && printf "[+] Github-Subdomains - Installed.\n" || printf "[-] Github-Subdomains - Not installed\n" 
-hash gitlab-subdomains 2>/dev/null && printf "[+] Gitlab-Subdomains - Installed.\n" || printf "[-] Gitlab-Subdomains - Not installed\n" 
-hash crobat 2>/dev/null && printf "[+] Crobat - Installed.\n" || printf "[-] Crobat - Not installed\n" 
-hash cero 2>/dev/null && printf "[+] Cero - Installed.\n" || printf "[-] Cero - Not installed\n" 
-hash shosubgo 2>/dev/null && printf "[+] Shosubgo - Installed.\n" || printf "[-] Shosubgo - Not installed\n" 
-hash censys 2>/dev/null && printf "[+] censys - Installed.\n" || printf "[-] censys - Not installed\n" 
+Shodan() {
+    printf "                                \r"
+    pip3 install shodan
+}
 
-echo """
-+ Manually add the censys api key and secret key manually using 'censys config'
-+ Add the API keys and tokens in Config.txt file
-+ Feed the API keys and tokens in subfinder and amass config file for more subdomains
-"""
+Censys() {
+    printf "                                \r"
+    pip3 install censys
+}
+
+Subfinder() {
+        printf "                                \r"
+        go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+}
+
+Amass() {
+        printf "                                \r"
+        go install -v github.com/owasp-amass/amass/v3/...@master
+}
+
+Assetfinder() {
+        printf "                                \r"
+        go install github.com/tomnomnom/assetfinder@latest
+}
+
+Chaos() {
+        printf "                                \r"
+        go install -v github.com/projectdiscovery/chaos-client/cmd/chaos@latest
+}
+
+Findomain() {
+        printf "                                \r"
+        wget https://github.com/Findomain/Findomain/releases/download/8.2.1/findomain-linux.zip
+        unzip findomain-linux.zip
+        rm findomain-linux.zip
+        chmod +x findomain
+        ./findomain && sudo cp findomain /usr/bin/
+}
+
+Haktrails() {
+        printf "                                \r"
+        go install -v github.com/hakluke/haktrails@latest
+}
+
+Gau() {
+        printf "                                \r"
+        go install github.com/lc/gau/v2/cmd/gau@latest
+}
+
+Github-subdomains() {
+        printf "                                \r"
+        go install github.com/gwen001/github-subdomains@latest
+}
+
+Gitlab-subdomains() {
+        printf "                                \r"
+        go install github.com/gwen001/gitlab-subdomains@latest
+}
+
+Crobat() {
+        printf "                                \r"
+    go install github.com/cgboal/sonarsearch/cmd/crobat@latest
+}
+
+Cero() {
+        printf "                                \r"
+        go install -v github.com/glebarez/cero@latest
+}
+
+Shosubgo() {
+        printf "                                \r"
+        go install github.com/incogbyte/shosubgo@latest
+}
+
+Httpx() {
+        printf "                                \r"
+        go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+}
+
+Anew() {
+        printf "                                \r"
+        go install -v github.com/tomnomnom/anew@latest
+}
+
+Unfurl() {
+        printf "                                \r"
+        go install github.com/tomnomnom/unfurl@latest
+}
+
+Parallel
+JQ
+Python
+Pip
+Shodan
+Censys
+Subfinder
+Amass
+Assetfinder
+Chaos
+Findomain
+Haktrails
+Gau
+Github-subdomains
+Gitlab-subdomains
+Crobat
+Cero
+Shosubgo
+Httpx
+Anew
+Unfurl
+
+list=(
+        parallel
+        jq
+        python3
+        pip
+        shodan
+        censys
+        subfinder
+        amass
+    assetfinder
+    chaos
+    findomain
+    haktrails
+    gau
+    github-subdomains
+    gitlab-subdomains
+    crobat
+    cero
+    shosubgo
+    httpx
+    anew
+    unfurl
+        )
+
+r="\e[31m"
+g="\e[32m"
+e="\e[0m"
+
+for prg in ${list[@]}
+do
+        hash $prg 2>/dev/null && printf "[$prg]$g Installed$e\n" || printf "[$prg]$r Install Manually.$e\n"
+done
