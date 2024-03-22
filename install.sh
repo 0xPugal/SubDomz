@@ -56,7 +56,7 @@ Findomain() {
         unzip findomain-linux.zip
         rm findomain-linux.zip
         chmod +x findomain
-        ./findomain && sudo cp findomain /usr/bin/
+        sudo cp findomain /usr/bin/
 }
 
 Haktrails() {
@@ -67,6 +67,7 @@ Haktrails() {
 Gau() {
         printf "                                \r"
         go install github.com/lc/gau/v2/cmd/gau@latest
+        wget ~/ https://raw.githubusercontent.com/lc/gau/master/.gau.toml
 }
 
 Github-subdomains() {
@@ -77,11 +78,6 @@ Github-subdomains() {
 Gitlab-subdomains() {
         printf "                                \r"
         go install github.com/gwen001/gitlab-subdomains@latest
-}
-
-Crobat() {
-        printf "                                \r"
-    go install github.com/cgboal/sonarsearch/cmd/crobat@latest
 }
 
 Cero() {
@@ -124,7 +120,6 @@ Haktrails
 Gau
 Github-subdomains
 Gitlab-subdomains
-Crobat
 Cero
 Shosubgo
 Httpx
@@ -147,7 +142,6 @@ list=(
     gau
     github-subdomains
     gitlab-subdomains
-    crobat
     cero
     shosubgo
     httpx
