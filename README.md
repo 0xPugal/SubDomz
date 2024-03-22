@@ -38,25 +38,23 @@ chmod +x install.sh SubDomz.sh
 ```
 
 ### Available Sources/tools
-```
-Subfinder
-Amass
-Assetfinder
-Chaos
-Findomain
-Haktrails
-Gau
-Github-subdomains
-Gitlab-subdomains
-Cero
-Shosubgo
-Censys
-Crtsh
-JLDC-anubis
-Alienvault
-Subdomain-center
-Certspotter
-```
+- [Subfinder](https://github.com/projectdiscovery/subfinder)
+- [Amass](https://github.com/owasp-amass/amass)
+- [Assetfinder](https://github.com/tomnomnom/assetfinder)
+- [Chaos](https://github.com/projectdiscovery/chaos-client)
+- [Findomain](https://github.com/Findomain/Findomain)
+- [Haktrails](https://github.com/hakluke/haktrails)
+- [Gau](https://github.com/lc/gau)
+- [Github-subdomains](https://github.com/gwen001/github-subdomains)
+- [Gitlab-subdomains](https://github.com/gwen001/gitlab-subdomains)
+- [Cero](https://github.com/glebarez/cero)
+- [Shosubgo](https://github.com/incogbyte/shosubgo)
+- [Censys](https://search.censys.io/)
+- [Crtsh](https://crt.sh/)
+- [JLDC-anubis](https://jldc.me/anubis)
+- [Alienvault](https://otx.alienvault.com)
+- [Subdomain-center](https://api.subdomain.center)
+- [Certspotter](https://api.certspotter.com)
 
 ### API keys
 + Add your API keys in [config.txt](https://github.com/0xPugazh/SubDomz/blob/master/config.txt)
