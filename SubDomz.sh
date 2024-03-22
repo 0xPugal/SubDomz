@@ -45,7 +45,6 @@ ListSources() {
     echo "Gau"
     echo "Github-subdomains"
     echo "Gitlab-subdomains"
-    echo "Crobat"
     echo "Cero"
     echo "Shosubgo"
     echo "Censys"
@@ -73,13 +72,13 @@ spinner() {
 }
 
 Subfinder() {
-	[ "$silent" == True ] && subfinder -all -silent -pc $SUBFINDER_CONFIG -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && subfinder -all -silent -d $domain -pc $SUBFINDER_CONFIG 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Subfinder${NC}" &
 			PID="$!"
 		}
-		subfinder -all -silent -pc $SUBFINDER_CONFIG -d $domain 1> tmp-subfinder-$domain 2>/dev/null
+		subfinder -all -silent -d $domain -pc $SUBFINDER_CONFIG 1> tmp-subfinder-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$BOLD[*] SubFinder$NC: $(wc -l < tmp-subfinder-$domain)"
+		echo -e "$BOLD[*] Subfinder$NC: $(wc -l < tmp-subfinder-$domain)"
 	}
 }
 
@@ -121,9 +120,9 @@ Findomain() {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Findomain${NC}" &
 			PID="$!"
 		}
-		findomain -t $domain -u tmp-findomain-$domain &>/dev/null
+		findomain -t $domain -q > tmp-findomain-$domain &>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$BOLD[*] Findomain$NC: $(wc -l tmp-findomain-$domain 2>/dev/null | awk '{print $1}')"
+		echo -e "$BOLD[*] Findomain$NC: $(wc -l tmp-findomain-$domain)"
 	}
 }
 
@@ -149,36 +148,25 @@ Gau() {
         }
 }
 
-Github-Subdomains() {
-        [ "$silent" == True ] && github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains | grep "$domain" 2>/dev/null | anew subdomz-$domain.txt || {
+Github-subdomains() {
+        [ "$silent" == True ] && github-subdomains -d $domain -t $GITHUB_TOKEN -raw 2>/dev/null | anew subdomz-$domain.txt || {
                 [[ ${PARALLEL} == True ]] || { spinner "${BOLD}Github-Subdomains${NC}" &
                         PID="$!"
                 }
-                github-subdomains -d $domain -t $GITHUB_TOKEN | unfurl domains | grep "$domain" 1> tmp-github-subdomains-$domain 2>/dev/null
+                github-subdomains -d $domain -t $GITHUB_TOKEN -raw 1> tmp-github-subdomains-$domain 2>/dev/null
                 [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
                 echo -e "$BOLD[*] Github-Subdomains$NC: $( wc -l < tmp-github-subdomains-$domain)"
         }
 }
 
-Gitlab-Subdomains() {
-        [ "$silent" == True ] && gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains | grep "$domain" 2>/dev/null | anew subdomz-$domain.txt || {
+Gitlab-subdomains() {
+        [ "$silent" == True ] && gitlab-subdomains -d $domain -t $GITLAB_TOKEN 2>/dev/null | anew subdomz-$domain.txt || {
                 [[ ${PARALLEL} == True ]] || { spinner "${BOLD}Gitlab-Subdomains${NC}" &
                         PID="$!"
                 }
-                gitlab-subdomains -d $domain -t $GITLAB_TOKEN | unfurl domains | grep "$domain" 1> tmp-gitlab-subdomains-$domain 2>/dev/null
+                gitlab-subdomains -d $domain -t $GITLAB_TOKEN 1> tmp-gitlab-subdomains-$domain 2>/dev/null
                 [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
                 echo -e "$BOLD[*] Github-Subdomains$NC: $( wc -l < tmp-gitlab-subdomains-$domain)"
-        }
-}
-
-Crobat() {
-        [ "$silent" == True ] && crobat -s $domain  2>/dev/null | anew subdomz-$domain.txt || {
-                [[ ${PARALLEL} == True ]] || { spinner "${BOLD}crobat${NC}" &
-                        PID="$!"
-                }
-                crobat -s $domain 1> tmp-crobat-$domain 2>/dev/null
-                [[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-                echo -e "$BOLD[*] crobat$NC: $( wc -l < tmp-crobat-$domain)"
         }
 }
 
@@ -205,11 +193,11 @@ Shosubgo() {
 }
 
 Censys() {
-	[ "$silent" == True ] && censys subdomains $domain 2>/dev/null | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && censys subdomains $domain | sed 's/^[ \t]*-//; s/-//g' 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Censys${NC}" &
 			PID="$!"
 		}
-		censys subdomains $domain 1> tmp-censys-$domain 2>/dev/null
+		censys subdomains $domain | sed 's/^[ \t]*-//; s/-//g' 1> tmp-censys-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$BOLD[*] Censys$NC: $( wc -l < tmp-censys-$domain)"
 	}
@@ -317,9 +305,9 @@ List() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Enumerating" &
 				PID="$!"
-				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Crobat Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter spinner
+				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter spinner
 				export domain silent BOLD NC
-				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Crobat Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter
+				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter
 				kill ${PID}
 				[[ $out != False ]] && Out $out || Out
 			} || {
@@ -332,7 +320,6 @@ List() {
                                 Gau
                                 Github-subdomains
                                 Gitlab-subdomains
-                                Crobat
                                 Cero
                                 Shosubgo
                                 Censys
@@ -358,9 +345,9 @@ Main() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Enumerating" &
 				PID="$!"
-				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Crobat Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter spinner
+				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter spinner
 				export domain silent BOLD NC
-				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Crobat Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter
+				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter
 				kill ${PID}
 			} || {
 				Subfinder
@@ -372,7 +359,6 @@ Main() {
                                 Gau
                                 Github-subdomains
                                 Gitlab-subdomains
-                                Crobat
                                 Cero
                                 Shosubgo
                                 Censys
@@ -416,7 +402,6 @@ list=(
         Gau
         Github-subdomains
         Gitlab-subdomains
-        Crobat
         Cero
         Shosubgo
         Censys
