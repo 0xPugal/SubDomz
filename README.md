@@ -5,7 +5,6 @@
 <h3 align="center">
 All in One (Passive) Subdomain Enumeration Tool
 </p>
-<br/>
   
 ![subdomz](https://github.com/0xPugazh/SubDomz/blob/master/subdomz.png)
 -----------------------------
@@ -17,7 +16,7 @@ All in One (Passive) Subdomain Enumeration Tool
 ```
 git clone https://github.com/0xlittleboy/SubDomz.git
 cd SubDomz 
-chmod +x install.sh SubDomz
+chmod +x install.sh SubDomz.sh
 ./install.sh
 ```
 
