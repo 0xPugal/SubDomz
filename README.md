@@ -7,8 +7,7 @@ All in One (Passive) Subdomain Enumeration Tool
 </p>
 <br/>
   
-![carbon](https://github.com/0xPugazh/SubDomz/assets/75373225/6049a018-e6af-4d67-9034-1eeba3231ece)
-
+![subdomz](https://github.com/0xPugazh/SubDomz/blob/master/subdomz.png)
 -----------------------------
 ### What is SubDomz ?
  SubDomz is an automation tool for finding the subdomains passively of the given target or targets. It uses multiple tools and various online search engines and services in parallel to find subdomains effectively and sort and save them in an organised way.
@@ -50,7 +49,6 @@ Haktrails
 Gau
 Github-subdomains
 Gitlab-subdomains
-Crobat
 Cero
 Shosubgo
 Censys
