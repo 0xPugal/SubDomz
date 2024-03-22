@@ -12,6 +12,8 @@ VERSION="2.0"
 
 PRG=${0##*/}
 
+source config.txt
+
 Usage() {
         while read -r line; do
                 printf "%b\n" "$line"
