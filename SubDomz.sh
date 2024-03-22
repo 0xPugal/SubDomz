@@ -73,22 +73,22 @@ spinner() {
 }
 
 Subfinder() {
-	[ "$silent" == True ] && subfinder -all -silent -pc $SUBFINDER_CONFIG -d $domain | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && subfinder -all -silent -pc $SUBFINDER_CONFIG -d $domain 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Subfinder${NC}" &
 			PID="$!"
 		}
-		subfinder -all -silent -pc $SUBFINDER_CONFIG -d $domain > tmp-subfinder-$domain
+		subfinder -all -silent -pc $SUBFINDER_CONFIG -d $domain 1> tmp-subfinder-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$BOLD[*] SubFinder$NC: $( wc -l< tmp-subfinder-$domain)"
+		echo -e "$BOLD[*] SubFinder$NC: $(wc -l < tmp-subfinder-$domain)"
 	}
 }
 
 Amass() {
-	[ "$silent" == True ] && amass enum -passive -norecursive -noalts -d $domain -config $AMASS_CONFIG | anew subdomz-$domain.txt || {
+	[ "$silent" == True ] && amass enum -passive -norecursive -noalts -d $domain -config $AMASS_CONFIG 2>/dev/null | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Amass${NC}" &
 			PID="$!"
 		}
-		amass enum -passive -norecursive -noalts -d $domain -config $AMASS_CONFIG > tmp-amass-$domain
+		amass enum -passive -norecursive -noalts -d $domain -config $AMASS_CONFIG 1> tmp-amass-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$BOLD[*] Amass$NC: $(wc -l < tmp-amass-$domain)"
 	}
@@ -100,7 +100,7 @@ Assetfinder() {
 			PID="$!"
 		}
 		assetfinder --subs-only $domain > tmp-assetfinder-$domain
-		kill ${PID} 2>/dev/null
+		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
 		echo -e "$BOLD[*] Assetfinder$NC: $(wc -l < tmp-assetfinder-$domain)"
 	}
 }
@@ -112,7 +112,7 @@ Chaos() {
 		}
 		chaos -silent -key $CHAOS_API_KEY -d $domain > tmp-chaos-$domain
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$BOLD[*] Chaos$NC: $( wc -l < tmp-chaos-$domain)"
+		echo -e "$BOLD[*] Chaos$NC: $(wc -l < tmp-chaos-$domain)"
 	}
 }
 
@@ -134,7 +134,7 @@ Haktrails() {
 		}
 		echo "$domain" | haktrails subdomains 1> tmp-haktrails-$domain 2>/dev/null
 		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
-		echo -e "$BOLD[*] Haktrails$NC: $(wc -l tmp-haktrails-$domain 2>/dev/null | awk '{print $1}')"
+		echo -e "$BOLD[*] Haktrails$NC: $(wc -l tmp-haktrails-$domain)"
 	}
 }
 
@@ -216,7 +216,7 @@ Censys() {
 }
 
 Crtsh() {
-	[ "$silent" == True ] && curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | grep -w "$domain\$" | anew subenum-$domain.txt || {
+	[ "$silent" == True ] && curl -sk "https://crt.sh/?q=%.$domain&output=json" | tr ',' '\n' | awk -F'"' '/name_value/ {gsub(/\*\./, "", $4); gsub(/\\n/,"\n",$4);print $4}' | grep -w "$domain\$" | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Crtsh${NC}" &
 			PID="$!"
 		}
@@ -227,7 +227,7 @@ Crtsh() {
 }
 
 JLDC() {
-  [ "$silent" == True ] && curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew subenum-$domain.txt || {
+  [ "$silent" == True ] && curl -sk "https://jldc.me/anubis/subdomains/$domain" | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}JLDC${NC}" &
 			PID="$!"
 		}
@@ -238,7 +238,7 @@ JLDC() {
 }
 
 Alienvault() {
-  [ "$silent" == True ] && curl -s "https://otx.alienvault.com/api/v1/indicators/domain/$domain/url_list?limit=1000&page=100" | grep -o '"hostname": *"[^"]*' | sed 's/"hostname": "//' | anew subenum-$domain.txt || {
+  [ "$silent" == True ] && curl -s "https://otx.alienvault.com/api/v1/indicators/domain/$domain/url_list?limit=1000&page=100" | grep -o '"hostname": *"[^"]*' | sed 's/"hostname": "//' | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Alienvault${NC}" &
 			PID="$!"
 		}
@@ -249,7 +249,7 @@ Alienvault() {
 }
 
 Subdomain-center() {
-  [ "$silent" == True ] && curl "https://api.subdomain.center/?domain=$domain" -s | jq -r '.[]' | sort -u | anew subenum-$domain.txt || {
+  [ "$silent" == True ] && curl "https://api.subdomain.center/?domain=$domain" -s | jq -r '.[]' | sort -u | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Subdomain center${NC}" &
 			PID="$!"
 		}
@@ -260,7 +260,7 @@ Subdomain-center() {
 }
 
 Certspotter() {
-  [ "$silent" == True ] && curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq -r '.[].dns_names[]' | anew subenum-$domain.txt || {
+  [ "$silent" == True ] && curl -sk "https://api.certspotter.com/v1/issuances?domain=$domain&include_subdomains=true&expand=dns_names" | jq -r '.[].dns_names[]' | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}CertSpotter${NC}" &
 			PID="$!"
 		}
