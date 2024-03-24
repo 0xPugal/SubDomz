@@ -5,7 +5,9 @@
 <h3 align="center">
 All in One (Passive) Subdomain Enumeration Tool
 </p>
-  
+
+  ![SubDomz](https://github.com/0xPugazh/SubDomz/blob/master/SubDomz.png)
+
 -----------------------------
 ### What is SubDomz ?
  SubDomz is an automation tool for finding the subdomains passively of the given target or targets. It uses multiple tools and various online search engines and services in parallel to find subdomains effectively and sort and save them in an organised way.
