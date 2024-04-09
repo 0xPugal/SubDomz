@@ -71,10 +71,10 @@ This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](http
 
 ## Star History
 
-<a href="https://star-history.com/#0xPugazh/SubDomz&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=0xPugazh/SubDomz&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=0xPugazh/SubDomz&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=0xPugazh/SubDomz&type=Date" />
-  </picture>
+<a href="https://star-history.com/#0xpugal/SubDomz&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=0xpugal/SubDomz&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=0xpugal/SubDomz&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=0xpugal/SubDomz&type=Date" />
+ </picture>
 </a>
