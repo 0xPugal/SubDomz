@@ -3,14 +3,14 @@
   <br>
 </h1> 
 <h3 align="center">
-All in One (Passive) Subdomain Enumeration Tool
+All-in-One (Passive) Subdomain Enumeration Tool
 </p>
 
   ![SubDomz](https://github.com/0xPugazh/SubDomz/blob/master/SubDomz.png)
 
 -----------------------------
-### What is SubDomz ?
- SubDomz is an automation tool for finding the subdomains passively of the given target or targets. It uses multiple tools and various online search engines and services in parallel to find subdomains effectively and sort and save them in an organised way.
+### What is SubDomz?
+ SubDomz is an automation tool for finding the subdomains of the given target or targets passively. It uses multiple tools and various online search engines and services in parallel to find subdomains effectively and sort and save them in an organized way.
 
 
 ### Installation
@@ -18,6 +18,7 @@ All in One (Passive) Subdomain Enumeration Tool
 git clone https://github.com/0xlittleboy/SubDomz.git
 cd SubDomz 
 chmod +x install.sh SubDomz.sh
+dos2unix install.sh SubDomz.sh
 ./install.sh
 ```
 
@@ -31,8 +32,8 @@ chmod +x install.sh SubDomz.sh
       -o, --output            - Output file to save final results ( Default: <target>-Date-Time.txt)
       -s, --silent            - Show only subdomains in output
       -hp, --http-probe       - probe for working http/https servers
-      -k, --keep              - keep the temporary files ( output from each tools)
-      -p, --parallel          - Run parallely for faster results. Doesn't Work With -e/--exclude or -u/--use.
+      -k, --keep              - keep the temporary files ( output from each tool)
+      -p, --parallel          - Run parallelly for faster results. Doesn't Work With -e/--exclude or -u/--use.
       -h, --help              - Display this help message and exit
       -v, --version           - Display the version and exit
       -ls, --list-sources     - Display all available sources/tools
