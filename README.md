@@ -18,7 +18,7 @@ All-in-One (Passive) Subdomain Enumeration Tool
 git clone https://github.com/0xlittleboy/SubDomz.git
 cd SubDomz 
 chmod +x install.sh SubDomz.sh
-dos2unix install.sh SubDomz.sh
+dos2unix install.sh SubDomz.sh config.txt
 ./install.sh
 ```
 
