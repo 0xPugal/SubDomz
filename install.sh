@@ -17,17 +17,17 @@ Python() {
 
 Pip() {
     printf "                                \r"
-        sudo apt-get install python3-pip3 -y
+        sudo apt-get install python3-pip -y
 }
 
 Shodan() {
     printf "                                \r"
-    pip3 install shodan
+    pip3 install shodan || pip3 install shodan --break-system-packages
 }
 
 Censys() {
     printf "                                \r"
-    pip3 install censys
+    pip3 install censys || pip3 install censys --break-system-packages
 }
 
 Subfinder() {
@@ -56,7 +56,7 @@ Findomain() {
         unzip findomain-linux.zip
         rm findomain-linux.zip
         chmod +x findomain
-        sudo cp findomain /usr/bin/
+        sudo mv findomain /usr/bin/
 }
 
 Haktrails() {
