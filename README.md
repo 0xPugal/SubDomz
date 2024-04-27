@@ -61,12 +61,6 @@ dos2unix install.sh SubDomz.sh config.txt
 ### API keys
 + Add your API keys in [config.txt](https://github.com/0xPugazh/SubDomz/blob/master/config.txt)
 
-### Get 200$ credits on DO
-[![DigitalOcean Referral Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg)](https://www.digitalocean.com/?refcode=87789189e3ea&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
-
-## Support Me
-<a href="https://www.buymeacoffee.com/0xPugazh" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
-
 ### Credit
 This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script.
 
