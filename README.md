@@ -1,12 +1,12 @@
 <h1 align="center">
-  <b>SubDomz</b>
+  <b>Subdomz</b>
   <br>
 </h1> 
 <h3 align="center">
-All-in-One (Passive) Subdomain Enumeration Tool
+An Automated Subdomain Enumeration Tool
 </p>
 
-  ![SubDomz](https://github.com/0xPugazh/SubDomz/blob/master/SubDomz.png)
+  ![SubDomz](https://github.com/0xPugal/SubDomz/blob/master/SubDomz.png)
 
 -----------------------------
 ### What is SubDomz?
@@ -15,10 +15,9 @@ All-in-One (Passive) Subdomain Enumeration Tool
 
 ### Installation
 ```
-git clone https://github.com/0xlittleboy/SubDomz.git
+git clone https://github.com/0xPugal/Subdomz.git
 cd SubDomz 
-chmod +x install.sh SubDomz.sh
-dos2unix install.sh SubDomz.sh config.txt
+chmod +x install.sh subdomz.sh check.sh
 ./install.sh
 ```
 
@@ -33,7 +32,7 @@ dos2unix install.sh SubDomz.sh config.txt
       -s, --silent            - Show only subdomains in output
       -hp, --http-probe       - probe for working http/https servers
       -k, --keep              - keep the temporary files ( output from each tool)
-      -p, --parallel          - Run parallelly for faster results. Doesn't Work With -e/--exclude or -u/--use.
+      -p, --parallel          - Run parallely for faster results. Doesn't Work With -e/--exclude or -u/--use.
       -h, --help              - Display this help message and exit
       -v, --version           - Display the version and exit
       -ls, --list-sources     - Display all available sources/tools
@@ -57,9 +56,12 @@ dos2unix install.sh SubDomz.sh config.txt
 - [Alienvault](https://otx.alienvault.com)
 - [Subdomain-center](https://api.subdomain.center)
 - [Certspotter](https://api.certspotter.com)
+- [Puredns](https://github.com/d3mondev/puredns)
+- [Trickest Resolvers](https://github.com/trickest/resolvers)
+- [Best-DNS-wordlists](https://wordlists.assetnote.io/)
 
 ### API keys
-+ Add your API keys in [config.txt](https://github.com/0xPugazh/SubDomz/blob/master/config.txt)
++ Add your API keys in [config.txt](https://github.com/0xPugal/subdomz/blob/master/config.txt)
 
 ### Credit
 This tool was inspired by [@bing0o](https://github.com/bing0o) [domains.sh](https://github.com/bing0o/bash_scripting/blob/master/domains.sh) script.

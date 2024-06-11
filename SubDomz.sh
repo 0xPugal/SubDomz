@@ -8,7 +8,7 @@ GREEN="\e[32m"
 BLUE="\e[34"
 CYAN="\e[36m"
 NC="\e[0m"
-VERSION="2.0"
+VERSION="3.0"
 
 PRG=${0##*/}
 
@@ -55,6 +55,7 @@ ListSources() {
     echo "Alienvault"
     echo "Subdomain-center"
     echo "Certspotter"
+	echo "Puredns"
     exit 1
 }
 
@@ -260,6 +261,17 @@ Certspotter() {
 	}
 }
 
+Puredns() {
+  [ "$silent" == True ] && puredns bruteforce $WORDLISTS $DOMAIN --resolvers $RESOLVERS -q | anew subdomz-$domain.txt || {
+		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Puredns${NC}" &
+			PID="$!"
+		}
+		puredns bruteforce $WORDLISTS $DOMAIN --resolvers $RESOLVERS -q > tmp-certspotter-$domain
+		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
+		echo -e "$BOLD[*] Puredns$NC: $( wc -l < tmp-puredns-$domain && echo)"
+	}
+}
+
 Use() {
         for i in $lu; 
         do
@@ -282,7 +294,7 @@ Exclude() {
 
 Out() {
         [ "$silent" == False ] && { 
-		[ -n "$1" ] && output="$1" || output="$domain-$(date +'%Y-%m-%d').txt"
+		[ -n "$1" ] && output="$1" || output="$domain.txt"
 		result=$(sort -u tmp-* | wc -l)
 		sort -u tmp-* >> $output
 		echo -e $GREEN"[+] The Final subdomains:$NC ${result}"
@@ -307,9 +319,9 @@ List() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Enumerating" &
 				PID="$!"
-				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter spinner
+				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter Puredns spinner
 				export domain silent BOLD NC
-				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter
+				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter Puredns
 				kill ${PID}
 				[[ $out != False ]] && Out $out || Out
 			} || {
@@ -330,6 +342,7 @@ List() {
                                 Alienvault
                                 Subdomain-center
                                 Certspotter
+								Puredns
 				[[ $out != False ]] && Out $out || Out
 			}
 		}
@@ -347,9 +360,9 @@ Main() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Enumerating" &
 				PID="$!"
-				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter spinner
+				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter Puredns spinner
 				export domain silent BOLD NC
-				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter
+				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter Puredns
 				kill ${PID}
 			} || {
 				Subfinder
@@ -369,6 +382,7 @@ Main() {
                                 Alienvault
                                 Subdomain-center
                                 Certspotter
+								Puredns
 			}
 			[ $out == False ] && Out || Out $out
 		} || { 
@@ -412,6 +426,7 @@ list=(
         Alienvault
         Subdomain-center
         Certspotter
+		Puredns
         )
 
 while [ -n "$1" ]; do
@@ -475,7 +490,7 @@ done
  ___/ / /_/ / /_/ / /_/ / /_/ / / / / / / / /_
 /____/\__,_/_.___/_____/\____/_/ /_/ /_/ /___/ $VERSION
 
- All in One Passive Subdomain Enumeration tool
+ An Subdomain Subdomain Enumeration Tool
                                 $GREEN by @0xPugal $NC
 """$NC
 
