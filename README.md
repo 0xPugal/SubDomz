@@ -21,7 +21,7 @@ An Automated Subdomain Enumeration Tool
 ```
 git clone https://github.com/0xPugal/Subdomz.git
 cd Subdomz 
-chmod +x install.sh subDomz.sh check.sh
+chmod +x install.sh SubDomz.sh check.sh
 ./install.sh
 ```
 
