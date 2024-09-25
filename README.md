@@ -20,8 +20,8 @@ An Automated Subdomain Enumeration Tool
 ### Installation
 ```
 git clone https://github.com/0xPugal/Subdomz.git
-cd SubDomz 
-chmod +x install.sh subdomz.sh check.sh
+cd Subdomz 
+chmod +x install.sh SubDomz.sh check.sh
 ./install.sh
 ```
 
