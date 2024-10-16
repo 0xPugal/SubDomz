@@ -61,6 +61,7 @@ chmod +x install.sh subdomz.sh check.sh
 - [Subdomain-center](https://api.subdomain.center)
 - [Certspotter](https://api.certspotter.com)
 - [Puredns](https://github.com/d3mondev/puredns)
+- [VirusTotal](https://virustotal.com/)
 - [Trickest Resolvers](https://github.com/trickest/resolvers)
 - [Best-DNS-wordlists](https://wordlists.assetnote.io/)
 
