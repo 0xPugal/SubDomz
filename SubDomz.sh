@@ -55,7 +55,8 @@ ListSources() {
     echo "Alienvault"
     echo "Subdomain-center"
     echo "Certspotter"
-	echo "Puredns"
+    echo "Puredns"
+    echo "VirusTotal"
     exit 1
 }
 
@@ -261,6 +262,16 @@ Certspotter() {
 	}
 }
 
+VirusTotal() {
+  [ "$silent" == True ] && curl -s "https://www.virustotal.com/vtapi/v2/domain/report?apikey=$VIRUSTOTAL_API_KEY&domain=$domain" | jq | egrep -v "http|Alexa domain info" | grep "$domain" | sed 's/[",]//g' | sed 's/^[[:space:]]*//' | anew subdomz-$domain.txt || {
+  		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}VirusTotal${NC}" &
+    			PID="$!"
+       		}
+	 	curl -s "https://www.virustotal.com/vtapi/v2/domain/report?apikey=$VIRUSTOTAL_API_KEY&domain=$domain" | jq | egrep -v "http|Alexa domain info" | grep "$domain" | sed 's/[",]//g' | sed 's/^[[:space:]]*//' | sort -u > tmp-virustotal-$domain
+   		[[ ${PARALLEL} == True ]] || kill ${PID} 2>/dev/null
+     		echo -e "$BOLD[*] VirusTotal$NC: $( wc -l < tmp-virustotal-$domain && echo)"
+       }
+
 Puredns() {
   [ "$silent" == True ] && puredns bruteforce $WORDLISTS $DOMAIN --resolvers $RESOLVERS -q | anew subdomz-$domain.txt || {
 		[[ ${PARALLEL} == True ]] || { spinner "${BOLD}Puredns${NC}" &
@@ -319,9 +330,9 @@ List() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Enumerating" &
 				PID="$!"
-				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter Puredns spinner
+				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter VirusTotal Puredns spinner
 				export domain silent BOLD NC
-				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter Puredns
+				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter VirusTotal Puredns
 				kill ${PID}
 				[[ $out != False ]] && Out $out || Out
 			} || {
@@ -342,6 +353,7 @@ List() {
                                 Alienvault
                                 Subdomain-center
                                 Certspotter
+				VirusTotal
 								Puredns
 				[[ $out != False ]] && Out $out || Out
 			}
@@ -360,9 +372,9 @@ Main() {
 			[[ ${PARALLEL} == True ]] && {
 				spinner "Enumerating" &
 				PID="$!"
-				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter Puredns spinner
+				export -f Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter VirusTotal Puredns spinner
 				export domain silent BOLD NC
-				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter Puredns
+				parallel -j18 ::: Subfinder Amass Assetfinder Chaos Findomain Haktrails Gau Github-subdomains Gitlab-subdomains Cero Shosubgo Censys Crtsh JLDC Alienvault Subdomain-center Certspotter VirusTotal Puredns
 				kill ${PID}
 			} || {
 				Subfinder
@@ -382,6 +394,7 @@ Main() {
                                 Alienvault
                                 Subdomain-center
                                 Certspotter
+				VirusTotal
 								Puredns
 			}
 			[ $out == False ] && Out || Out $out
@@ -426,6 +439,7 @@ list=(
         Alienvault
         Subdomain-center
         Certspotter
+	VirusTotal
 		Puredns
         )
 
